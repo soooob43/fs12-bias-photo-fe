@@ -17,8 +17,11 @@ export default function CommonModal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.backdrop}>
-      <section className={styles.modal}>
+    <div className={styles.backdrop} onClick={onClose}>
+      <section
+        className={styles.modal}
+        onClick={(event) => event.stopPropagation()}
+      >
         <button
           className={styles.dragHandle}
           type="button"

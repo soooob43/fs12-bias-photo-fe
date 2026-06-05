@@ -1,14 +1,13 @@
 import React from 'react';
-import { brBold } from '@/fonts/index';
-import { brRegular } from '@/fonts/index';
+import { brBold, brRegular } from '@/fonts/index';
 
 export default function BuyerDetail() {
   return (
-    <div className="w-[92.5rem] h-[85rem] flex flex-col justify-between">
-      <div className="text-[#A4A4A4] font-['brBold'] text-[1.5rem]">
+    <div className="w-[92.5rem] h-[95rem] flex flex-col justify-between">
+      <div className="text-[#A4A4A4] font-['brBold'] text-[1.5rem] mb-[3.75rem]">
         마켓플레이스
       </div>
-      <div className="text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold pb-[1.25rem] border-b-[2px] border-[#EEE]">
+      <div className="text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold pb-[1.25rem] mb-[4.37rem] border-b-[2px] border-[#EEE]">
         카드 제목
       </div>
       <div className="flex justify-between items-start">

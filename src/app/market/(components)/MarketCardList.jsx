@@ -12,6 +12,7 @@ const MarketCardList = () => {
         price={10}
         remainingQuantity={5}
         totalQuantity={5}
+        isSoldOut={false}
       />
       <Card
         title={'우리집 앞마당'}
@@ -21,6 +22,7 @@ const MarketCardList = () => {
         price={3}
         remainingQuantity={10}
         totalQuantity={10}
+        isSoldOut={false}
       />
       <Card
         title={'아이고'}
@@ -30,6 +32,7 @@ const MarketCardList = () => {
         price={2}
         remainingQuantity={5}
         totalQuantity={6}
+        isSoldOut={true}
       />
       <Card
         title={'우리집 앞마당'}
@@ -39,6 +42,7 @@ const MarketCardList = () => {
         price={10}
         remainingQuantity={5}
         totalQuantity={5}
+        isSoldOut={false}
       />
       <Card
         title={'좋아요'}
@@ -48,6 +52,7 @@ const MarketCardList = () => {
         price={10}
         remainingQuantity={5}
         totalQuantity={5}
+        isSoldOut={true}
       />
       <Card
         title={'안녕'}
@@ -57,6 +62,7 @@ const MarketCardList = () => {
         price={10}
         remainingQuantity={5}
         totalQuantity={5}
+        isSoldOut={false}
       />
     </div>
   );

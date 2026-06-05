@@ -21,7 +21,7 @@ const MarketFilter = () => {
     '기타',
   ];
   const transactionOptions = ['판매', '교환'];
-  const sortOptions = ['낮은 가격순', '높은 가격순', '최신순'];
+  const sortOptions = ['낮은 가격순', '높은 가격순', '최신순', '오래된순'];
   const [grade, setGrade] = useState(gradeOptions[0]);
   const [genre, setGenre] = useState(genreOptions[0]);
   const [transaction, setTransaction] = useState(transactionOptions[0]);

@@ -1,24 +1,57 @@
+'use client';
+
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchMarketDetail } from '@/api/detailApi.js';
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
 
-export default function BuyerDetail() {
+export default function BuyerDetail({ transactionId }) {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['marketDetail', transactionId], // cardId가 바뀔 때마다 리렌더링
+    queryFn: () => fetchMarketDetail(transactionId),
+    enabled: !!transactionId,
+  });
+
+  // 1. 로딩 상태 화면 처리
+  if (isLoading) {
+    return (
+      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
+        데이터를 불러오는 중입니다...
+      </div>
+    );
+  }
+
+  // 2. 에러 상태 화면 처리
+  if (isError) {
+    return (
+      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
+        오류가 발생했습니다: {error.message}
+      </div>
+    );
+  }
+  console.log('★★ 백엔드 전체 데이터:', data);
+  console.log('★★ 카드 데이터:', data?.card);
+  const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
+
   return (
     <div className="w-[92.5rem] h-[95rem] flex flex-col justify-between">
       <div className="text-[#A4A4A4] font-['brBold'] text-[1.5rem] mb-[3.75rem]">
         마켓플레이스
       </div>
       <div className="text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold pb-[1.25rem] mb-[4.37rem] border-b-[2px] border-[#EEE]">
-        카드 제목
+        {cardInfo?.title || '로딩된 제목 없음'}
       </div>
       <div className="flex justify-between items-start">
         <div className="relative w-[60rem] h-[45rem]">
           <Image
-            src={karina}
-            alt="포토카드 이미지"
+            // url없는 경우에 karina 이미지로 대체
+            src={cardInfo?.imageUrl || karina}
+            alt={cardInfo?.title || '포토카드 이미지'}
             fill
             className="object-cover"
+            unoptimized={cardInfo?.imageUrl ? true : false} // 외부 URL 이미지를 최적화 없이 그대로 가져올 때 에러 방지
           />
         </div>
         <div className="flex flex-col w-[27.5rem] h-[45rem] gap-[5rem]">
@@ -26,20 +59,20 @@ export default function BuyerDetail() {
             <div className="flex justify-between w-full">
               <p className="flex items-start gap-[0.9rem]">
                 <span className="text-[#FF2A6A] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  카드등급
+                  {cardInfo?.grade || '포토카드 등급 없음'}
                 </span>
                 |
                 <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  카테고리
+                  {cardInfo?.genre || '포토카드 종류 없음'}
                 </span>
               </p>
               <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold underline">
-                소유자
+                {data?.seller?.nickname || '소유자 미상'}
               </span>
             </div>
             <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
             <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
-              카드에 대한 설명설명설명
+              {cardInfo?.description || '포토카드 설명 없음'}
             </p>
             <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
             <p className="flex justify-between w-full">
@@ -47,7 +80,7 @@ export default function BuyerDetail() {
                 가격
               </span>
               <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                N P
+                {data?.price ? data.price.toLocaleString() : '?'} P
               </span>
             </p>
             <p className="flex justify-between w-full">
@@ -56,10 +89,13 @@ export default function BuyerDetail() {
               </span>
               <span>
                 <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  남은카드
+                  {data?.remainingQuantity !== undefined
+                    ? data.remainingQuantity
+                    : '?'}
                 </span>
                 <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem]">
-                  /5
+                  /
+                  {data?.totalQuantity !== undefined ? data.totalQuantity : '?'}
                 </span>
               </span>
             </p>
@@ -70,7 +106,7 @@ export default function BuyerDetail() {
                 구매수량
               </span>
               <span className="w-[11rem] h-[3.125rem] flex justify-between rounded-[0.125rem] p-[0.6rem] border border-[#FFF] text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
-                <button>-</button>N<button>+</button>
+                <button>-</button>0<button>+</button>
               </span>
             </p>
             <p className="flex justify-between w-full">
@@ -79,10 +115,10 @@ export default function BuyerDetail() {
               </span>
               <span>
                 <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  N P
+                  0 P
                 </span>
                 <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem]">
-                  (N장)
+                  (0장)
                 </span>
               </span>
             </p>

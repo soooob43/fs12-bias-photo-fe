@@ -132,9 +132,7 @@ export const authHeaderFetch = async (url, options = {}) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          refreshToken: localStorage.getItem('refreshToken'),
-        }),
+        credentials: 'include',
         cache: 'no-store',
       });
 
@@ -155,11 +153,11 @@ export const authHeaderFetch = async (url, options = {}) => {
   }
 
   if (!res.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `API error: ${response.status}`);
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `API error: ${res.status}`);
   }
 
-  if (response.status === 204) return {};
+  if (res.status === 204) return {};
 
   // 응답 본문이 있는지 확인
   const contentType = res.headers.get('content-type');
@@ -179,6 +177,7 @@ export const authFetch = async (url, options = {}) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     cache: 'no-store',
   };
 
@@ -194,8 +193,8 @@ export const authFetch = async (url, options = {}) => {
   const res = await fetch(createUrl(url), mergedOptions);
 
   if (!res.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `API error: ${response.status}`);
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `API error: ${res.status}`);
   }
 
   const data = await res.json();

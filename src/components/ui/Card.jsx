@@ -51,6 +51,7 @@ const Card = ({
           src={imgTest}
           alt="Default Image"
           fill
+          priority
           className={`object-cover ${isSoldOut ? 'opacity-15' : ''}`}
         />
         {isSoldOut ? (
@@ -93,13 +94,13 @@ const Card = ({
           </p>
         </section>
       </div>
-      <div className="hidden md:flex justify-center mt-[20px] lg:mt-[30px]">
+      <div className="hidden relative w-full max-w-[100px] mx-auto md:inline-block mt-[20px] lg:mt-[30px]">
         <Image
           src={imgLogo}
           alt="최애의 포토 로고"
-          width={99.2}
+          width={100}
           height={18}
-          className="object-cover"
+          className="w-auto h-auto"
         />
       </div>
     </main>

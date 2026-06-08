@@ -3,6 +3,7 @@
 import { fetchTransactions } from '@/api/marketApi';
 import Card from '@/components/ui/Card';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -73,17 +74,18 @@ const MarketCardList = ({
           </div>
         ) : (
           allCards.map((transaction) => (
-            <Card
-              key={transaction.id}
-              title={transaction.card?.title}
-              grade={transaction.card?.grade}
-              genre={transaction.card?.genre}
-              nickname={transaction.seller?.nickname}
-              price={transaction.price}
-              remainingQuantity={transaction.remainingQuantity}
-              totalQuantity={transaction.totalQuantity}
-              isSoldOut={transaction.remainingQuantity === 0}
-            />
+            <Link key={transaction.id} href={`/market/${transaction.id}`}>
+              <Card
+                title={transaction.card?.title}
+                grade={transaction.card?.grade}
+                genre={transaction.card?.genre}
+                nickname={transaction.seller?.nickname}
+                price={transaction.price}
+                remainingQuantity={transaction.remainingQuantity}
+                totalQuantity={transaction.totalQuantity}
+                isSoldOut={transaction.remainingQuantity === 0}
+              />
+            </Link>
           ))
         )}
       </div>

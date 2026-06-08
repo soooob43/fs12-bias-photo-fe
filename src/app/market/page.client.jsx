@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import MarketHeader from './(components)/MarketHeader';
 import MarketFilter from './(components)/MarketFilter';
 import MarketCardList from './(components)/MarketCardList';
+import useDebounce from '@/hooks/useDebounce';
 
 const ClientPage = () => {
   const [keyword, setKeyword] = useState('');
+  const debouncedKeyword = useDebounce(keyword, 500);
+
   const [filterType, setFilterType] = useState(null); // 'GRADE' | 'GENRE' | 'SALE_STATUS'
   const [filterValue, setFilterValue] = useState(null);
 
@@ -25,7 +28,7 @@ const ClientPage = () => {
         setSortOrder={setSortOrder}
       />
       <MarketCardList
-        keyword={keyword}
+        keyword={debouncedKeyword}
         filterType={filterType}
         filterValue={filterValue}
         sortBy={sortBy}

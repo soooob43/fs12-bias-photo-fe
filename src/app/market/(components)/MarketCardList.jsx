@@ -77,6 +77,7 @@ const MarketCardList = ({
             <Link key={transaction.id} href={`/market/${transaction.id}`}>
               <Card
                 title={transaction.card?.title}
+                imageUrl={transaction.card?.imageUrl}
                 grade={transaction.card?.grade}
                 genre={transaction.card?.genre}
                 nickname={transaction.seller?.nickname}

@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import { brBold } from '@/fonts';
 import icSearch from '@/assets/icons/ic_search.svg';
 
-const MarketHeader = () => {
-  const [keyword, setKeyword] = useState('');
+const MarketHeader = ({ keyword, setKeyword }) => {
   return (
     <>
+      {/* 모바일 뷰 */}
       <header className="pb-[15px] border-b-1 border-(--gray-gray400) md:hidden">
         <div className="relative inline-block w-full">
           <input
@@ -29,6 +29,8 @@ const MarketHeader = () => {
           />
         </div>
       </header>
+
+      {/* 태블릿, 데스크탑 뷰 */}
       <header className="hidden justify-between items-center pb-[20px] border-b-1 md:flex">
         <h1 className={`${brBold.className} text-[48px] lg:text-[62px]`}>
           마켓플레이스

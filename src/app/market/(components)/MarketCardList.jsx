@@ -1,70 +1,99 @@
-import Card from '@/components/ui/Card';
-import React from 'react';
+'use client';
 
-const MarketCardList = () => {
+import { fetchTransactions } from '@/api/marketApi';
+import Card from '@/components/ui/Card';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+const MarketCardList = ({
+  keyword,
+  filterType,
+  filterValue,
+  sortBy,
+  sortOrder,
+}) => {
+  const { ref, inView } = useInView();
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+  } = useInfiniteQuery({
+    queryKey: [
+      'transactions',
+      { keyword, filterType, filterValue, sortBy, sortOrder },
+    ],
+    queryFn: ({ pageParam }) =>
+      fetchTransactions({
+        pageParam,
+        keyword,
+        filterType,
+        filterValue,
+        sortBy,
+        sortOrder,
+      }),
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage?.nextCursor || undefined,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (status === 'pending') {
+    return (
+      <div className="mt-20 text-center text-(--white-white)">
+        데이터를 불러오는 중입니다...
+      </div>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="mt-20 text-center text-(--red-red)">
+        에러가 발생했습니다: {error?.message}
+      </div>
+    );
+  }
+
+  const allCards = data?.pages.flatMap((page) => page.data || []) || [];
+
   return (
-    <div className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
-      <Card
-        title={'우리집 앞마당'}
-        grade="COMMON"
-        genre={'시즌그리팅'}
-        nickname={'테스트 1'}
-        price={10}
-        remainingQuantity={5}
-        totalQuantity={5}
-        isSoldOut={false}
-      />
-      <Card
-        title={'우리집 앞마당'}
-        grade="LEGENDARY"
-        genre={'팬미팅'}
-        nickname={'테스트 2'}
-        price={3}
-        remainingQuantity={10}
-        totalQuantity={10}
-        isSoldOut={false}
-      />
-      <Card
-        title={'아이고'}
-        grade="RARE"
-        genre={'콜라보'}
-        nickname={'테스트 3'}
-        price={2}
-        remainingQuantity={5}
-        totalQuantity={6}
-        isSoldOut={true}
-      />
-      <Card
-        title={'우리집 앞마당'}
-        grade="SUPER RARE"
-        genre={'시즌그리팅'}
-        nickname={'테스트 1'}
-        price={10}
-        remainingQuantity={5}
-        totalQuantity={5}
-        isSoldOut={false}
-      />
-      <Card
-        title={'좋아요'}
-        grade="COMMON"
-        genre={'시즌그리팅'}
-        nickname={'테스트 1'}
-        price={10}
-        remainingQuantity={5}
-        totalQuantity={5}
-        isSoldOut={true}
-      />
-      <Card
-        title={'안녕'}
-        grade="COMMON"
-        genre={'시즌그리팅'}
-        nickname={'테스트 1'}
-        price={10}
-        remainingQuantity={5}
-        totalQuantity={5}
-        isSoldOut={false}
-      />
-    </div>
+    <>
+      <div className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
+        {allCards.length === 0 ? (
+          <div className="col-span-full py-20 text-center text-(--gray-gray400)">
+            조건에 맞는 포토카드가 없습니다.
+          </div>
+        ) : (
+          allCards.map((transaction) => (
+            <Card
+              key={transaction.id}
+              title={transaction.card?.title}
+              grade={transaction.card?.grade}
+              genre={transaction.card?.genre}
+              nickname={transaction.seller?.nickname}
+              price={transaction.price}
+              remainingQuantity={transaction.remainingQuantity}
+              totalQuantity={transaction.totalQuantity}
+              isSoldOut={transaction.remainingQuantity === 0}
+            />
+          ))
+        )}
+      </div>
+      {/* 무한 스크롤 트리거 역할 */}
+      <div ref={ref} className="h-10 mt-5 flex justify-center items-center">
+        {isFetchingNextPage && (
+          <span className="text-(--gray-gray400)">더 불러오는 중...</span>
+        )}
+      </div>
+    </>
   );
 };
 

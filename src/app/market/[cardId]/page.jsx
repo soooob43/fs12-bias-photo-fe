@@ -7,7 +7,7 @@ import BuyerDetail from './(components)/BuyerDetail';
 export default function CardDetailPage({ params }) {
   const { cardId } = React.use(params); //URL 내 cardID
 
-  const [isSeller, setIsSeller] = useState(true); // true:판매자, false:구매자
+  const [isSeller, setIsSeller] = useState(false); // true:판매자, false:구매자
 
   return (
     <div className="container mx-auto py-[3.75rem] flex flex-col justify-center items-center">

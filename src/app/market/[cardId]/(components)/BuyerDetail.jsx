@@ -1,5 +1,7 @@
 import React from 'react';
 import { brBold, brRegular } from '@/fonts/index';
+import Image from 'next/image';
+import karina from '@/app/market/img/sample_karina.png';
 
 export default function BuyerDetail() {
   return (
@@ -11,11 +13,14 @@ export default function BuyerDetail() {
         카드 제목
       </div>
       <div className="flex justify-between items-start">
-        <img
-          src="https://ldsagency.co.kr/files/attach/images/50352/170/056/51ed4382d891f3af676e73b4ea030571.png"
-          alt="포토카드 이미지"
-          className="w-[60rem] h-[45rem] object-cover"
-        />
+        <div className="relative w-[60rem] h-[45rem]">
+          <Image
+            src={karina}
+            alt="포토카드 이미지"
+            fill
+            className="object-cover"
+          />
+        </div>
         <div className="flex flex-col w-[27.5rem] h-[45rem] gap-[5rem]">
           <div className="flex flex-col gap-[1.875rem]">
             <div className="flex justify-between w-full">

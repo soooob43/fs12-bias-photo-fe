@@ -4,11 +4,34 @@ import imgTest from '@/assets/images/img_photo_card_test.svg';
 import imgLogo from '@/assets/images/img_logo.svg';
 import icSoldOut from '@/assets/icons/ic_sold_out.svg';
 
+// 둥급에 따른 색깔 설정 객체
 const GRADE_COLORS = {
   COMMON: 'text-(--main-main)',
   RARE: 'text-(--blue-blue)',
-  'SUPER RARE': 'text-(--purple-purple)',
+  SUPER_RARE: 'text-(--purple-purple)',
   LEGENDARY: 'text-(--pink-pink)',
+};
+
+// 등급 이름 매핑 객체
+const GRADE_MAP = {
+  COMMON: 'COMMON',
+  RARE: 'RARE',
+  SUPER_RARE: 'SUPER RARE',
+  LEGENDARY: 'LEGENDARY',
+};
+
+// 장르 이름 매핑 객체
+const GENRE_MAP = {
+  ALBUM: '앨범',
+  BENEFIT: '특전',
+  FAN_SIGN: '팬싸',
+  SEASON_GREETING: '시즌그리팅',
+  FAN_MEETING: '팬미팅',
+  CONCERT: '콘서트',
+  MD: 'MD',
+  COLLAB: '콜라보',
+  FAN_CLUB: '팬클럽',
+  ETC: '기타',
 };
 
 const Card = ({
@@ -50,9 +73,9 @@ const Card = ({
             <p
               className={`pr-[5px] border-r-1 border-(--gray-gray400) ${GRADE_COLORS[grade] || 'text-(--white-white)'} md:pr-[10px]`}
             >
-              {grade}
+              {GRADE_MAP[grade] || grade}
             </p>
-            <p className="pl-[5px] md:pl-[10px]">{genre}</p>
+            <p className="pl-[5px] md:pl-[10px]">{GENRE_MAP[genre] || genre}</p>
           </div>
           <p className="text-(--white-white) underline underline-offset-3">
             {nickname}

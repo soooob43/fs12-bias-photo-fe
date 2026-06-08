@@ -10,7 +10,7 @@ export const fetchTransactions = async ({
 }) => {
   const params = new URLSearchParams();
 
-  params.append('limit', 10);
+  params.append('limit', 12);
 
   if (pageParam) params.append('cursor', pageParam);
   if (keyword) params.append('keyword', keyword);

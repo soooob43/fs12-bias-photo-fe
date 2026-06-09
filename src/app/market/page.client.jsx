@@ -40,14 +40,12 @@ const ClientPage = () => {
     setFilterIsOpen(false);
   };
 
-  // ⭐️ 2. 부모의 상태를 MobileFilterSheet가 읽을 수 있는 객체 형태로 변환
+  // 모바일 필터 시트와 태블릿, 데스크탑 드롭다운 동기화
   const getInitialSelection = () => {
     const baseSelection = { grade: null, genre: null, saleStatus: null };
 
-    // 필터가 아예 적용되지 않은 상태면 빈 객체 반환
     if (!filterType || !filterValue) return baseSelection;
 
-    // 백엔드 타입('GENRE')을 프론트엔드 탭 이름('genre')으로 매핑
     const tabKeyMap = {
       GRADE: 'grade',
       GENRE: 'genre',
@@ -55,7 +53,6 @@ const ClientPage = () => {
     };
     const activeTab = tabKeyMap[filterType];
 
-    // 백엔드 값('ALBUM')을 프론트엔드 한글 글자('앨범')로 역추적
     if (activeTab) {
       const uiLabel = Object.keys(FILTER_KEY_MAP[activeTab]).find(
         (key) => FILTER_KEY_MAP[activeTab][key] === filterValue,
@@ -66,15 +63,13 @@ const ClientPage = () => {
     return baseSelection;
   };
 
-  // ⭐️ 3. 모바일 시트에서 '확인'을 눌렀을 때 부모 상태를 업데이트하는 함수
-  const handleLookupMobileFilter = (draftSelection) => {
-    // draftSelection은 { grade: null, genre: '앨범', saleStatus: null } 형태입니다.
+  // 모바일 필터 적용 핸들러
+  const handleLookupMobileFilter = (currentSelection) => {
     const tabs = ['grade', 'genre', 'saleStatus'];
-    const selectedTab = tabs.find((key) => draftSelection[key] !== null);
+    const selectedTab = tabs.find((key) => currentSelection[key] !== null);
 
     if (selectedTab) {
-      // 선택된 탭이 있다면 백엔드용 데이터로 변환
-      const uiLabel = draftSelection[selectedTab];
+      const uiLabel = currentSelection[selectedTab];
       const backendValue = FILTER_KEY_MAP[selectedTab][uiLabel];
 
       const typeMap = {

@@ -42,7 +42,7 @@ export default function BuyerDetail({ transactionId }) {
   const maxQuantity = data?.remainingQuantity || 0;
   const totalPrice = data?.price * quantity || 0;
 
-  const handelDecrease = () => {
+  const handleDecrease = () => {
     setQuantity((prev) => (prev > 0 ? prev - 1 : 0));
   };
   const handleIncrease = () => {
@@ -118,7 +118,7 @@ export default function BuyerDetail({ transactionId }) {
               </span>
               <span className="w-[11rem] h-[3.125rem] flex justify-between rounded-[0.125rem] p-[0.6rem] border border-[#FFF] text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
                 <button
-                  onClick={handelDecrease}
+                  onClick={handleDecrease}
                   disabled={quantity <= 0}
                   className="cursor-pointer"
                 >

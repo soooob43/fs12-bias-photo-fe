@@ -2,6 +2,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // URL 경로 결합 함수
 const createUrl = (url) => {
+  if (!BASE_URL) {
+    throw new Error(
+      'NEXT_PUBLIC_API_URL이 설정되지 않았습니다. .env.local을 확인해 주세요.',
+    );
+  }
+
   const path = url.startsWith('/') ? url : `/${url}`;
   return `${BASE_URL}${path}`;
 };

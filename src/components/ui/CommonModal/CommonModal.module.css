@@ -6,13 +6,13 @@
   align-items: center;
   justify-content: center;
   padding: 48px 24px;
-  background: #0f0f0f;
+  background: rgba(0, 0, 0, 0.78);
 }
 
 .modal {
   position: relative;
-  width: min(100%, 1160px);
-  height: min(1000px, calc(100dvh - 80px));
+  width: min(100%, 1216px);
+  height: min(1048px, calc(100dvh - 80px));
   max-height: calc(100dvh - 80px);
   border: 2px solid transparent;
   border-radius: 2px;

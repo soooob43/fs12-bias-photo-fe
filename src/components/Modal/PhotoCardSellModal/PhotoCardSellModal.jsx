@@ -12,7 +12,7 @@ export default function PhotoCardSellModal({
 }) {
   const mockCard = card ?? {
     title: '우리집 앞마당',
-    imageUrl: '/images/mock-card.png',
+    imageUrl: '../../images/img_photo_card_test.svg',
     grade: 'LEGENDARY',
     genre: '풍경',
     creator: '윤디',
@@ -36,7 +36,7 @@ export default function PhotoCardSellModal({
   return (
     <CommonModal isOpen={isOpen} onClose={onClose}>
       <div className={styles.container}>
-        <p className={styles.eyebrow}>나의 포토카드 판매하기</p>
+        <p className={styles.eyebrow}>{title}</p>
         <h1 className={styles.title}>{mockCard.title}</h1>
 
         <section className={styles.cardSection}>
@@ -51,33 +51,47 @@ export default function PhotoCardSellModal({
               <span className={styles.grade}>{mockCard.grade}</span>
               <span className={styles.divider}>|</span>
               <span>{mockCard.genre}</span>
-              <strong>{mockCard.creator}</strong>
+              <strong className={styles.creator}>{mockCard.creator}</strong>
             </div>
 
             <div className={styles.optionRow}>
-              <span>총 판매 수량</span>
+              <span className={styles.optionLabel}>총 판매 수량</span>
               <div className={styles.quantityArea}>
                 <div className={styles.stepper}>
-                  <button type="button" onClick={decreaseQuantity}>
-                    -
+                  <button
+                    type="button"
+                    onClick={decreaseQuantity}
+                    disabled={quantity === 1}
+                    aria-label="판매 수량 줄이기"
+                  >
+                    &minus;
                   </button>
                   <span>{quantity}</span>
-                  <button type="button" onClick={increaseQuantity}>
+                  <button
+                    type="button"
+                    onClick={increaseQuantity}
+                    disabled={quantity === mockCard.quantity}
+                    aria-label="판매 수량 늘리기"
+                  >
                     +
                   </button>
                 </div>
-                <small>/ {mockCard.quantity}장</small>
+                <div className={styles.quantityLimit}>
+                  <strong>/ {mockCard.quantity}</strong>
+                  <small>최대 {mockCard.quantity}장</small>
+                </div>
               </div>
             </div>
 
             <div className={styles.optionRow}>
-              <span>장당 가격</span>
+              <span className={styles.optionLabel}>장당 가격</span>
               <label className={styles.priceInput}>
                 <input
                   type="number"
                   min="0"
                   value={price}
                   onChange={(event) => setPrice(event.target.value)}
+                  placeholder="숫자만 입력"
                 />
                 <strong>P</strong>
               </label>
@@ -86,8 +100,7 @@ export default function PhotoCardSellModal({
         </section>
 
         <section className={styles.exchangeSection}>
-          <h3>교환 희망 정보</h3>
-
+          <h2 className={styles.subtitle}>교환 희망 정보</h2>
           <div className={styles.selectGrid}>
             <label>
               <span>등급</span>
@@ -126,12 +139,17 @@ export default function PhotoCardSellModal({
             <textarea
               value={description}
               onChange={(event) => setDescription(event.target.value)}
+              placeholder="설명을 입력해 주세요"
             />
           </label>
         </section>
 
         <div className={styles.buttonGroup}>
-          <button className={styles.cancelButton} type="button">
+          <button
+            className={styles.cancelButton}
+            type="button"
+            onClick={onClose}
+          >
             취소하기
           </button>
           <button className={styles.submitButton} type="button">

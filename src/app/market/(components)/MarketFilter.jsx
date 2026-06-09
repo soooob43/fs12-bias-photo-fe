@@ -5,79 +5,54 @@ import React, { useState } from 'react';
 import icFilter from '@/assets/icons/ic_filter.svg';
 import icSearch from '@/assets/icons/ic_search.svg';
 import Dropdown from '@/components/ui/Dropdown';
-
-/*----------------------------------
-    백엔드 Enum 변환을 위한 매핑 객체
------------------------------------*/
-const GENRE_VALUE_MAP = {
-  앨범: 'ALBUM',
-  특전: 'BENEFIT',
-  팬싸: 'FAN_SIGN',
-  시즌그리팅: 'SEASON_GREETING',
-  팬미팅: 'FAN_MEETING',
-  콘서트: 'CONCERT',
-  MD: 'MD',
-  콜라보: 'COLLAB',
-  팬클럽: 'FAN_CLUB',
-  기타: 'ETC',
-};
-
-const GRADE_VALUE_MAP = {
-  COMMON: 'COMMON',
-  RARE: 'RARE',
-  'SUPER RARE': 'SUPER_RARE',
-  LEGENDARY: 'LEGENDARY',
-};
+import { FILTER_KEY_MAP, FILTER_CONFIG } from '@/constants/filter';
 
 const MarketFilter = ({
   keyword,
+  filterType,
+  filterValue,
   setKeyword,
   setFilterType,
   setFilterValue,
   setSortBy,
   setSortOrder,
+  onOpen,
 }) => {
-  const gradeOptions = ['COMMON', 'RARE', 'SUPER RARE', 'LEGENDARY'];
-  const genreOptions = [
-    '앨범',
-    '특전',
-    '팬싸',
-    '시즌그리팅',
-    '팬미팅',
-    '콘서트',
-    'MD',
-    '콜라보',
-    '팬클럽',
-    '기타',
-  ];
-  const saleStatusOptions = ['판매중', '매진'];
-  const sortOptions = ['최신순', '오래된순', '낮은 가격순', '높은 가격순'];
+  const gradeOptions = FILTER_CONFIG.grade.options;
+  const genreOptions = FILTER_CONFIG.genre.options;
+  const saleStatusOptions = FILTER_CONFIG.saleStatus.options;
+  const sortOptions = FILTER_CONFIG.sort.options;
 
-  // 드롭다운 UI에 보여줄 로컬 텍스트 상태
-  const [selectedGrade, setSelectedGrade] = useState('등급');
-  const [selectedGenre, setSelectedGenre] = useState('장르');
-  const [selectedStatus, setSelectedStatus] = useState('판매 상태');
   const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
 
-  const handleFilterChange = (type, value, setLocalState) => {
-    // 1. 모든 드롭다운의 UI 텍스트를 기본값으로 초기화
-    setSelectedGrade('등급');
-    setSelectedGenre('장르');
-    setSelectedStatus('판매 상태');
+  const getUiLabel = (tabKey, backValue) => {
+    if (!backValue) return null;
+    const map = FILTER_KEY_MAP[tabKey];
+    return Object.keys(map).find((key) => map[key] === backValue) || backValue;
+  };
 
-    // 2. 현재 선택한 드롭다운만 값 변경
-    setLocalState(value);
+  const displayGrade =
+    filterType === 'GRADE' && filterValue
+      ? getUiLabel('grade', filterValue)
+      : '등급';
+  const displayGenre =
+    filterType === 'GENRE' && filterValue
+      ? getUiLabel('genre', filterValue)
+      : '장르';
+  const displayStatus =
+    filterType === 'SALE_STATUS' && filterValue
+      ? getUiLabel('saleStatus', filterValue)
+      : '판매 상태';
 
-    // 3. 부모(최상위) 컴포넌트로 필터 타입과 값 전달
+  const handleFilterChange = (type, value) => {
     setFilterType(type);
 
-    // 판매 상태의 경우 백엔드가 인식하는 'ON_SALE', 'SOLD_OUT'으로 변환해서 전달
     if (type === 'SALE_STATUS') {
-      setFilterValue(value === '판매중' ? 'ON_SALE' : 'SOLD_OUT');
+      setFilterValue(FILTER_KEY_MAP.saleStatus[value] || value);
     } else if (type === 'GENRE') {
-      setFilterValue(GENRE_VALUE_MAP[value] || value);
+      setFilterValue(FILTER_KEY_MAP.genre[value] || value);
     } else if (type === 'GRADE') {
-      setFilterValue(GRADE_VALUE_MAP[value] || value);
+      setFilterValue(FILTER_KEY_MAP.grade[value] || value);
     } else {
       setFilterValue(value);
     }
@@ -87,75 +62,65 @@ const MarketFilter = ({
   const handleSortChange = (value) => {
     setSelectedSort(value);
 
-    if (value === '최신순') {
-      setSortBy('DATE');
-      setSortOrder('DESC');
-    } else if (value === '오래된순') {
-      setSortBy('DATE');
-      setSortOrder('ASC');
-    } else if (value === '낮은 가격순') {
-      setSortBy('PRICE');
-      setSortOrder('ASC');
-    } else if (value === '높은 가격순') {
-      setSortBy('PRICE');
-      setSortOrder('DESC');
+    const sortConfig = FILTER_KEY_MAP.sort[value];
+    if (sortConfig) {
+      setSortBy(sortConfig.sortBy);
+      setSortOrder(sortConfig.sortOrder);
     }
   };
 
-  // const [grade, setGrade] = useState(gradeOptions[0]);
-  // const [genre, setGenre] = useState(genreOptions[0]);
-  // const [transaction, setTransaction] = useState(transactionOptions[0]);
-  // const [orderBy, setOrderBy] = useState(sortOptions[0]);
-  // const [keyword, setKeyword] = useState('');
   return (
-    <div className="mt-[15px] flex justify-between items-center md:mt-[20px]">
-      <button className="p-[6.5px] border border-(--gray-gray200) rounded-[2px] cursor-pointer md:hidden">
-        <Image src={icFilter} alt="필터 아이콘" width={20} height={20} />
-      </button>
-      <div className="hidden md:flex gap-[25px] items-center flex-1">
-        <div className="relative w-full max-w-[200px] md:inline-block lg:max-w-[320px]">
-          <input
-            type="text"
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
-            placeholder="검색"
-            className="w-full pl-[20px] pr-[46px] py-[9.5px] text-(--white-white) bg-(--black-black) border-1 border-(--gray-gray200) rounded-[2px] outline-none lg:py-[12px]"
+    <>
+      <div className="mt-[15px] flex justify-between items-center md:mt-[20px]">
+        <button
+          onClick={onOpen}
+          className="p-[6.5px] border border-(--gray-gray200) rounded-[2px] cursor-pointer md:hidden"
+        >
+          <Image src={icFilter} alt="필터 아이콘" width={20} height={20} />
+        </button>
+        <div className="hidden md:flex gap-[25px] items-center flex-1">
+          <div className="relative w-full max-w-[200px] md:inline-block lg:max-w-[320px]">
+            <input
+              type="text"
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+              }}
+              placeholder="검색"
+              className="w-full pl-[20px] pr-[46px] py-[9.5px] text-(--white-white) bg-(--black-black) border-1 border-(--gray-gray200) rounded-[2px] outline-none lg:py-[12px]"
+            />
+            <Image
+              src={icSearch}
+              alt="검색 아이콘"
+              width={22}
+              height={22}
+              className="absolute top-1/2 -translate-y-1/2 right-[20px] cursor-pointer"
+            />
+          </div>
+          <Dropdown
+            options={gradeOptions}
+            value={displayGrade}
+            onChange={(val) => handleFilterChange('GRADE', val)}
           />
-          <Image
-            src={icSearch}
-            alt="검색 아이콘"
-            width={22}
-            height={22}
-            className="absolute top-1/2 -translate-y-1/2 right-[20px] cursor-pointer"
+          <Dropdown
+            options={genreOptions}
+            value={displayGenre}
+            onChange={(val) => handleFilterChange('GENRE', val)}
+          />
+          <Dropdown
+            options={saleStatusOptions}
+            value={displayStatus}
+            onChange={(val) => handleFilterChange('SALE_STATUS', val)}
           />
         </div>
         <Dropdown
-          options={gradeOptions}
-          value={selectedGrade}
-          onChange={(val) => handleFilterChange('GRADE', val, setSelectedGrade)}
-        />
-        <Dropdown
-          options={genreOptions}
-          value={selectedGenre}
-          onChange={(val) => handleFilterChange('GENRE', val, setSelectedGenre)}
-        />
-        <Dropdown
-          options={saleStatusOptions}
-          value={selectedStatus}
-          onChange={(val) =>
-            handleFilterChange('SALE_STATUS', val, setSelectedStatus)
-          }
+          type={'sort'}
+          options={sortOptions}
+          value={selectedSort}
+          onChange={handleSortChange}
         />
       </div>
-      <Dropdown
-        type={'sort'}
-        options={sortOptions}
-        value={selectedSort}
-        onChange={handleSortChange}
-      />
-    </div>
+    </>
   );
 };
 

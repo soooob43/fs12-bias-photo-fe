@@ -14,7 +14,7 @@ export const defaultFetch = async (url, options = {}) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    cache: 'force-cache',
+    cache: 'no-store',
   };
 
   const mergedOptions = {

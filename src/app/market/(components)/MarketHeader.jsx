@@ -5,7 +5,7 @@ import React from 'react';
 import { brBold } from '@/fonts';
 import icSearch from '@/assets/icons/ic_search.svg';
 
-const MarketHeader = ({ keyword, setKeyword }) => {
+const MarketHeader = ({ keyword, setKeyword, onOpen }) => {
   return (
     <>
       {/* 모바일 뷰 */}
@@ -35,7 +35,10 @@ const MarketHeader = ({ keyword, setKeyword }) => {
         <h1 className={`${brBold.className} text-[48px] lg:text-[62px]`}>
           마켓플레이스
         </h1>
-        <button className="w-full max-w-[440px] max-h-[60px] py-[17px] bg-(--main-main) text-(--black-black) font-semibold text-[16px] rounded-[2px] lg:text-[18px]">
+        <button
+          onClick={onOpen}
+          className="w-full max-w-[440px] max-h-[60px] py-[17px] bg-(--main-main) text-(--black-black) font-semibold text-[16px] rounded-[2px] cursor-pointer lg:text-[18px] hover:bg-[#b8c41a]"
+        >
           나의 포토카드 판매하기
         </button>
       </header>

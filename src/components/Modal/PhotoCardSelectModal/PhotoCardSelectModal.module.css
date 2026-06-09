@@ -77,6 +77,12 @@
   list-style: none;
 }
 
+.status {
+  margin: 80px 0;
+  color: var(--gray-gray300);
+  text-align: center;
+}
+
 .card {
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -88,37 +94,11 @@
 }
 
 .thumbnail {
+  display: block;
   width: 100%;
   aspect-ratio: 305 / 220;
   margin-bottom: 24px;
-  background-size: cover;
-  background-position: center;
-}
-
-.spain {
-  background:
-    linear-gradient(135deg, rgba(255, 181, 82, 0.8), rgba(34, 115, 170, 0.65)),
-    linear-gradient(45deg, #1c5c7c, #f6b15f 48%, #423129);
-}
-
-.garden {
-  background:
-    radial-gradient(
-      circle at 35% 20%,
-      rgba(255, 255, 180, 0.9),
-      transparent 32%
-    ),
-    linear-gradient(135deg, #8fbb67, #533f25 55%, #f08d6b);
-}
-
-.sunset {
-  background:
-    radial-gradient(
-      circle at 70% 35%,
-      rgba(255, 238, 157, 0.95),
-      transparent 18%
-    ),
-    linear-gradient(135deg, #7f6cd9, #ff9f73 50%, #2c7290);
+  object-fit: cover;
 }
 
 .cardTitle {

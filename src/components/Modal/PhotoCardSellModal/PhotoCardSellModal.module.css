@@ -253,6 +253,13 @@
   margin-top: 40px;
 }
 
+.formError {
+  margin: 24px 0 0;
+  color: var(--red-red);
+  font-size: 14px;
+  text-align: center;
+}
+
 .submitButton,
 .cancelButton {
   flex: 1 1 0;
@@ -269,6 +276,11 @@
   border: 0;
   background: var(--main-main);
   color: var(--black-black);
+}
+
+.submitButton:disabled {
+  opacity: 0.55;
+  cursor: wait;
 }
 
 .cancelButton {

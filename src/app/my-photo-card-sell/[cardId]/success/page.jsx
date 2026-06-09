@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
 export default function MyPhotoCardSellDetailPage() {
-  const photoCard = {
-    id: 1,
-    title: '우리집 앞마당',
-    grade: 'LEGENDARY',
-    count: 2,
-  };
+  const searchParams = useSearchParams();
+  const title = searchParams.get('title') ?? '';
+  const grade = searchParams.get('grade') ?? '';
+  const quantity = searchParams.get('quantity') ?? '0';
 
   return (
     <div className={styles.container}>
@@ -22,8 +21,7 @@ export default function MyPhotoCardSellDetailPage() {
       </h2>
 
       <p className={styles.description}>
-        [{photoCard.grade} | {photoCard.title}] {photoCard.count}장 판매 등록에
-        성공했습니다!
+        [{grade} | {title}] {quantity}장 판매 등록에 성공했습니다!
       </p>
 
       <Link className={styles.btn} href="/my-photo-card-sell">

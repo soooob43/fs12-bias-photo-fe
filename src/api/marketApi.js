@@ -25,3 +25,7 @@ export const fetchTransactions = async ({
 
   return await defaultFetch(`/transactions?${queryString}`);
 };
+
+export const fetchTransactionsFilterMeta = async () => {
+  return await defaultFetch(`/transactions/meta`);
+};

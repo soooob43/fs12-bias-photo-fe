@@ -36,6 +36,7 @@ const GENRE_MAP = {
 
 const Card = ({
   title,
+  imageUrl,
   grade = 'COMMON',
   genre,
   nickname,
@@ -48,10 +49,12 @@ const Card = ({
     <main className="flex flex-col gap-[10px] p-[10px] w-full bg-(--gray-gray500) border border-(--gray-gray400) rounded-[2px] md:p-[20px] md:gap-[26px] lg:p-[40px] lg:max-w-[440px] lg:gap-[32px]">
       <div className="relative w-full aspect-[150/112] overflow-hidden lg:max-w-[360px] lg:max-h-[270px]">
         <Image
-          src={imgTest}
+          src={imageUrl || imgTest}
           alt="Default Image"
           fill
+          priority
           className={`object-cover ${isSoldOut ? 'opacity-15' : ''}`}
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
         />
         {isSoldOut ? (
           <Image
@@ -93,13 +96,13 @@ const Card = ({
           </p>
         </section>
       </div>
-      <div className="hidden md:flex justify-center mt-[20px] lg:mt-[30px]">
+      <div className="hidden relative w-full max-w-[100px] mx-auto md:inline-block mt-[20px] lg:mt-[30px]">
         <Image
           src={imgLogo}
           alt="최애의 포토 로고"
-          width={99.2}
+          width={100}
           height={18}
-          className="object-cover"
+          className="w-auto h-auto"
         />
       </div>
     </main>

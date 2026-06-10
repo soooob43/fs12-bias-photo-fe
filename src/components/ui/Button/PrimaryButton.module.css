@@ -1,0 +1,17 @@
+.button {
+  border-radius: 2px;
+  background-color: var(--main-main);
+  color: var(--black-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1023px) {
+  .button {
+    font-size: 16px;
+  }
+}

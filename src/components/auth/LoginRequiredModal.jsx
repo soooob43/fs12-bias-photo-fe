@@ -1,6 +1,8 @@
 'use client';
 
+import styles from './LoginRequiredModal.module.css';
 import AlertModal from '../ui/AlertModal/AlertModal';
+import PrimaryButton from '../ui/Button/PrimaryButton';
 
 const LoginRequiredModal = ({ isOpen, onClose, onConfirm }) => {
   return (
@@ -11,6 +13,9 @@ const LoginRequiredModal = ({ isOpen, onClose, onConfirm }) => {
         <br />
         다양한 서비스를 편리하게 이용하실 수 있습니다.
       </p>
+      <PrimaryButton onClick={onConfirm} className={styles.confirmButton}>
+        확인
+      </PrimaryButton>
     </AlertModal>
   );
 };

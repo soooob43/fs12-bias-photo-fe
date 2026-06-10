@@ -51,7 +51,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   // 로그인 안 된 경우
-  if (!user || isError) {
+  if (isError || !user) {
     return (
       <LoginRequiredModal
         isOpen={isOpen}

@@ -4,6 +4,9 @@ import { getMe } from '@/api/authApi';
 export const useMe = () => {
   return useQuery({
     queryKey: ['me'],
-    queryFn: getMe,
+    queryFn: async () => {
+      const data = await getMe();
+      return data.user;
+    },
   });
 };

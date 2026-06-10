@@ -21,7 +21,7 @@ export default function MyGalleryPage() {
   return (
     <div className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
       {items.map((item) => (
-        <Link key={item.id} href={`/market/${item.id}`}>
+        <Link key={item.id} href="">
           <Card
             title={item.card?.title}
             imageUrl={item.card?.imageUrl}

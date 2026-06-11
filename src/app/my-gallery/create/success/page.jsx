@@ -1,7 +1,12 @@
 import React from 'react';
+import SuccessClientPage from './page.client';
 
 const SuccessPage = () => {
-  return <div>포토 카드 생성 성공</div>;
+  return (
+    <>
+      <SuccessClientPage />
+    </>
+  );
 };
 
 export default SuccessPage;

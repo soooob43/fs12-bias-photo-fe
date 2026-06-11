@@ -1,7 +1,12 @@
 import React from 'react';
+import FailClientPage from './page.client';
 
 const FailPage = () => {
-  return <div>포토 카드 생성 실패</div>;
+  return (
+    <>
+      <FailClientPage />
+    </>
+  );
 };
 
 export default FailPage;

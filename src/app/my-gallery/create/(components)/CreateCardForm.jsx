@@ -30,24 +30,19 @@ const CreateCardForm = () => {
 
   const postPhotoCardMutaion = useMutation({
     mutationFn: createPhotoCard,
-    // 포토 카드 생성 성공, 실패 임시 테스트
+    // 포토 카드 생성 성공 / 실패 시 결과 페이지로 이동
     onSuccess: (data) => {
-      console.log('서버 응답 데이터:', data);
-      alert('카드 생성 성공!');
       // 추후 마이갤러리 페이지와 querykey 연동
       // queryClient.invalidateQueries({ queryKey: ['myCards'] });
-      router.replace({
-        pathname: '/create/success',
-        query: { title: formData.title, grade: formData.grade },
-      });
+      router.replace(
+        `/my-gallery/create/success?title=${formData.title}&grade=${formData.grade}`,
+      );
     },
     onError: (error) => {
-      alert(`생성 실패: ${error.message}`);
       console.error(error);
-      router.replace({
-        pathname: '/create/fail',
-        query: { title: formData.title, grade: formData.grade },
-      });
+      router.replace(
+        `/my-gallery/create/fail?title=${formData.title}&grade=${formData.grade}`,
+      );
     },
   });
 
@@ -61,6 +56,7 @@ const CreateCardForm = () => {
   // formData 제출 핸들러
   const handleSubmit = (e) => {
     e.preventDefault();
+    // 임시 alert 표시
     if (!file) return alert('이미지 파일을 선택해주세요!');
 
     // formData 형변환

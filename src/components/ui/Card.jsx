@@ -68,7 +68,7 @@ const Card = ({
         )}
       </div>
       <div className="flex flex-col gap-[5px] text-[10px] text-(--gray-gray300) md:text-[16px] md:gap-[10px] lg:text-[18px]">
-        <h1 className="text-[14px] font-bold text-(--white-white) md:text-[22px]">
+        <h1 className="truncate text-[14px] font-bold text-(--white-white) md:text-[22px]">
           {title}
         </h1>
         <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400) md:pb-[20px]">

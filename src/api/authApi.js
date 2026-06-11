@@ -1,6 +1,14 @@
 import { authFetch, authHeaderFetch } from './core/fetchClient';
 
-export const login = () => {};
+export const login = async ({ email, password }) => {
+  return authFetch('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+};
 export const signup = async ({ email, nickname, password }) => {
   return authFetch('/auth/signup', {
     method: 'POST',

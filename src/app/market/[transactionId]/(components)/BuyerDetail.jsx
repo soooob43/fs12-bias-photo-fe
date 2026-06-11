@@ -1,18 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { purchasePhotocardApi } from '@/api/detailApi.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
 import PurchaseModal from './PurchaseModal';
+import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 
 export default function BuyerDetail({ transactionId, loginId, data }) {
   const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState(0);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  const [exchangeModalOpen, setExchangeModalOpen] = useState(false);
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -143,7 +145,10 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
           <span className="inline-flex items-end text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold">
             교환 희망 정보
           </span>
-          <button className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer">
+          <button
+            onClick={() => setExchangeModalOpen(true)}
+            className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
+          >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 교환하기
             </p>
@@ -168,8 +173,22 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
       {purchaseModalOpen && (
         <PurchaseModal
           onClose={() => setPurchaseModalOpen(false)}
+          transactionId={transactionId}
+          loginId={loginId}
           cardInfo={cardInfo}
           quantity={quantity}
+        />
+      )}
+
+      {exchangeModalOpen && (
+        <PhotoCardSelectModal
+          isOpen={exchangeModalOpen}
+          onClose={() => setExchangeModalOpen(false)}
+          title="포토카드 교환하기"
+          onSelectCard={() => {
+            setExchangeModalOpen(false);
+            router.push(`/market/${transactionId}`);
+          }}
         />
       )}
     </div>

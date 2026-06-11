@@ -11,7 +11,7 @@ import styles from './PhotoCardSelectModal.module.css';
 export default function PhotoCardSelectModal({
   isOpen,
   onClose,
-  title = '나의 포토카드 판매하기',
+  title,
   onSelectCard,
 }) {
   const [keyword, setKeyword] = useState('');
@@ -92,9 +92,13 @@ export default function PhotoCardSelectModal({
           </select>
         </div>
 
-        {isPending && <p className={styles.status}>포토카드를 불러오는 중입니다.</p>}
+        {isPending && (
+          <p className={styles.status}>포토카드를 불러오는 중입니다.</p>
+        )}
         {isError && (
-          <p className={styles.status}>판매 가능한 포토카드를 불러오지 못했습니다.</p>
+          <p className={styles.status}>
+            판매 가능한 포토카드를 불러오지 못했습니다.
+          </p>
         )}
         {!isPending && !isError && photoCards.length === 0 && (
           <p className={styles.status}>판매 가능한 포토카드가 없습니다.</p>
@@ -120,7 +124,9 @@ export default function PhotoCardSelectModal({
                   <div className={styles.meta}>
                     <span
                       className={
-                        styles[card.grade.replaceAll(/[\s_]/g, '').toLowerCase()]
+                        styles[
+                          card.grade.replaceAll(/[\s_]/g, '').toLowerCase()
+                        ]
                       }
                     >
                       {card.grade}

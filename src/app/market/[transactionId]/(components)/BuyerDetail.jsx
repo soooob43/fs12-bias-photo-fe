@@ -1,40 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMarketDetail } from '@/api/detailApi.js';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { purchasePhotocardApi } from '@/api/detailApi.js';
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
+import PurchaseModal from './PurchaseModal';
 
-export default function BuyerDetail({ transactionId }) {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['marketDetail', transactionId], // transactionId가 바뀔 때마다 리렌더링
-    queryFn: () => fetchMarketDetail(transactionId),
-    enabled: !!transactionId,
-  });
+export default function BuyerDetail({ transactionId, loginId, data }) {
+  const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState(0);
-
-  // 1. 로딩 상태 화면 처리
-  if (isLoading) {
-    return (
-      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
-        데이터를 불러오는 중입니다...
-      </div>
-    );
-  }
-
-  // 2. 에러 상태 화면 처리
-  if (isError) {
-    return (
-      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
-        오류가 발생했습니다: {error.message}
-      </div>
-    );
-  }
-  console.log('★★ 카드거래 전체 데이터:', data);
-  console.log('★★ 카드 원본 데이터:', data?.card);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -81,7 +59,7 @@ export default function BuyerDetail({ transactionId }) {
                 </span>
               </div>
               <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold underline">
-                {userInfo?.nickname || '소유자 미상'}
+                {userInfo?.nickname || '판매자 미상'}
               </span>
             </div>
             <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
@@ -150,6 +128,7 @@ export default function BuyerDetail({ transactionId }) {
           </div>
 
           <button
+            onClick={() => setPurchaseModalOpen(true)}
             disabled={quantity === 0}
             className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
           >
@@ -185,6 +164,14 @@ export default function BuyerDetail({ transactionId }) {
           </p>
         </div>
       </div>
+
+      {purchaseModalOpen && (
+        <PurchaseModal
+          onClose={() => setPurchaseModalOpen(false)}
+          cardInfo={cardInfo}
+          quantity={quantity}
+        />
+      )}
     </div>
   );
 }

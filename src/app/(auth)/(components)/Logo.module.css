@@ -1,0 +1,12 @@
+.logo {
+  width: 330px;
+  height: auto;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 743px) {
+  .logo {
+    width: 189px;
+    height: auto;
+  }
+}

@@ -84,6 +84,40 @@ export default function PhotoCardSellModal({
     }
 
     setFormError('');
+
+    if (mockCard.isMock) {
+      const mockTransaction = {
+        id: `mock-${Date.now()}`,
+        cardId: mockCard.cardId,
+        title: mockCard.title,
+        grade: mockCard.grade,
+        quantity,
+        price: parsedPrice,
+        exchangeGrade: grade,
+        exchangeGenre: genre,
+        exchangeDescription: description.trim(),
+        createdAt: new Date().toISOString(),
+      };
+      const previousTransactions = JSON.parse(
+        localStorage.getItem('mockTransactions') ?? '[]',
+      );
+      localStorage.setItem(
+        'mockTransactions',
+        JSON.stringify([mockTransaction, ...previousTransactions]),
+      );
+
+      const query = new URLSearchParams({
+        title: mockCard.title,
+        grade: mockCard.grade,
+        quantity: String(quantity),
+        mock: 'true',
+      });
+      router.push(
+        `/my-photo-card-sell/${mockCard.cardId}/success?${query.toString()}`,
+      );
+      return;
+    }
+
     transactionMutation.mutate({
       cardId: mockCard.cardId,
       ownershipIds: mockCard.ownershipIds.slice(0, quantity),

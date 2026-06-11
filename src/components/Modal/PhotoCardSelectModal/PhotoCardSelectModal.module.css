@@ -1,0 +1,309 @@
+.container {
+  width: 100%;
+}
+
+.eyebrow {
+  margin: 0 0 24px;
+  color: var(--gray-gray200);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.title {
+  margin: 0;
+  color: var(--white-white);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  margin: 20px 0 16px;
+  background: var(--gray-gray200);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.filterButton {
+  display: none;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 44px;
+  border: 1px solid var(--gray-gray300);
+  padding: 0 16px;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--white-white);
+  font-size: 14px;
+}
+
+.search span {
+  color: var(--gray-gray200);
+  font-size: 13px;
+}
+
+.select {
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--gray-gray200);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status {
+  margin: 80px 0;
+  color: var(--gray-gray300);
+  text-align: center;
+}
+
+.card {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  padding: 32px;
+  color: var(--white-white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 305 / 220;
+  margin-bottom: 24px;
+  object-fit: cover;
+}
+
+.cardTitle {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rare {
+  color: var(--blue-blue);
+}
+
+.common {
+  color: var(--main-main);
+}
+
+.superrare {
+  color: var(--purple-purple);
+}
+
+.legendary {
+  color: var(--pink-pink);
+}
+
+.genre {
+  color: var(--gray-gray300);
+}
+
+.genre::before {
+  content: '|';
+  margin-right: 10px;
+  color: var(--gray-gray400);
+}
+
+.creator {
+  justify-self: end;
+  color: var(--white-white);
+  text-decoration: underline;
+}
+
+.cardDivider {
+  height: 1px;
+  margin: 18px 0;
+  background: var(--gray-gray400);
+}
+
+.info {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.info div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.info dt {
+  color: var(--gray-gray300);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.info dd {
+  margin: 0;
+  color: var(--white-white);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.logo {
+  margin: 32px 0 0;
+  text-align: center;
+  color: var(--white-white);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.logo::first-letter {
+  color: var(--main-main);
+}
+
+@media (max-width: 1023px) {
+  .eyebrow {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .controls {
+    gap: 16px;
+  }
+
+  .search {
+    width: 180px;
+  }
+
+  .cardList {
+    gap: 24px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 743px) {
+  .eyebrow {
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .divider {
+    margin: 16px 0;
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .filterButton {
+    display: block;
+    height: 52px;
+    border: 1px solid var(--gray-gray300);
+    background: transparent;
+    color: var(--white-white);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .search {
+    width: 100%;
+    height: 52px;
+  }
+
+  .select {
+    display: none;
+  }
+
+  .cardList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .thumbnail {
+    margin-bottom: 12px;
+  }
+
+  .cardTitle {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .meta {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    font-size: 10px;
+  }
+
+  .genre::before {
+    content: '';
+    margin: 0;
+  }
+
+  .creator {
+    justify-self: start;
+    font-size: 10px;
+  }
+
+  .cardDivider {
+    margin: 10px 0;
+  }
+
+  .info dt,
+  .info dd {
+    font-size: 11px;
+  }
+
+  .logo {
+    margin-top: 16px;
+    font-size: 12px;
+  }
+}

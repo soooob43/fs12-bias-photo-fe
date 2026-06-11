@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import { fetchAvailableCards } from '@/api/transactionApi';
+import { DEV_MOCK_PHOTO_CARD } from '@/constants/mockPhotoCard';
 import styles from './PhotoCardSelectModal.module.css';
 
 export default function PhotoCardSelectModal({
@@ -25,7 +26,11 @@ export default function PhotoCardSelectModal({
   });
 
   const photoCards = useMemo(() => {
-    const cards = data?.data ?? [];
+    const availableCards = data?.data ?? [];
+    const cards =
+      !isPending && !isError && availableCards.length === 0
+        ? [DEV_MOCK_PHOTO_CARD]
+        : availableCards;
     const normalizedKeyword = keyword.trim().toLowerCase();
 
     return cards.filter((card) => {
@@ -37,7 +42,7 @@ export default function PhotoCardSelectModal({
 
       return matchesKeyword && matchesGrade && matchesGenre;
     });
-  }, [data, grade, genre, keyword]);
+  }, [data, grade, genre, isError, isPending, keyword]);
 
   const handleSelectCard = (card) => {
     if (onSelectCard) {

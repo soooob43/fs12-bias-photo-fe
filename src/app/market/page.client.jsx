@@ -5,7 +5,8 @@ import MarketHeader from './(components)/MarketHeader';
 import MarketFilter from './(components)/MarketFilter';
 import MarketCardList from './(components)/MarketCardList';
 import useDebounce from '@/hooks/useDebounce';
-import PhotoCardSelectModal from '@/components/features/PhotoCardSelectModal/PhotoCardSelectModal';
+import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
+import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
 import { MobileFilterSheet } from './(components)/MobileFilterSheet';
 import { FILTER_KEY_MAP } from '@/constants/filter';
 
@@ -20,19 +21,32 @@ const ClientPage = () => {
   const [sortOrder, setSortOrder] = useState('DESC');
 
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [isFilterOpen, setFilterIsOpen] = useState(false);
 
   const handleSaleOpen = () => {
     setFilterIsOpen(false);
+    setSelectedCard(null);
     setIsOpen(true);
   };
 
   const handleSaleClose = () => {
     setIsOpen(false);
+    setSelectedCard(null);
+  };
+
+  const handleSelectCard = (card) => {
+    setIsOpen(false);
+    setSelectedCard(card);
+  };
+
+  const handleSellClose = () => {
+    setSelectedCard(null);
   };
 
   const handleFilterOpen = () => {
     setIsOpen(false);
+    setSelectedCard(null);
     setFilterIsOpen(true);
   };
 
@@ -124,6 +138,13 @@ const ClientPage = () => {
       <PhotoCardSelectModal
         isOpen={isOpen}
         onClose={handleSaleClose}
+        title="나의 포토카드 판매하기"
+        onSelectCard={handleSelectCard}
+      />
+      <PhotoCardSellModal
+        card={selectedCard}
+        isOpen={selectedCard !== null}
+        onClose={handleSellClose}
         title="나의 포토카드 판매하기"
       />
       {isFilterOpen ? (

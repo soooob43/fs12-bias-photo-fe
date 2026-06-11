@@ -1,40 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMarketDetail } from '@/api/detailApi.js';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { brBold, brRegular } from '@/fonts/index';
 
 import Image from 'next/image';
 import renew from '@/app/market/img/renew.svg';
 import karina from '@/app/market/img/sample_karina.png';
 
-export default function SellerDetail({ transactionId }) {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['marketDetail', transactionId], // transactionId가 바뀔 때마다 리렌더링
-    queryFn: () => fetchMarketDetail(transactionId),
-    enabled: !!transactionId,
-  });
-
-  // 1. 로딩 상태 화면 처리
-  if (isLoading) {
-    return (
-      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
-        데이터를 불러오는 중입니다...
-      </div>
-    );
-  }
-
-  // 2. 에러 상태 화면 처리
-  if (isError) {
-    return (
-      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
-        오류가 발생했습니다: {error.message}
-      </div>
-    );
-  }
-  console.log('★★ 카드거래 전체 데이터:', data);
-  console.log('★★ 카드 원본 데이터:', data?.card);
+export default function SellerDetail({ transactionId, loginId, data }) {
+  const queryClient = useQueryClient();
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기

@@ -1,0 +1,24 @@
+.button {
+  border-radius: 0.125rem;
+  border: 1px solid var(--gray-gray100);
+  background-color: var(--black-black);
+  color: var(--white-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 1.125rem;
+  cursor: pointer;
+  height: 3.75rem;
+}
+
+.button:hover {
+  color: var(--gray-gray300);
+  border-color: var(--gray-gray300);
+}
+
+@media (max-width: 1023px) {
+  .button {
+    font-size: 1rem;
+  }
+}

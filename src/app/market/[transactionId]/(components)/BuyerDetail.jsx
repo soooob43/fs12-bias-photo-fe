@@ -1,40 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMarketDetail } from '@/api/detailApi.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
+import PurchaseModal from './PurchaseModal';
+import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 
-export default function BuyerDetail({ transactionId }) {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['marketDetail', transactionId], // transactionId가 바뀔 때마다 리렌더링
-    queryFn: () => fetchMarketDetail(transactionId),
-    enabled: !!transactionId,
-  });
+export default function BuyerDetail({ transactionId, loginId, data }) {
+  const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState(0);
-
-  // 1. 로딩 상태 화면 처리
-  if (isLoading) {
-    return (
-      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
-        데이터를 불러오는 중입니다...
-      </div>
-    );
-  }
-
-  // 2. 에러 상태 화면 처리
-  if (isError) {
-    return (
-      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
-        오류가 발생했습니다: {error.message}
-      </div>
-    );
-  }
-  console.log('★★ 카드거래 전체 데이터:', data);
-  console.log('★★ 카드 원본 데이터:', data?.card);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  const [exchangeModalOpen, setExchangeModalOpen] = useState(false);
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -42,7 +22,7 @@ export default function BuyerDetail({ transactionId }) {
   const maxQuantity = data?.remainingQuantity || 0;
   const totalPrice = data?.price * quantity || 0;
 
-  const handelDecrease = () => {
+  const handleDecrease = () => {
     setQuantity((prev) => (prev > 0 ? prev - 1 : 0));
   };
   const handleIncrease = () => {
@@ -81,7 +61,7 @@ export default function BuyerDetail({ transactionId }) {
                 </span>
               </div>
               <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold underline">
-                {userInfo?.nickname || '소유자 미상'}
+                {userInfo?.nickname || '판매자 미상'}
               </span>
             </div>
             <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
@@ -118,7 +98,7 @@ export default function BuyerDetail({ transactionId }) {
               </span>
               <span className="w-[11rem] h-[3.125rem] flex justify-between rounded-[0.125rem] p-[0.6rem] border border-[#FFF] text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
                 <button
-                  onClick={handelDecrease}
+                  onClick={handleDecrease}
                   disabled={quantity <= 0}
                   className="cursor-pointer"
                 >
@@ -150,6 +130,7 @@ export default function BuyerDetail({ transactionId }) {
           </div>
 
           <button
+            onClick={() => setPurchaseModalOpen(true)}
             disabled={quantity === 0}
             className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
           >
@@ -164,7 +145,10 @@ export default function BuyerDetail({ transactionId }) {
           <span className="inline-flex items-end text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold">
             교환 희망 정보
           </span>
-          <button className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer">
+          <button
+            onClick={() => setExchangeModalOpen(true)}
+            className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
+          >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 교환하기
             </p>
@@ -185,6 +169,28 @@ export default function BuyerDetail({ transactionId }) {
           </p>
         </div>
       </div>
+
+      {purchaseModalOpen && (
+        <PurchaseModal
+          onClose={() => setPurchaseModalOpen(false)}
+          transactionId={transactionId}
+          loginId={loginId}
+          cardInfo={cardInfo}
+          quantity={quantity}
+        />
+      )}
+
+      {exchangeModalOpen && (
+        <PhotoCardSelectModal
+          isOpen={exchangeModalOpen}
+          onClose={() => setExchangeModalOpen(false)}
+          title="포토카드 교환하기"
+          onSelectCard={() => {
+            setExchangeModalOpen(false);
+            router.push(`/market/${transactionId}`);
+          }}
+        />
+      )}
     </div>
   );
 }

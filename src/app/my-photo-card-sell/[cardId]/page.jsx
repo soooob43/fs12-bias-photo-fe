@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAvailableCards } from '@/api/transactionApi';
 import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
 
 export default function MyPhotoCardSellDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const { data, isPending, isError } = useQuery({
     queryKey: ['available-photo-cards'],
@@ -24,7 +25,10 @@ export default function MyPhotoCardSellDetailPage() {
     <PhotoCardSellModal
       card={card}
       isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={() => {
+        setIsOpen(false);
+        router.push('/market');
+      }}
       title="나의 포토카드 판매하기"
     />
   );

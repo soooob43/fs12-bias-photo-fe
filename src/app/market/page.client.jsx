@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import MarketHeader from './(components)/MarketHeader';
 import MarketFilter from './(components)/MarketFilter';
 import MarketCardList from './(components)/MarketCardList';
 import useDebounce from '@/hooks/useDebounce';
-import PhotoCardSelectModal from '@/components/features/PhotoCardSelectModal/PhotoCardSelectModal';
+import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 import { MobileFilterSheet } from './(components)/MobileFilterSheet';
 import { FILTER_KEY_MAP } from '@/constants/filter';
 
 const ClientPage = () => {
+  const router = useRouter();
   const [keyword, setKeyword] = useState('');
   const debouncedKeyword = useDebounce(keyword, 500);
 
@@ -29,6 +31,11 @@ const ClientPage = () => {
 
   const handleSaleClose = () => {
     setIsOpen(false);
+  };
+
+  const handleSelectCard = (card) => {
+    setIsOpen(false);
+    router.push(`/my-photo-card-sell/${card.cardId}`);
   };
 
   const handleFilterOpen = () => {
@@ -125,6 +132,7 @@ const ClientPage = () => {
         isOpen={isOpen}
         onClose={handleSaleClose}
         title="나의 포토카드 판매하기"
+        onSelectCard={handleSelectCard}
       />
       {isFilterOpen ? (
         <MobileFilterSheet

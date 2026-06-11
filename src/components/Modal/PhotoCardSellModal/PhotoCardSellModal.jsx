@@ -21,7 +21,7 @@ export default function PhotoCardSellModal({
     imageUrl: '../../images/img_photo_card_test.svg',
     grade: 'LEGENDARY',
     genre: '풍경',
-    creator: '윤디',
+    creator: '유디',
     quantity: 3,
     ownershipIds: [1, 2, 3],
   };

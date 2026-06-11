@@ -11,6 +11,12 @@ const nextConfig = {
         port: '',
         pathname: '/**', // 해당 도메인의 모든 경로 허용
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

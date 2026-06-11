@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import logoImage from '@/assets/images/img_logo.svg';
+import styles from './Logo.module.css';
 
 const Logo = () => {
   return (

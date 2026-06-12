@@ -15,8 +15,6 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const router = useRouter();
-
   const [quantity, setQuantity] = useState(0);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [exchangeModalOpen, setExchangeModalOpen] = useState(false);
@@ -221,6 +219,10 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
             transactionId={transactionId}
             loginId={loginId}
             cardInfo={selectedCard}
+            onClose={() => {
+              setExSecondModalOpen(false); //모달 닫고
+              setSelectedCard(null); // 선택했던 카드 정보 초기화
+            }}
           />
         </CommonModal>
       )}

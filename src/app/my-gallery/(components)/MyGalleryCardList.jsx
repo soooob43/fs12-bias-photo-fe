@@ -99,7 +99,7 @@ const MyGalleryCardList = () => {
               grade={card.grade}
               genre={card.genre}
               nickname={card.nickname}
-              price={card.price}
+              price={card.minimumPrice}
               quantity={card.quantity}
             />
           </li>

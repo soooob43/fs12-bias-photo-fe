@@ -7,9 +7,9 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 1000 * 10,
+        staleTime: 1000 * 3,
         refetchOnWindowFocus: false,
-        refetchOnMount: true,
+        // refetchOnMount: true,
       },
     },
   });

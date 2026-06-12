@@ -127,7 +127,7 @@ const ClientPage = () => {
         sortBy={sortBy}
         sortOrder={sortOrder}
       />
-      <div className="sticky bottom-0 left-0 right-0 py-[15px] mx-auto max-w-[1480px] md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 py-[15px] px-[15px] mx-auto w-full max-w-[1480px] md:hidden z-50">
         <button
           onClick={handleSaleOpen}
           className="w-full max-h-[60px] py-[17px] bg-(--main-main) text-(--black-black) font-semibold text-[16px] rounded-[2px] cursor-pointer hover:bg-[#b8c41a]"

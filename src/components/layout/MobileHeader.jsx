@@ -1,11 +1,14 @@
+'use client';
+
 import { useMe } from '@/hooks/useMe';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './MobileHeader.module.css';
 import logo from '@/assets/images/img_logo.svg';
-import menu from '@/assets/images/ic_menu.svg';
+import menu from '@/assets/icons/ic_menu.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
 import { useState } from 'react';
+import ProfileMenu from './ProfileMenu';
 
 const MobileHeader = () => {
   const { data: user, isLoading } = useMe();
@@ -34,7 +37,16 @@ const MobileHeader = () => {
           )}
         </div>
       </header>
-      {sidebarOpen && <ProfileMenu onClose={() => setSidebarOpen(false)} />}
+      {sidebarOpen && (
+        <div className={styles.backdrop} onClick={() => setSidebarOpen(false)}>
+          <aside
+            className={styles.sidebar}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ProfileMenu />
+          </aside>
+        </div>
+      )}
     </>
   );
 };

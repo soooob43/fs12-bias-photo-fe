@@ -1,0 +1,122 @@
+.sidebar {
+  width: 320px;
+  height: 100%;
+  padding: 32px 24px;
+  background: #161616;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.profile {
+  margin-bottom: 40px;
+}
+
+.greeting {
+  margin-bottom: 24px;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pointBox {
+  padding: 20px;
+  border-radius: 8px;
+  background: #242424;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pointLabel {
+  font-size: 14px;
+  color: #a4a4a4;
+}
+
+.pointValue {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuItem a {
+  display: block;
+
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+}
+
+.menuItem a:hover {
+  opacity: 0.8;
+}
+
+.logoutButton {
+  margin-top: auto;
+
+  border: none;
+  background: none;
+
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.guestMessage {
+  margin-bottom: 32px;
+
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.guestNav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.authLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 48px;
+
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.loginLink {
+  background: #efff04;
+  color: #000;
+}
+
+.signupLink {
+  border: 1px solid #5a5a5a;
+}
+
+.marketLink {
+  margin-top: 24px;
+  text-decoration: none;
+}

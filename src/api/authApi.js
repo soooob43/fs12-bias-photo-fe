@@ -14,6 +14,7 @@ export const login = async ({ email, password }) => {
     }),
   });
 };
+
 export const signup = async ({ email, nickname, password }) => {
   return authFetch('/auth/signup', {
     method: 'POST',
@@ -24,6 +25,7 @@ export const signup = async ({ email, nickname, password }) => {
     }),
   });
 };
+
 export const refresh = () => {};
 export const logout = async () => {
   try {

@@ -31,8 +31,9 @@ export default function ExchangeModal({
         offeredCardId: cardInfo.id,
         description: exdescription,
       });
-      onClose();
+
       alert('교환 요청 성공!');
+      onClose();
     } catch (error) {
       if (!loginId) {
         alert('교환 제시 실패하였습니다. 다시 시도해주세요.');
@@ -43,16 +44,18 @@ export default function ExchangeModal({
   };
 
   return (
-    <div className="w-[57.5rem] flex flex-col gap-[2.5rem] mx-[7.5rem] my-[3.75rem]">
-      <p className="font-['brBold'] text-[#A4A4A4] text-[1.5rem] font-bold">
-        포토카드 교환하기
-      </p>
-      <p className="pb-[1.25rem] font-['Noto_Sans_KR'] font-bold text-[#FFF] text-[2.5rem] border-b border-[#EEE] ">
-        {cardInfo.title}
-      </p>
+    <div className="w-[70rem] mx-auto my-auto flex flex-col gap-[3.2rem] items-center">
+      <div className="w-full flex flex-col gap-[2.5rem]">
+        <p className="font-['brBold'] text-[#A4A4A4] text-[1.5rem] font-bold">
+          포토카드 교환하기
+        </p>
+        <p className="pb-[1.25rem] font-['Noto_Sans_KR'] font-bold text-[#FFF] text-[2.5rem] border-b border-[#EEE] ">
+          {cardInfo.title}
+        </p>
+      </div>
 
-      <div className="flex gap-[2.5rem] justify-center">
-        <div className="w-[27.5rem] h-[37.5rem] p-[2.5rem] border border-white/10 rounded-[0.125rem] bg-[#161616]">
+      <div className="flex justify-between w-full h-full">
+        <div className="w-[34rem] h-[43rem] px-[1.5rem] py-[2rem] border border-white/10 rounded-[0.125rem] bg-[#161616]">
           <img
             className={styles.thumbnail}
             src={cardInfo.imageUrl}
@@ -89,7 +92,7 @@ export default function ExchangeModal({
             <p className={styles.logo}>최애의포토</p>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-[34rem]">
           <p className="mb-[0.62rem] text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem] font-bold">
             교환 제시 내용
           </p>
@@ -98,7 +101,7 @@ export default function ExchangeModal({
             value={exdescription}
             onChange={(e) => setExdescription(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="w-[27.5rem] h-[7.9rem] px-[1.125rem] py-[1.25rem] rounded-[0.125rem] text-[#FFF] border border-[#DDD] font-['Noto_Sans_KR'] text-[1rem] focus:outline-none focus:border-[#EFFF04]"
+            className="w-[34rem] h-[7.9rem] px-[1.125rem] py-[1.25rem] rounded-[0.125rem] text-[#FFF] border border-[#DDD] font-['Noto_Sans_KR'] text-[1rem] focus:outline-none focus:border-[#EFFF04]"
           />
           <div className="flex gap-[1.25rem]">
             <button

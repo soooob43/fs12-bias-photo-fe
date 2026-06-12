@@ -35,6 +35,7 @@ const GENRE_MAP = {
 };
 
 const Card = ({
+  type = 'default',
   title,
   imageUrl,
   grade = 'COMMON',
@@ -43,10 +44,13 @@ const Card = ({
   price = 0,
   remainingQuantity = 0,
   totalQuantity = 0,
+  quantity = 0,
   isSoldOut = false,
 }) => {
   return (
-    <main className="flex flex-col gap-[10px] p-[10px] w-full bg-(--gray-gray500) border border-(--gray-gray400) rounded-[2px] md:p-[20px] md:gap-[26px] lg:p-[40px] lg:max-w-[440px] lg:gap-[32px]">
+    <main
+      className={`flex flex-col gap-[10px] p-[10px] w-full bg-(--gray-gray500) border border-(--gray-gray400) rounded-[2px] md:p-[20px] md:gap-[26px] lg:p-[40px] lg:max-w-[440px] lg:gap-[32px] ${isSoldOut ? 'cursor-not-allowed' : ''}`}
+    >
       <div className="relative w-full aspect-[150/112] overflow-hidden lg:max-w-[360px] lg:max-h-[270px]">
         <Image
           src={imageUrl || imgTest}
@@ -89,11 +93,22 @@ const Card = ({
           <p className="text-(--white-white)">{price} P</p>
         </section>
         <section className="flex justify-between mb-[5px]">
-          <p>잔여</p>
-          <p>
-            <span className="text-(--white-white)">{remainingQuantity}</span>
-            {` / ${totalQuantity}`}
-          </p>
+          {type === 'my' ? (
+            <>
+              <p>수량</p>
+              <p>{quantity}</p>
+            </>
+          ) : (
+            <>
+              <p>잔여</p>
+              <p>
+                <span className="text-(--white-white)">
+                  {remainingQuantity}
+                </span>
+                {` / ${totalQuantity}`}
+              </p>
+            </>
+          )}
         </section>
       </div>
       <div className="hidden relative w-full max-w-[100px] mx-auto md:inline-block mt-[20px] lg:mt-[30px]">

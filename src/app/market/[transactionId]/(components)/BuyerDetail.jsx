@@ -10,6 +10,7 @@ import PurchaseModal from './PurchaseModal';
 import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 
 export default function BuyerDetail({ transactionId, loginId, data }) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState(0);

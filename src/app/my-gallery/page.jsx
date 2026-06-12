@@ -1,40 +1,20 @@
-'use client';
-
-import { fetchMyGallery } from '@/api/galleryApi';
-import Card from '@/components/ui/Card';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import MyGalleryHeader from './(components)/MyGalleryHeader';
+import MyGalleryCardList from './(components)/MyGalleryCardList';
 
 export default function MyGalleryPage() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const getGallery = async () => {
-      const result = await fetchMyGallery();
-      console.log(result);
-      setItems(result.data || []);
-    };
-
-    getGallery();
-  }, []);
-
   return (
-    <div className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
-      {items.map((item) => (
-        <Link key={item.id} href="">
-          <Card
-            title={item.card?.title}
-            imageUrl={item.card?.imageUrl}
-            grade={item.card?.grade}
-            genre={item.card?.genre}
-            nickname={item.seller?.nickname}
-            price={item.price}
-            remainingQuantity={item.remainingQuantity}
-            totalQuantity={item.totalQuantity}
-            isSoldOut={item.remainingQuantity === 0}
-          />
+    <div className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
+      <MyGalleryHeader />
+      <MyGalleryCardList />
+      <div className="fixed bottom-0 left-0 right-0 py-[0.9375rem] px-[0.9375rem] mx-auto w-full max-w-[92.5rem] md:hidden z-50">
+        <Link
+          href="/my-gallery/create"
+          className="flex justify-center items-center max-h-[3.75rem] py-[1.0625rem] bg-(--main-main) text-(--black-black) font-semibold text-[1rem] rounded-[0.125rem] cursor-pointer hover:bg-[#b8c41a]"
+        >
+          포토카드 생성하기
         </Link>
-      ))}
+      </div>
     </div>
   );
 }

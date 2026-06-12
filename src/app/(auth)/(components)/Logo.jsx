@@ -10,6 +10,8 @@ const Logo = () => {
         src={logoImage}
         alt="최애의포토"
         priority
+        width={330}
+        height={60}
         className={styles.logo}
       ></Image>
     </Link>

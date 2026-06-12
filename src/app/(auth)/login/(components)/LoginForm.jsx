@@ -7,9 +7,10 @@ import Input from '@/components/ui/Input/Input';
 import PasswordInput from '@/components/ui/Input/PasswordInput';
 import PrimaryButton from '@/components/ui/Button/PrimaryButton';
 import { useMutation } from '@tanstack/react-query';
-import { signup } from '@/api/authApi';
+import { login } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
+import styles from './LoginForm.module.css';
 
 const loginSchema = z.object({
   email: z
@@ -36,22 +37,12 @@ const LoginForm = () => {
   const [modal, setModal] = useState({
     isOpen: false,
     message: '',
-    success: false,
   });
 
   const handleModalClose = () => {
-    if (modal.success) {
-      if (redirect) {
-        router.push(`/login?redirect=${encodeURIComponent(redirect)}`);
-      } else {
-        router.push('/login');
-      }
-    }
-
     setModal({
       isOpen: false,
       message: '',
-      success: false,
     });
   };
 
@@ -69,24 +60,15 @@ const LoginForm = () => {
     }));
   };
 
-  const signupMutation = useMutation({
-    mutationFn: signup,
+  const loginMutation = useMutation({
+    mutationFn: login,
     onSuccess: () => {
       router.push(redirect || '/market');
     },
     onError: (error) => {
-      if (error.message === '이미 사용 중인 이메일입니다.') {
-        setErrors((prev) => ({
-          ...prev,
-          email: [error.message],
-        }));
-        return;
-      }
-
       setModal({
         isOpen: true,
         message: error.message,
-        success: false,
       });
     },
   });
@@ -103,9 +85,8 @@ const LoginForm = () => {
 
     setErrors({});
 
-    signupMutation.mutate({
+    loginMutation.mutate({
       email: formData.email,
-      nickname: formData.nickname,
       password: formData.password,
     });
   };
@@ -135,7 +116,7 @@ const LoginForm = () => {
             비밀번호
           </label>
           <PasswordInput
-            placeholder="8자 이상 입력해 주세요"
+            placeholder="비밀번호를 입력해 주세요"
             id="password"
             name="password"
             value={formData.password}
@@ -149,18 +130,18 @@ const LoginForm = () => {
 
         <PrimaryButton
           type="submit"
-          disabled={signupMutation.isPending}
+          disabled={loginMutation.isPending}
           className={styles.submitButton}
         >
-          {signupMutation.isPending ? '가입 중...' : '가입하기'}
+          {loginMutation.isPending ? '로그인 중...' : '로그인'}
         </PrimaryButton>
       </form>
-      <p className={styles.loginLinkText}>
+      <p className={styles.signupLinkText}>
         최애의 포토가 처음이신가요?
         <Link
           href={
             redirect
-              ? `/signupredirect=${encodeURIComponent(redirect)}`
+              ? `/signup?redirect=${encodeURIComponent(redirect)}`
               : '/signup'
           }
           className={styles.link}

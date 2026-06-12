@@ -13,17 +13,14 @@ export default function MyPhotoCardSellPage() {
   };
 
   return (
-    <>
-      <button>나의 포토카드 판매하기</button>
-      <PhotoCardSelectModal
-        isOpen={isOpen}
-        onClose={handleClose}
-        title="나의 포토카드 판매하기"
-        onSelectCard={(card) => {
-          setIsOpen(false);
-          router.push(`/my-photo-card-sell/${card.cardId}`);
-        }}
-      />
-    </>
+    <PhotoCardSelectModal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title="나의 포토카드 판매하기"
+      onSelectCard={(card) => {
+        setIsOpen(false);
+        router.push(`/my-photo-card-sell/${card.cardId}`);
+      }}
+    />
   );
 }

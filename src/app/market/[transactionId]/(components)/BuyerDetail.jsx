@@ -12,6 +12,7 @@ import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import ExchangeModal from './ExchangeModal';
 
 export default function BuyerDetail({ transactionId, loginId, data }) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const router = useRouter();

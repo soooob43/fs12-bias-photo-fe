@@ -73,9 +73,10 @@ const MarketCardList = ({
             조건에 맞는 포토카드가 없습니다.
           </div>
         ) : (
-          allCards.map((transaction) => (
-            <Link key={transaction.id} href={`/market/${transaction.id}`}>
+          allCards.map((transaction) =>
+            transaction.remainingQuantity === 0 ? (
               <Card
+                key={transaction.id}
                 title={transaction.card?.title}
                 imageUrl={transaction.card?.imageUrl}
                 grade={transaction.card?.grade}
@@ -86,8 +87,22 @@ const MarketCardList = ({
                 totalQuantity={transaction.totalQuantity}
                 isSoldOut={transaction.remainingQuantity === 0}
               />
-            </Link>
-          ))
+            ) : (
+              <Link key={transaction.id} href={`/market/${transaction.id}`}>
+                <Card
+                  title={transaction.card?.title}
+                  imageUrl={transaction.card?.imageUrl}
+                  grade={transaction.card?.grade}
+                  genre={transaction.card?.genre}
+                  nickname={transaction.seller?.nickname}
+                  price={transaction.price}
+                  remainingQuantity={transaction.remainingQuantity}
+                  totalQuantity={transaction.totalQuantity}
+                  isSoldOut={transaction.remainingQuantity === 0}
+                />
+              </Link>
+            ),
+          )
         )}
       </div>
       {/* 무한 스크롤 트리거 역할 */}

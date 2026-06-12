@@ -8,11 +8,11 @@ const CloseIcon = ({ className }) => {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className} // ⭐️ 외부에서 전달받은 Tailwind 클래스 적용
+      className={className}
     >
       <path
         d="M18 6L6 18M6 6l12 12"
-        stroke="currentColor" // ⭐️ stroke나 fill을 currentColor로 변경
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

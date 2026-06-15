@@ -2,46 +2,18 @@
 
 import MySaleCard from './MySaleCard';
 
-const mockData = [
-  {
-    transactionId: 1,
-    title: '스페인 여행',
-    imageUrl: '',
-    grade: 'COMMON',
-    genre: 'ETC',
-    creatorNickname: '프로여행러',
-    price: 4,
-    remainingQuantity: 1,
-    status: 'ON_SALE',
-  },
-  {
-    transactionId: 2,
-    title: 'How Far I’ll Go',
-    imageUrl: '',
-    grade: 'RARE',
-    genre: 'ETC',
-    creatorNickname: '랍스타',
-    price: 4,
-    remainingQuantity: 1,
-    status: 'ON_EXCHANGE',
-  },
-  {
-    transactionId: 3,
-    title: '우리집 앞마당',
-    imageUrl: '',
-    grade: 'LEGENDARY',
-    genre: 'ETC',
-    creatorNickname: '미쓰손',
-    price: 4,
-    remainingQuantity: 0,
-    status: 'SOLD_OUT',
-  },
-];
+const MySaleCardList = ({ cards }) => {
+  if (cards.length === 0) {
+    return (
+      <div className="flex h-[300px] items-center justify-center">
+        판매 중인 포토카드가 없습니다.
+      </div>
+    );
+  }
 
-const mySaleCardList = () => {
   return (
     <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 lg:grid-cols-3">
-      {mockData.map((sale) => (
+      {cards.map((sale) => (
         <MySaleCard
           key={sale.transactionId}
           title={sale.title}
@@ -59,4 +31,4 @@ const mySaleCardList = () => {
   );
 };
 
-export default mySaleCardList;
+export default MySaleCardList;

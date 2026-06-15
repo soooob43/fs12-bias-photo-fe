@@ -1,42 +1,67 @@
 'use client';
 
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import GradeStats from './(components)/GradeStats';
+import { fetchMySales } from '@/api/mySaleApi';
+import { useMe } from '@/hooks/useMe';
+
+import MySaleGradeStats from './(components)/MySaleGradeStats';
 import MySalesFilter from './(components)/MySalesFilter';
 import MySaleCardList from './(components)/MySaleCardList';
 import Pagination from './(components)/Pagination';
 
 const MySalesPage = () => {
-  const gradeCounts = {
-    COMMON: 10,
-    RARE: 3,
-    SUPER_RARE: 3,
-    LEGENDARY: 5,
-  };
+  const { data: user } = useMe();
 
   const [page, setPage] = useState(1);
 
   const [keyword, setKeyword] = useState('');
-
   const [grade, setGrade] = useState('');
   const [genre, setGenre] = useState('');
   const [saleMethod, setSaleMethod] = useState('');
   const [soldOut, setSoldOut] = useState('');
 
-  // 나중에 React Query 연결 예정
-  // const { data, isLoading } = useQuery(...)
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['my-sales', page, keyword, grade, genre, saleMethod, soldOut],
+    queryFn: () =>
+      fetchMySales({
+        page,
+        limit: 15,
+        keyword,
+        grade,
+        genre,
+        saleMethod,
+        soldOut,
+      }),
+  });
+
+  if (isLoading) {
+    return <div className="flex justify-center py-[100px]">로딩 중...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center py-[100px] text-red-500">
+        데이터를 불러오지 못했습니다.
+      </div>
+    );
+  }
 
   return (
-    <main className="mx-auto max-w-[1480px] px-[20px] py-[30px]">
-      {/* 페이지 제목 */}
-      <h1 className="text-[24px] font-bold text-(--white-white)">
+    <main className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
+      <h1 className="text-[24px] font-bold text-white md:text-[32px]">
         나의 판매 포토카드
       </h1>
 
-      <GradeStats gradeCounts={gradeCounts} />
+      <div className="mt-[20px] border-b border-(--gray-gray300)" />
 
-      {/* 검색 + 필터 */}
+      <MySaleGradeStats
+        nickname={user?.nickname}
+        totalQuantity={data?.pagination?.totalCount ?? 0}
+        gradeCounts={data?.gradeCounts ?? {}}
+      />
+
       <MySalesFilter
         keyword={keyword}
         setKeyword={setKeyword}
@@ -46,11 +71,16 @@ const MySalesPage = () => {
         setSoldOut={setSoldOut}
       />
 
-      {/* 카드 목록 */}
-      <MySaleCardList cards={[]} />
+      <div className="mt-[40px]">
+        <MySaleCardList cards={data?.data ?? []} />
+      </div>
 
-      <div className="flex min-h-screen items-center justify-center bg-black">
-        <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
+      <div className="mt-[80px]">
+        <Pagination
+          currentPage={page}
+          totalPages={Math.max(data?.pagination?.totalPages ?? 0, 1)}
+          onPageChange={setPage}
+        />
       </div>
     </main>
   );

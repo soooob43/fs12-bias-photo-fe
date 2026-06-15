@@ -72,9 +72,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             key={page}
             onClick={() => onPageChange(page)}
             className={`
-              flex h-[72px] w-[72px]
+              flex h-[45px] w-[45px]
               items-center justify-center
-              text-[24px] font-bold
+              text-[20px] font-bold
               transition-all
               ${
                 currentPage === page

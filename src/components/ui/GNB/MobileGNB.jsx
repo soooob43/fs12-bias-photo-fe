@@ -13,6 +13,7 @@ const MobileGNB = ({ title }) => {
         type="button"
         onClick={() => router.back()}
         className="cursor-pointer"
+        aria-label="뒤로 가기"
       >
         <LeftArrowIcon className="absolute top-1/2 -translate-y-1/2 left-1" />
       </button>

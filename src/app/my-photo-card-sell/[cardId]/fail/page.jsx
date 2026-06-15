@@ -13,7 +13,7 @@ export default function MyPhotoCardSellDetailPage() {
 
   return (
     <div className={styles.container}>
-      <Link className={styles.closeButton} href="/my-photo-card-sell">
+      <Link className={styles.closeButton} href="/market">
         <span>&times;</span> {/*닫기 버튼 X */}
       </Link>
 
@@ -26,7 +26,7 @@ export default function MyPhotoCardSellDetailPage() {
       </p>
       {message && <p className={styles.description}>{message}</p>}
 
-      <Link className={styles.btn} href="/my-photo-card-sell">
+      <Link className={styles.btn} href="/market">
         마켓플레이스로 돌아가기
       </Link>
     </div>

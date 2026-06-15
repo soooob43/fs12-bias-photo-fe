@@ -24,7 +24,7 @@ export const FILTER_CONFIG = {
   },
   sort: {
     label: '정렬',
-    options: ['최신순', '오래된순', '낮은 가격순', '높은가격순'],
+    options: ['최신순', '오래된순', '낮은 가격순', '높은 가격순'],
   },
 };
 

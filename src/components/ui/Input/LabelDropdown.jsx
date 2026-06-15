@@ -30,7 +30,7 @@ const LabelDropdown = ({
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className={`flex items-center justify-between py-[1.125rem] pl-[20px] pr-[12px] w-full border rounded-[2px] cursor-pointer ${errorMsg ? 'border-(--red-red)' : ' border-(--gray-gray200)'} ${widthClass}`}
+          className={`flex items-center justify-between py-[1.125rem] pl-[20px] pr-[12px] w-full border border-(--gray-gray200) rounded-[2px] cursor-pointer ${widthClass}`}
         >
           <p
             className={`${value === '' ? 'text-(--gray-gray300)' : 'text-(--white-white)'} text-[0.875rem] font-light md:text-[1rem] md:font-normal`}

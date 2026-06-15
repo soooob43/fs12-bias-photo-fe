@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useQuery } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchExchangeOffers } from '@/api/detailApi';
-import Card from '@/components/ui/Card';
+import ExCard from './ExCard';
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import renew from '@/app/market/img/renew.svg';
@@ -27,8 +27,7 @@ export default function SellerDetail({ transactionId, loginId, data }) {
     retry: false,
   });
 
-  console.log(exdata);
-  const photoCards = exdata?.data ?? [];
+  const photoCards = exdata ?? [];
 
   //로딩 상태 화면 처리
   if (isLoading || (!data && !isError)) {
@@ -163,22 +162,24 @@ export default function SellerDetail({ transactionId, loginId, data }) {
           </span>
         </div>
         <div className="py-[3.75rem] flex gap-[5rem]">
-          {photoCards.length > 0 && (
-            <ul>
+          {photoCards.length <= 0 ? (
+            <div>제시된 카드가 없습니다</div>
+          ) : (
+            <ul className="flex gap-[5rem]">
               {photoCards.map((card) => (
                 <li
-                  key={card.cardId}
+                  key={card.id}
                   className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
                 >
-                  <Card
+                  <ExCard
                     type="my"
-                    imageUrl={card.imageUrl}
-                    title={card.title}
-                    grade={card.grade}
-                    genre={card.genre}
-                    nickname={card.creatorNickname}
-                    price={card.minimumPrice}
-                    quantity={card.quantity}
+                    imageUrl={card.offeredCard.card.imageUrl}
+                    title={card.offeredCard.card.title}
+                    grade={card.offeredCard.card.grade}
+                    genre={card.offeredCard.card.genre}
+                    nickname={card.proposer.nickname}
+                    price={card.offeredCard.purchasePrice}
+                    description={card.description}
                   />
                 </li>
               ))}

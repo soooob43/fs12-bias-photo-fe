@@ -18,22 +18,28 @@ const MobileHeader = () => {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <button type="button" onClick={() => setSidebarOpen(true)}>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className={styles.btnIcon}
+          >
             <Image src={menu} alt="메뉴" />
           </button>
           <Link href="/market">
-            <Image src={logo} alt="최애의포토 로고" />
+            <Image src={logo} alt="최애의포토 로고" width={84} />
           </Link>
           {isLoading ? (
             <nav className={styles.nav}>
               <div className={styles.skeletonIcon}></div>
             </nav>
           ) : user ? (
-            <button type="button">
+            <button type="button" className={styles.btnIcon}>
               <Image src={notificationIcon} alt="알림" />
             </button>
           ) : (
-            <Link href="/login">로그인</Link>
+            <Link href="/login" className={styles.loginButton}>
+              로그인
+            </Link>
           )}
         </div>
       </header>
@@ -43,7 +49,7 @@ const MobileHeader = () => {
             className={styles.sidebar}
             onClick={(e) => e.stopPropagation()}
           >
-            <ProfileMenu />
+            <ProfileMenu user={user} onClose={() => setSidebarOpen(false)} />
           </aside>
         </div>
       )}

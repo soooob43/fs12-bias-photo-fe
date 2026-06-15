@@ -6,7 +6,7 @@ import { z } from 'zod';
 import Input from '@/components/ui/Input/Input';
 import PasswordInput from '@/components/ui/Input/PasswordInput';
 import PrimaryButton from '@/components/ui/Button/PrimaryButton';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -31,6 +31,8 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  const queryClient = useQueryClient();
 
   const [errors, setErrors] = useState({});
 
@@ -62,7 +64,11 @@ const LoginForm = () => {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['me'],
+      });
+
       router.push(redirect || '/market');
     },
     onError: (error) => {

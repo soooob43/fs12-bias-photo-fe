@@ -71,8 +71,12 @@ const Header = () => {
           </nav>
         ) : (
           <nav className={styles.nav}>
-            <Link href="/login">로그인</Link>
-            <Link href="/signup">회원가입</Link>
+            <Link href="/login" className={styles.loginButton}>
+              로그인
+            </Link>
+            <Link href="/signup" className={styles.logoutButton}>
+              회원가입
+            </Link>
           </nav>
         )}
       </div>

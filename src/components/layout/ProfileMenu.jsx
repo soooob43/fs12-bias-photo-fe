@@ -21,69 +21,80 @@ const ProfileMenu = ({ user, onClose }) => {
       user: null,
     });
 
+    onClose?.();
+
     router.push('/');
   };
 
   return (
-    <>
+    <nav className={styles.nav}>
       {user ? (
-        <aside>
-          <nav>
-            <div>
-              <h2>안녕하세요, {user.nickname}님!</h2>
+        <>
+          <div className={styles.profile}>
+            <h2 className={styles.greeting}>안녕하세요, {user.nickname}님!</h2>
 
-              <div>
-                <p>보유 포인트</p>
-                <p>{user.points} P</p>
-              </div>
+            <div className={styles.pointBox}>
+              <p className={styles.pointLabel}>보유 포인트</p>
+              <p className={styles.pointValue}>{user.points} P</p>
             </div>
+          </div>
 
-            <ul className={styles.menuList}>
-              <li className={styles.menuItem}>
-                <Link href="/market" onClick={onClose}>
-                  마켓플레이스
-                </Link>
-              </li>
+          <ul className={styles.menuList}>
+            <li className={styles.menuItem}>
+              <Link href="/market" onClick={onClose}>
+                마켓플레이스
+              </Link>
+            </li>
 
-              <li className={styles.menuItem}>
-                <Link href="/my-gallery" onClick={onClose}>
-                  마이갤러리
-                </Link>
-              </li>
+            <li className={styles.menuItem}>
+              <Link href="/my-gallery" onClick={onClose}>
+                마이갤러리
+              </Link>
+            </li>
 
-              <li className={styles.menuItem}>
-                <Link href="/my-photo-card-sell" onClick={onClose}>
-                  판매 중인 포토카드
-                </Link>
-              </li>
-            </ul>
+            <li className={styles.menuItem}>
+              <Link href="/my-photo-card-sell" onClick={onClose}>
+                판매 중인 포토카드
+              </Link>
+            </li>
+          </ul>
 
-            <button type="button" onClick={handleLogout}>
-              로그아웃
-            </button>
-          </nav>
-        </aside>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className={styles.logoutButton}
+          >
+            로그아웃
+          </button>
+        </>
       ) : (
-        <aside>
-          <p>
-            안녕하세요!
-            <br />
-            서비스를 이용하려면 로그인이 필요합니다.
-          </p>
-          <nav>
-            <Link href="/login" onClick={onClose}>
-              로그인
-            </Link>
-            <Link href="/signup" onClick={onClose}>
-              회원가입
-            </Link>
-            <Link href="/market" onClick={onClose}>
-              마켓플레이스
-            </Link>
-          </nav>
-        </aside>
+        <>
+          <div className={styles.guestBox}>
+            <h2 className={styles.title}>안녕하세요!</h2>
+            <p className={styles.guideText}>
+              서비스를 이용하려면 로그인이 필요합니다.
+            </p>
+          </div>
+          <ul className={styles.menuList}>
+            <li className={styles.menuItem}>
+              <Link href="/login" onClick={onClose}>
+                로그인
+              </Link>
+            </li>
+            <li className={styles.menuItem}>
+              <Link href="/signup" onClick={onClose}>
+                회원가입
+              </Link>
+            </li>
+            <li className={styles.menuItem}>
+              <Link href="/market" onClick={onClose}>
+                마켓플레이스
+              </Link>
+            </li>
+          </ul>
+        </>
       )}
-    </>
+    </nav>
   );
 };
 

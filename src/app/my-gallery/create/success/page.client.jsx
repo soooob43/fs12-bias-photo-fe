@@ -1,9 +1,10 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ResultPage from '@/components/layout/ResultPage';
 import { useSearchParams } from 'next/navigation';
+import ResultSkeleton from '@/components/ui/Skeleton/ResultSkeleton';
 
-const SuccessClientPage = () => {
+const SuccessClientPageContent = () => {
   const searchParams = useSearchParams();
   const title = searchParams.get('title');
   const grade = searchParams.get('grade');
@@ -20,6 +21,20 @@ const SuccessClientPage = () => {
         href="/my-gallery"
       />
     </>
+  );
+};
+
+const SuccessClientPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <ResultSkeleton />
+        </div>
+      }
+    >
+      <SuccessClientPageContent />
+    </Suspense>
   );
 };
 

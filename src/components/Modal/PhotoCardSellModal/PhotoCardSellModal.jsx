@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTransaction } from '@/api/transactionApi';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import styles from './PhotoCardSellModal.module.css';
+import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 
 export default function PhotoCardSellModal({
   card,
@@ -224,9 +225,12 @@ export default function PhotoCardSellModal({
                 <option value="" disabled>
                   장르를 선택해 주세요
                 </option>
-                <option value="풍경">풍경</option>
-                <option value="인물">인물</option>
-                <option value="사물">사물</option>
+
+                {FILTER_CONFIG.genre.options.map((label) => (
+                  <option key={label} value={FILTER_KEY_MAP.genre[label]}>
+                    {label}
+                  </option>
+                ))}
               </select>
             </label>
           </div>

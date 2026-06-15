@@ -24,21 +24,24 @@ export default function ExchangeModal({
       return;
     }
 
+    // 해당 카드의 첫번째 1장의 소유권 ID(ownershipId) 대입
+    const targetOfferedId =
+      cardInfo.ownershipIds && cardInfo.ownershipIds.length > 0
+        ? cardInfo.ownershipIds[0]
+        : cardInfo.cardId || cardInfo.id;
+
     try {
       await proposeExchangeApi({
         transactionId: transactionId,
         proposerId: loginId,
-        offeredCardId: cardInfo.id,
+        offeredCardId: targetOfferedId,
         description: exdescription,
       });
 
       alert('교환 요청 성공!');
       onClose();
     } catch (error) {
-      if (!loginId) {
-        alert('교환 제시 실패하였습니다. 다시 시도해주세요.');
-      }
-
+      alert('교환 요청 카드에 문제가 있습니다!');
       console.error('교환 요청 중 오류 발생: ', error);
     }
   };

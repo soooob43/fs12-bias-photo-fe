@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useQuery } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchExchangeOffers } from '@/api/detailApi';
+import Card from '@/components/ui/Card';
 import { brBold, brRegular } from '@/fonts/index';
-
 import Image from 'next/image';
 import renew from '@/app/market/img/renew.svg';
 import karina from '@/app/market/img/sample_karina.png';
@@ -13,6 +14,41 @@ export default function SellerDetail({ transactionId, loginId, data }) {
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
+
+  const {
+    data: exdata,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['exchangeList', transactionId], // transactionId가 바뀔 때마다 리렌더링
+    queryFn: () => fetchExchangeOffers(transactionId),
+    enabled: typeof transactionId !== 'undefined' && transactionId !== null,
+    retry: false,
+  });
+
+  console.log(exdata);
+  const photoCards = exdata?.data ?? [];
+
+  //로딩 상태 화면 처리
+  if (isLoading || (!data && !isError)) {
+    return (
+      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
+        데이터를 불러오는 중입니다...
+      </div>
+    );
+  }
+
+  //에러 상태 화면 처리
+  if (isError) {
+    return (
+      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
+        오류가 발생했습니다: {error.message}
+      </div>
+    );
+  }
+
+  console.log('현재 에러 상태: ', error);
 
   return (
     <div className="w-[92.5rem] h-[95rem] flex flex-col justify-between">
@@ -127,15 +163,27 @@ export default function SellerDetail({ transactionId, loginId, data }) {
           </span>
         </div>
         <div className="py-[3.75rem] flex gap-[5rem]">
-          <div className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]">
-            교환 요청 카드1
-          </div>
-          <div className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]">
-            교환 요청 카드2
-          </div>
-          <div className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]">
-            교환 요청 카드3
-          </div>
+          {photoCards.length > 0 && (
+            <ul>
+              {photoCards.map((card) => (
+                <li
+                  key={card.cardId}
+                  className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
+                >
+                  <Card
+                    type="my"
+                    imageUrl={card.imageUrl}
+                    title={card.title}
+                    grade={card.grade}
+                    genre={card.genre}
+                    nickname={card.creatorNickname}
+                    price={card.minimumPrice}
+                    quantity={card.quantity}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

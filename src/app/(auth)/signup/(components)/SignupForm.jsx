@@ -11,6 +11,7 @@ import { signup } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './SignupForm.module.css';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 const signupSchema = z
   .object({
@@ -219,14 +220,16 @@ const SignupForm = () => {
             <p className={styles.errorMessage}>{errors.passwordConfirm[0]}</p>
           )}
         </div>
-
-        <PrimaryButton
-          type="submit"
-          disabled={signupMutation.isPending}
-          className={styles.submitButton}
-        >
-          {signupMutation.isPending ? '가입 중...' : '가입하기'}
-        </PrimaryButton>
+        <div className={styles.buttonBox}>
+          <PrimaryButton
+            type="submit"
+            disabled={signupMutation.isPending}
+            className={styles.submitButton}
+          >
+            {signupMutation.isPending ? '가입 중...' : '가입하기'}
+          </PrimaryButton>
+          <GoogleLoginButton />
+        </div>
       </form>
       <p className={styles.loginLinkText}>
         이미 최애의포토 회원이신가요?

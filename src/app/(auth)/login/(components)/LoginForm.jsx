@@ -11,6 +11,7 @@ import { login } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './LoginForm.module.css';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 const loginSchema = z.object({
   email: z
@@ -134,13 +135,16 @@ const LoginForm = () => {
           )}
         </div>
 
-        <PrimaryButton
-          type="submit"
-          disabled={loginMutation.isPending}
-          className={styles.submitButton}
-        >
-          {loginMutation.isPending ? '로그인 중...' : '로그인'}
-        </PrimaryButton>
+        <div className={styles.buttonBox}>
+          <PrimaryButton
+            type="submit"
+            disabled={loginMutation.isPending}
+            className={styles.submitButton}
+          >
+            {loginMutation.isPending ? '로그인 중...' : '로그인'}
+          </PrimaryButton>
+          <GoogleLoginButton />
+        </div>
       </form>
       <p className={styles.signupLinkText}>
         최애의 포토가 처음이신가요?

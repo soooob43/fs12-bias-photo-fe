@@ -8,7 +8,7 @@
 .guestBox {
   margin-top: 40px;
   padding: 32px 20px;
-  border-bottom: 1px solid #3a3a3a;
+  border-bottom: 1px solid var(--gray-gray400);
 }
 
 .greeting,

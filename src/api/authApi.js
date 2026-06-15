@@ -48,5 +48,3 @@ export const getMe = async () => {
 
   return authHeaderFetch('/users/me');
 };
-
-export const googleLogin = () => {};

@@ -12,6 +12,11 @@ import icSearch from '@/assets/icons/ic_search.svg';
 import styles from './MyGalleryCardList.module.css';
 import { useMe } from '@/hooks/useMe';
 
+/*---------------------------
+ 마이갤러리 MyGalleryCardList 작업 
+  add : 2026.06.15 윤소정
+----------------------------*/
+
 const GRADE_STYLES = {
   COMMON: styles.common,
   RARE: styles.rare,

@@ -5,7 +5,6 @@ import MobileHeader from '@/components/layout/MobileHeader';
 const page = () => {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen">
-      <MobileHeader />
       <Logo />
       <LoginForm />
     </main>

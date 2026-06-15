@@ -66,6 +66,13 @@
   background-color: var(--gray-gray400);
 }
 
+.loginButton,
+.logoutButton {
+  font-weight: 500;
+  color: var(--gray-gray200);
+  font-size: 14px;
+}
+
 @keyframes shimmer {
   0% {
     opacity: 0.6;

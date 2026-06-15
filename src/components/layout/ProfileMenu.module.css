@@ -72,10 +72,3 @@
   color: var(--gray-gray300);
   font-size: 14px;
 }
-
-.loginButton,
-.logoutButton {
-  font-weight: 500;
-  color: var(--gray-gray200);
-  font-size: 14px;
-}

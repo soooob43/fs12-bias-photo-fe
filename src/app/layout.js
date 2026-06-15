@@ -1,6 +1,7 @@
 import { Noto_Sans_KR } from 'next/font/google';
 import QueryProvider from '@/providers/QueryProvider';
 import './globals.css';
+import Header from '@/components/layout/Header';
 
 const notoSansKr = Noto_Sans_KR({
   variable: '--font-noto-sans',
@@ -16,7 +17,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko" className={`${notoSansKr.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <Header />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

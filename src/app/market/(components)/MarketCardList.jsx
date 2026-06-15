@@ -39,6 +39,7 @@ const MarketCardList = ({
       }),
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage?.nextCursor || undefined,
+    refetchOnMount: 'always',
   });
 
   useEffect(() => {

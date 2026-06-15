@@ -17,10 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko" className={`${notoSansKr.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <QueryProvider>
-          <Header />
-          {children}
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

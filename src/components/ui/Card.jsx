@@ -49,7 +49,7 @@ const Card = ({
 }) => {
   return (
     <main
-      className={`flex flex-col gap-[10px] p-[10px] w-full bg-(--gray-gray500) border border-(--gray-gray400) rounded-[2px] md:p-[20px] md:gap-[26px] lg:p-[40px] lg:max-w-[440px] lg:gap-[32px] ${isSoldOut ? 'cursor-not-allowed' : ''}`}
+      className={`flex flex-col gap-[10px] p-[10px] w-full bg-(--gray-gray500) border border-(--gray-gray400) rounded-[2px] md:p-[20px] md:gap-[26px] lg:p-[40px] lg:max-w-[440px] lg:gap-[32px]`}
     >
       <div className="relative w-full aspect-[150/112] overflow-hidden lg:max-w-[360px] lg:max-h-[270px]">
         <Image

@@ -53,7 +53,6 @@ const MySaleCard = ({
   nickname,
   price = 0,
   remainingQuantity = 0,
-  totalQuantity = 0,
   quantity = 0,
   status,
   isSoldOut = false,
@@ -76,9 +75,7 @@ const MySaleCard = ({
 
         {status && !isSoldOut && (
           <div className="absolute top-[10px] left-[10px] bg-(--gray-gray500) px-[8px] py-[4px] text-[10px] md:text-[12px]">
-            <span className={STATUS_STYLE[status]}>
-              {STATUS_MAP[status]}
-            </span>
+            <span className={STATUS_STYLE[status]}>{STATUS_MAP[status]}</span>
           </div>
         )}
 
@@ -107,9 +104,7 @@ const MySaleCard = ({
               {GRADE_MAP[grade] || grade}
             </p>
 
-            <p className="pl-[5px] md:pl-[10px]">
-              {GENRE_MAP[genre] || genre}
-            </p>
+            <p className="pl-[5px] md:pl-[10px]">{GENRE_MAP[genre] || genre}</p>
           </div>
 
           <p className="text-(--white-white) underline underline-offset-3">
@@ -120,9 +115,7 @@ const MySaleCard = ({
         <section className="flex justify-between mt-[5px] md:mt-[10px]">
           <p>가격</p>
 
-          <p className="text-(--white-white)">
-            {price} P
-          </p>
+          <p className="text-(--white-white)">{price} P</p>
         </section>
 
         <section className="flex justify-between mb-[5px]">
@@ -145,7 +138,7 @@ const MySaleCard = ({
         </section>
       </div>
 
-       <div className="hidden relative w-full max-w-[100px] mx-auto md:inline-block mt-[20px] lg:mt-[30px]">
+      <div className="hidden relative w-full max-w-[100px] mx-auto md:inline-block mt-[20px] lg:mt-[30px]">
         <Image
           src={imgLogo}
           alt="최애의 포토 로고"

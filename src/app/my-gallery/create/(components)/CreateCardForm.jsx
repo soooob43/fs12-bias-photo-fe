@@ -99,6 +99,7 @@ const CreateCardForm = () => {
       autoComplete="off"
     >
       <TextField
+        type="text"
         labelName="포토카드 이름"
         name="title"
         value={formData.title}
@@ -125,6 +126,7 @@ const CreateCardForm = () => {
         widthClass="max-w-[32.5rem]"
       />
       <TextField
+        type="number"
         labelName="최소 가격"
         name="minimumPrice"
         value={formData.minimumPrice}
@@ -137,6 +139,7 @@ const CreateCardForm = () => {
         }
       />
       <TextField
+        type="number"
         labelName="총 발행량"
         name="totalQuantity"
         value={formData.totalQuantity}

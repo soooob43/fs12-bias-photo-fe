@@ -1,0 +1,28 @@
+.button {
+  width: 520px;
+  height: 60px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gray-gray300);
+  background-color: var(--white-white);
+  border-radius: 2px;
+  color: var(--black-black);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1023px) {
+  .button {
+    width: 441px;
+    height: 55px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 743px) {
+  .button {
+    width: 345px;
+  }
+}

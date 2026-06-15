@@ -24,6 +24,7 @@ const Dropdown = ({
       }}
     >
       <button
+        type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className={`flex items-center ${type === 'sort' ? 'justify-between pl-[15px] pr-[6px] h-[35px] border border-(--gray-gray200) w-[130px] md:w-[140px] md:h-[45px] lg:w-[180px] lg:h-[50px] lg:pl-[20px] lg:pr-[11px]' : 'gap-[10px]'} rounded-[2px] cursor-pointer ${widthClass}`}
       >
@@ -51,6 +52,7 @@ const Dropdown = ({
 
             return (
               <button
+                type="button"
                 key={option}
                 onClick={() => {
                   onChange(option);

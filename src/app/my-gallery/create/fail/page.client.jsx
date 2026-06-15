@@ -1,10 +1,11 @@
 'use client';
 
 import ResultPage from '@/components/layout/ResultPage';
+import ResultSkeleton from '@/components/ui/Skeleton/ResultSkeleton';
 import { useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 
-const FailClientPage = () => {
+const FailClientPageContent = () => {
   const searchParams = useSearchParams();
   const title = searchParams.get('title');
   const grade = searchParams.get('grade');
@@ -19,6 +20,20 @@ const FailClientPage = () => {
       btnName="마이갤러리로 돌아가기"
       href="/my-gallery"
     />
+  );
+};
+
+const FailClientPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <ResultSkeleton />
+        </div>
+      }
+    >
+      <FailClientPageContent />
+    </Suspense>
   );
 };
 

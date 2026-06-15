@@ -8,13 +8,18 @@ import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
 import PurchaseModal from './PurchaseModal';
 import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
+import CommonModal from '@/components/ui/CommonModal/CommonModal';
+import ExchangeModal from './ExchangeModal';
 
 export default function BuyerDetail({ transactionId, loginId, data }) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState(0);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [exchangeModalOpen, setExchangeModalOpen] = useState(false);
+  const [exSecondModalOpen, setExSecondModalOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null); // 교환하기에서 선택한 카드 정보 저장
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -180,16 +185,46 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
         />
       )}
 
-      {exchangeModalOpen && (
-        <PhotoCardSelectModal
-          isOpen={exchangeModalOpen}
-          onClose={() => setExchangeModalOpen(false)}
-          title="포토카드 교환하기"
-          onSelectCard={() => {
+      {exchangeModalOpen &&
+        (() => {
+          if (loginId === 'undefined' || !loginId) {
+            alert('로그인 후에 교환이 가능합니다.');
             setExchangeModalOpen(false);
-            router.push(`/market/${transactionId}`);
+            return null;
+          }
+
+          return (
+            <PhotoCardSelectModal
+              isOpen={exchangeModalOpen}
+              onClose={() => setExchangeModalOpen(false)}
+              title="포토카드 교환하기"
+              onSelectCard={(card) => {
+                setSelectedCard(card);
+                setExchangeModalOpen(false);
+                setExSecondModalOpen(true);
+              }}
+            />
+          );
+        })()}
+
+      {exSecondModalOpen && (
+        <CommonModal
+          isOpen={exSecondModalOpen}
+          onClose={() => {
+            setExSecondModalOpen(false); //모달 닫고
+            setSelectedCard(null); // 선택했던 카드 정보 초기화
           }}
-        />
+        >
+          <ExchangeModal
+            transactionId={transactionId}
+            loginId={loginId}
+            cardInfo={selectedCard}
+            onClose={() => {
+              setExSecondModalOpen(false); //모달 닫고
+              setSelectedCard(null); // 선택했던 카드 정보 초기화
+            }}
+          />
+        </CommonModal>
       )}
     </div>
   );

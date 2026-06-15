@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { z } from 'zod';
 import Input from '@/components/ui/Input/Input';
@@ -11,6 +11,7 @@ import { signup } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './SignupForm.module.css';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 const signupSchema = z
   .object({
@@ -151,7 +152,7 @@ const SignupForm = () => {
   };
 
   return (
-    <>
+    <Suspense>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -219,14 +220,16 @@ const SignupForm = () => {
             <p className={styles.errorMessage}>{errors.passwordConfirm[0]}</p>
           )}
         </div>
-
-        <PrimaryButton
-          type="submit"
-          disabled={signupMutation.isPending}
-          className={styles.submitButton}
-        >
-          {signupMutation.isPending ? '가입 중...' : '가입하기'}
-        </PrimaryButton>
+        <div className={styles.buttonBox}>
+          <PrimaryButton
+            type="submit"
+            disabled={signupMutation.isPending}
+            className={styles.submitButton}
+          >
+            {signupMutation.isPending ? '가입 중...' : '가입하기'}
+          </PrimaryButton>
+          <GoogleLoginButton />
+        </div>
       </form>
       <p className={styles.loginLinkText}>
         이미 최애의포토 회원이신가요?
@@ -244,7 +247,7 @@ const SignupForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
-    </>
+    </Suspense>
   );
 };
 

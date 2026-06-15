@@ -1,7 +1,7 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // URL 경로 결합 함수
-const createUrl = (url) => {
+export const createUrl = (url) => {
   if (!BASE_URL) {
     throw new Error(
       'NEXT_PUBLIC_API_URL이 설정되지 않았습니다. .env.local을 확인해 주세요.',
@@ -151,10 +151,11 @@ export const authHeaderFetch = async (url, options = {}) => {
       } else {
         // 리프레시 토큰까지 만료된 경우 로그아웃 처리
         localStorage.removeItem('accessToken');
-        window.location.href = '/'; // 메인 페이지로 튕겨내기
+        throw new Error('Unauthorized'); // 메인 페이지로 튕겨내기
       }
     } catch (error) {
       console.error('토큰 갱신 실패:', error);
+      throw error;
     }
   }
 

@@ -39,6 +39,12 @@
   border-bottom: 1px solid var(--main-main);
 }
 
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 @media (max-width: 1023px) {
   .label {
     font-size: 16px;

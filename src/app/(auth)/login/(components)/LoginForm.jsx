@@ -1,16 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { z } from 'zod';
 import Input from '@/components/ui/Input/Input';
 import PasswordInput from '@/components/ui/Input/PasswordInput';
 import PrimaryButton from '@/components/ui/Button/PrimaryButton';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login } from '@/api/authApi';
 import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './LoginForm.module.css';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 
 const loginSchema = z.object({
   email: z
@@ -31,6 +32,8 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  const queryClient = useQueryClient();
 
   const [errors, setErrors] = useState({});
 
@@ -62,7 +65,11 @@ const LoginForm = () => {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['me'],
+      });
+
       router.push(redirect || '/market');
     },
     onError: (error) => {
@@ -92,7 +99,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <Suspense>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -128,13 +135,16 @@ const LoginForm = () => {
           )}
         </div>
 
-        <PrimaryButton
-          type="submit"
-          disabled={loginMutation.isPending}
-          className={styles.submitButton}
-        >
-          {loginMutation.isPending ? '로그인 중...' : '로그인'}
-        </PrimaryButton>
+        <div className={styles.buttonBox}>
+          <PrimaryButton
+            type="submit"
+            disabled={loginMutation.isPending}
+            className={styles.submitButton}
+          >
+            {loginMutation.isPending ? '로그인 중...' : '로그인'}
+          </PrimaryButton>
+          <GoogleLoginButton />
+        </div>
       </form>
       <p className={styles.signupLinkText}>
         최애의 포토가 처음이신가요?
@@ -152,7 +162,7 @@ const LoginForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
-    </>
+    </Suspense>
   );
 };
 

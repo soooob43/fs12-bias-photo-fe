@@ -5,7 +5,7 @@ import styles from './Logo.module.css';
 
 const Logo = () => {
   return (
-    <Link href="/">
+    <Link href="/market">
       <Image
         src={logoImage}
         alt="최애의포토"

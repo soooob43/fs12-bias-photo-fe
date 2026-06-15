@@ -43,7 +43,7 @@ const ImageUpload = ({ labelName, name, file, setFile, errorMsg = null }) => {
           className={`flex-1 flex justify-between bg-(--black-black) items-center w-full max-w-[390px] font-light border px-[1.25rem] py-[1.125rem] rounded-[0.125rem] focus:outline-none ${errorMsg ? 'border-(--red-red)' : ' border-(--gray-gray200)'}`}
         >
           <span
-            className={`truncate ${file ? 'text-(--white-white)' : 'text-(--gray-gray300)'}`}
+            className={`truncate ${file ? 'text-(--white-white)' : 'text-(--gray-gray300)'} text-[0.875rem] font-light md:text-[1rem] md:font-normal`}
           >
             {file ? file.name : '사진 업로드'}
           </span>
@@ -57,13 +57,15 @@ const ImageUpload = ({ labelName, name, file, setFile, errorMsg = null }) => {
         <button
           type="button"
           onClick={handleFileButtonClick}
-          className="max-w-[7.5rem] w-full px-[1.75rem] py-[1.125rem] text-[1rem] text-(--main-main) border border-(--main-main) rounded-[0.125rem] cursor-pointer"
+          className="max-w-[7.5rem] w-full px-[1.75rem] py-[1.125rem] text-[0.875rem] text-(--main-main) border border-(--main-main) rounded-[0.125rem] cursor-pointer md:text-[1rem]"
         >
           파일선택
         </button>
       </div>
       {errorMsg ? (
-        <p className="text-[1rem] text-(--red-red) font-light">{errorMsg}</p>
+        <p className="text-[0.875rem] text-(--red-red) font-light md:text-[1rem]">
+          {errorMsg}
+        </p>
       ) : (
         <></>
       )}

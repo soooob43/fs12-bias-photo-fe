@@ -10,9 +10,12 @@ import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { z } from 'zod';
+import { createCardSchema } from '@/schemas/cardSchema';
 
 const CreateCardForm = () => {
   const router = useRouter();
+  const [touched, setTouched] = useState({});
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
     title: '', // [String]
@@ -31,7 +34,7 @@ const CreateCardForm = () => {
   const postPhotoCardMutaion = useMutation({
     mutationFn: createPhotoCard,
     // 포토 카드 생성 성공 / 실패 시 결과 페이지로 이동
-    onSuccess: (data) => {
+    onSuccess: () => {
       // 추후 마이갤러리 페이지와 querykey 연동
       // queryClient.invalidateQueries({ queryKey: ['myCards'] });
       router.replace(
@@ -46,22 +49,40 @@ const CreateCardForm = () => {
     },
   });
 
+  // 실시간 유효성 검사 진행
+  const validationResult = createCardSchema.safeParse({
+    ...formData,
+    file,
+  });
+
+  const isFormValid = validationResult.success;
+  const errorTree = isFormValid ? null : z.treeifyError(validationResult.error);
+
   // formData 입력 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
   // formData 제출 핸들러
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 임시 alert 표시
-    if (!file) return alert('이미지 파일을 선택해주세요!');
+
+    // 유효성 검사 미통과시 제출 차단
+    if (!isFormValid) return;
+
+    const trimmedFormData = Object.keys(formData).reduce((acc, key) => {
+      const value = formData[key];
+      // 문자열인 경우에만 trim() 적용
+      acc[key] = typeof value === 'string' ? value.trim() : value;
+      return acc;
+    }, {});
 
     // formData 형변환
     const payloadData = {
-      ...formData,
+      ...trimmedFormData,
       genre: FILTER_KEY_MAP.genre[formData.genre] || formData.genre,
       grade: FILTER_KEY_MAP.grade[formData.grade] || formData.grade,
       minimumPrice: Number(formData.minimumPrice),
@@ -75,6 +96,7 @@ const CreateCardForm = () => {
     <form
       onSubmit={handleSubmit}
       className="w-full max-w-[520px] flex flex-col gap-[2.25rem] md:gap-[4.0625rem]"
+      autoComplete="off"
     >
       <TextField
         labelName="포토카드 이름"
@@ -82,6 +104,9 @@ const CreateCardForm = () => {
         value={formData.title}
         onChange={handleChange}
         placeholder="포토 카드 이름을 입력해주세요"
+        errorMsg={
+          touched.title ? errorTree?.properties?.title?.errors?.[0] : null
+        }
       />
       <LabelDropdown
         labelName="등급"
@@ -105,6 +130,11 @@ const CreateCardForm = () => {
         value={formData.minimumPrice}
         onChange={handleChange}
         placeholder="최소 가격을 입력해주세요"
+        errorMsg={
+          touched.minimumPrice
+            ? errorTree?.properties?.minimumPrice?.errors?.[0]
+            : null
+        }
       />
       <TextField
         labelName="총 발행량"
@@ -112,12 +142,20 @@ const CreateCardForm = () => {
         value={formData.totalQuantity}
         onChange={handleChange}
         placeholder="총 발행량을 입력해주세요"
+        errorMsg={
+          touched.totalQuantity
+            ? errorTree?.properties?.totalQuantity?.errors?.[0]
+            : null
+        }
       />
       <ImageUpload
         labelName="사진 업로드"
         name="image"
         file={file}
         setFile={setFile}
+        errorMsg={
+          touched.file ? errorTree?.properties?.file?.errors?.[0] : null
+        }
       />
       <TextAreaField
         labelName="포토카드 설명"
@@ -125,12 +163,17 @@ const CreateCardForm = () => {
         value={formData.description}
         onChange={handleChange}
         placeholder="카드 설명을 입력해주세요"
+        errorMsg={
+          touched.description
+            ? errorTree?.properties?.description?.errors?.[0]
+            : null
+        }
       />
 
       <PrimaryButton
         type="submit"
         className="py-[1.0625rem]"
-        disabled={postPhotoCardMutaion.isPending}
+        disabled={!isFormValid || postPhotoCardMutaion.isPending}
       >
         {postPhotoCardMutaion.isPending ? '포토 카드 생성중...' : '생성하기'}
       </PrimaryButton>

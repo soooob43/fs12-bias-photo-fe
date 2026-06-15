@@ -29,14 +29,13 @@ const CreateCardForm = () => {
   const gradeOptions = FILTER_CONFIG.grade.options;
   const genreOptions = FILTER_CONFIG.genre.options;
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const postPhotoCardMutaion = useMutation({
     mutationFn: createPhotoCard,
     // 포토 카드 생성 성공 / 실패 시 결과 페이지로 이동
     onSuccess: () => {
-      // 추후 마이갤러리 페이지와 querykey 연동
-      // queryClient.invalidateQueries({ queryKey: ['myCards'] });
+      queryClient.invalidateQueries({ queryKey: ['my-gallery'] });
       router.replace(
         `/my-gallery/create/success?title=${formData.title}&grade=${formData.grade}`,
       );

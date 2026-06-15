@@ -8,5 +8,6 @@ export const useMe = () => {
       const data = await getMe();
       return data.user;
     },
+    retry: false,
   });
 };

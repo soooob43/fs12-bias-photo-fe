@@ -1,4 +1,9 @@
-import { authFetch, authHeaderFetch } from './core/fetchClient';
+import {
+  authFetch,
+  authHeaderFetch,
+  cookieFetch,
+  createUrl,
+} from './core/fetchClient';
 
 export const login = async ({ email, password }) => {
   return authFetch('/auth/login', {
@@ -9,6 +14,7 @@ export const login = async ({ email, password }) => {
     }),
   });
 };
+
 export const signup = async ({ email, nickname, password }) => {
   return authFetch('/auth/signup', {
     method: 'POST',
@@ -19,8 +25,26 @@ export const signup = async ({ email, nickname, password }) => {
     }),
   });
 };
-export const refresh = () => {};
-export const logout = () => {};
-export const getMe = () => authHeaderFetch('/users/me');
 
-export const googleLogin = () => {};
+export const refresh = () => {};
+export const logout = async () => {
+  try {
+    await fetch(createUrl('/auth/logout'), {
+      method: 'POST',
+      credentials: 'include',
+      cache: 'no-store',
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getMe = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (!accessToken) {
+    return { user: null };
+  }
+
+  return authHeaderFetch('/users/me');
+};

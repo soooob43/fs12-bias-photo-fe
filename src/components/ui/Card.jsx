@@ -72,19 +72,21 @@ const Card = ({
         )}
       </div>
       <div className="flex flex-col gap-[5px] text-[10px] text-(--gray-gray300) md:text-[16px] md:gap-[10px] lg:text-[18px]">
-        <h1 className="truncate text-[14px] font-bold text-(--white-white) md:text-[22px]">
+        <h1 className="truncate text-left min-w-0 text-[14px] font-bold text-(--white-white) md:text-[22px]">
           {title}
         </h1>
-        <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400) md:pb-[20px]">
-          <div className="flex">
+        <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400) md:pb-[20px] min-w-0">
+          <div className="flex items-center min-w-0 flex-1">
             <p
-              className={`pr-[5px] border-r-1 border-(--gray-gray400) ${GRADE_COLORS[grade] || 'text-(--white-white)'} md:pr-[10px]`}
+              className={`pr-[5px] border-r-1 border-(--gray-gray400) ${GRADE_COLORS[grade] || 'text-(--white-white)'} md:pr-[10px] truncate shrink-0`}
             >
               {GRADE_MAP[grade] || grade}
             </p>
-            <p className="pl-[5px] md:pl-[10px]">{GENRE_MAP[genre] || genre}</p>
+            <p className="pl-[5px] md:pl-[10px] truncate">
+              {GENRE_MAP[genre] || genre}
+            </p>
           </div>
-          <p className="text-(--white-white) underline underline-offset-3">
+          <p className="text-(--white-white) underline underline-offset-3 truncate ml-2 max-w-[40%]">
             {nickname}
           </p>
         </section>

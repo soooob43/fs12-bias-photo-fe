@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchExchangeOffers } from '@/api/detailApi';
+import ExCard from './ExCard';
 import { useRouter } from 'next/navigation';
+
 import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
@@ -10,6 +13,7 @@ import PurchaseModal from './PurchaseModal';
 import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import ExchangeModal from './ExchangeModal';
+import Link from 'next/link';
 
 export default function BuyerDetail({ transactionId, loginId, data }) {
   const router = useRouter();
@@ -20,6 +24,47 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
   const [exchangeModalOpen, setExchangeModalOpen] = useState(false);
   const [exSecondModalOpen, setExSecondModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null); // 교환하기에서 선택한 카드 정보 저장
+
+  const {
+    data: exdata,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['exchangeList', transactionId], // transactionId가 바뀔 때마다 리렌더링
+    queryFn: () => fetchExchangeOffers(transactionId),
+    enabled: typeof transactionId !== 'undefined' && transactionId !== null,
+    retry: false,
+  });
+
+  console.log(`제안된 카드 데이터: `, exdata);
+
+  const photoCards =
+    loginId && exdata
+      ? exdata.filter((card) => card.proposerId === loginId)
+      : [];
+
+  console.log(`내가 제안한 데이터: `, photoCards);
+
+  //로딩 상태 화면 처리
+  if (isLoading || (!data && !isError)) {
+    return (
+      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
+        데이터를 불러오는 중입니다...
+      </div>
+    );
+  }
+
+  //에러 상태 화면 처리
+  if (isError) {
+    return (
+      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
+        오류가 발생했습니다: {error.message}
+      </div>
+    );
+  }
+
+  console.log('현재 에러 상태: ', error);
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -36,9 +81,12 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
 
   return (
     <div className="w-[92.5rem] h-[95rem] flex flex-col justify-between">
-      <div className="text-[#A4A4A4] font-['brBold'] text-[1.5rem] mb-[3.75rem]">
+      <Link
+        href="/market"
+        className="text-[#A4A4A4] font-['brBold'] text-[1.5rem] mb-[3.75rem]"
+      >
         마켓플레이스
-      </div>
+      </Link>
       <div className="text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold pb-[1.25rem] mb-[4.37rem] border-b-[2px] border-[#EEE]">
         {cardInfo?.title || '로딩된 제목 없음'}
       </div>
@@ -172,6 +220,42 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
               {data?.exchangeGenre || '교환 희망 종류 없음'}
             </span>
           </p>
+        </div>
+        <div>
+          {photoCards.length <= 0 ? (
+            <></>
+          ) : (
+            <>
+              <div className="flex justify-between pb-[1.25rem] border-b-[2px] border-[#EEE]">
+                <span className="inline-flex items-end text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold">
+                  내가 제시한 교환 목록
+                </span>
+              </div>
+              <div className="py-[3.75rem] flex gap-[5rem]">
+                <ul className="flex gap-[5rem]">
+                  {photoCards.map((card) => (
+                    <li
+                      key={card.id}
+                      className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
+                    >
+                      <ExCard
+                        page="buyer"
+                        imageUrl={card.offeredCard.card.imageUrl}
+                        title={card.offeredCard.card.title}
+                        grade={card.offeredCard.card.grade}
+                        genre={card.offeredCard.card.genre}
+                        nickname={card.proposer.nickname}
+                        price={card.offeredCard.purchasePrice}
+                        description={card.description}
+                        exchangeOfferId={card.id}
+                        transactionId={transactionId}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
         </div>
       </div>
 

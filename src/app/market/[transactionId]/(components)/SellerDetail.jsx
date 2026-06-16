@@ -9,11 +9,13 @@ import Image from 'next/image';
 import renew from '@/app/market/img/renew.svg';
 import karina from '@/app/market/img/sample_karina.png';
 import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
+import DeleteTransaction from './DeleteTransction';
 
 export default function SellerDetail({ transactionId, loginId, data }) {
   const queryClient = useQueryClient();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // 수정하기 상태
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); //판매내리기 상태
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -147,14 +149,17 @@ export default function SellerDetail({ transactionId, loginId, data }) {
             <button
               type="button"
               onClick={() => setIsEditModalOpen(true)}
-              className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
+              className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center cursor-pointer shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
             >
-              <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
+              <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold ">
                 수정하기
               </p>
             </button>
 
-            <button className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]">
+            <button
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center cursor-pointer shrink-0 rounded-[0.125rem] border border-[#EEE]"
+            >
               <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
                 판매 내리기
               </p>
@@ -170,7 +175,9 @@ export default function SellerDetail({ transactionId, loginId, data }) {
         </div>
         <div className="py-[3.75rem] flex gap-[5rem]">
           {photoCards.length <= 0 ? (
-            <div>제시된 카드가 없습니다</div>
+            <div className="w-full flex justify-center items-center text-[1.25rem]">
+              아직 교환 제시된 카드가 없습니다
+            </div>
           ) : (
             <ul className="flex gap-[5rem]">
               {photoCards.map((card) => (
@@ -179,7 +186,7 @@ export default function SellerDetail({ transactionId, loginId, data }) {
                   className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
                 >
                   <ExCard
-                    type="my"
+                    page="seller"
                     imageUrl={card.offeredCard.card.imageUrl}
                     title={card.offeredCard.card.title}
                     grade={card.offeredCard.card.grade}
@@ -187,6 +194,8 @@ export default function SellerDetail({ transactionId, loginId, data }) {
                     nickname={card.proposer.nickname}
                     price={card.offeredCard.purchasePrice}
                     description={card.description}
+                    exchangeOfferId={card.id}
+                    transactionId={transactionId}
                   />
                 </li>
               ))}
@@ -217,6 +226,13 @@ export default function SellerDetail({ transactionId, loginId, data }) {
         onClose={() => setIsEditModalOpen(false)}
         title="나의 포토카드 판매 수정하기"
       />
+
+      {isDeleteModalOpen && (
+        <DeleteTransaction
+          transactionId={transactionId}
+          onClose={() => setIsDeleteModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

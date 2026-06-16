@@ -6,6 +6,7 @@ import { fetchMarketDetail } from '@/api/detailApi.js';
 import { getMe } from '@/api/authApi'; // useMe 대신 직접 사용
 import SellerDetail from './(components)/SellerDetail';
 import BuyerDetail from './(components)/BuyerDetail';
+import ErrorPage from '@/components/layout/ErrorPage';
 
 export default function CardDetailPage({ params }) {
   const { transactionId } = React.use(params); //URL 내 거래 게시글 Id
@@ -68,8 +69,13 @@ export default function CardDetailPage({ params }) {
   //에러 상태 화면 처리
   if (isError) {
     return (
-      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
-        오류가 발생했습니다: {error.message}
+      <div>
+        <ErrorPage
+          title="오류가 발생했습니다!"
+          content={error.message}
+          btnName="마켓플레이스로 돌아가기"
+          href="/market"
+        />
       </div>
     );
   }

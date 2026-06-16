@@ -21,12 +21,10 @@ const TextAreaField = ({
         placeholder={placeholder}
         rows={5}
       />
-      {errorMsg ? (
+      {errorMsg && (
         <p className="absolute top-45 left-0 text-[0.875rem] text-(--red-red) font-light md:top-50 md:text-[1rem]">
           {errorMsg}
         </p>
-      ) : (
-        <></>
       )}
     </label>
   );

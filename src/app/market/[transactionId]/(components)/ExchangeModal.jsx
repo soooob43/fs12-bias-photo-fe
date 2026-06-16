@@ -44,6 +44,9 @@ export default function ExchangeModal({
       await queryClient.invalidateQueries({
         queryKey: ['exchangeList', transactionId],
       });
+      await queryClient.invalidateQueries({
+        queryKey: ['available-photo-cards'],
+      });
 
       onClose();
     } catch (error) {

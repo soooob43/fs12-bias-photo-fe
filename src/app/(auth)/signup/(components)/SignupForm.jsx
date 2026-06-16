@@ -12,6 +12,7 @@ import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './SignupForm.module.css';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import SignupSkeleton from '@/components/ui/Skeleton/SignupSkeleton';
 
 const signupSchema = z
   .object({
@@ -55,7 +56,7 @@ const signupSchema = z
     message: '비밀번호가 일치하지 않습니다.',
   });
 
-const SignupForm = () => {
+const SignupFormContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -152,7 +153,7 @@ const SignupForm = () => {
   };
 
   return (
-    <Suspense>
+    <>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -247,6 +248,14 @@ const SignupForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
+    </>
+  );
+};
+
+const SignupForm = () => {
+  return (
+    <Suspense fallback={<SignupSkeleton />}>
+      <SignupFormContent />
     </Suspense>
   );
 };

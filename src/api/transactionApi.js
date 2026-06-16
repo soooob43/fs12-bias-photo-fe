@@ -14,7 +14,7 @@ export const createTransaction = (transactionData) => {
 
 //수정하기 모달
 export const updateTransaction = (transactionId, transactionData) => {
-  return authHeaderFetch('/transaction/${transactionId}', {
+  return authHeaderFetch(`/transactions/${transactionId}`, {
     method: 'PATCH',
     body: JSON.stringify(transactionData),
   });

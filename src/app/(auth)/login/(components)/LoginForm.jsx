@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { z } from 'zod';
 import Input from '@/components/ui/Input/Input';
@@ -99,7 +99,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Suspense>
+    <>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -162,7 +162,7 @@ const LoginForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
-    </Suspense>
+    </>
   );
 };
 

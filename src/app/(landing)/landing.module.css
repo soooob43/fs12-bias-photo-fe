@@ -1,0 +1,543 @@
+.section {
+  width: 100%;
+}
+
+.bg {
+  padding: 13px 58px 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  z-index: 0;
+  min-height: 850px;
+}
+
+.heroSection {
+  height: 1101px;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.heroTitle {
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  margin: 30px 0;
+}
+
+.inner {
+  padding: 138px 0;
+  max-width: 1068px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  margin-top: 90px;
+  width: 139px;
+  height: 25px;
+}
+
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.description {
+  font-size: 18px;
+  color: #9f9f9f;
+}
+
+.heroTitle strong,
+.title strong {
+  color: var(--main-main);
+}
+
+.title .tradeTitle {
+  color: #04b8ff;
+}
+
+.tradeSection {
+  position: relative;
+  overflow: hidden;
+  height: 800px;
+}
+
+.imageWrapper {
+  position: relative;
+}
+
+.blueBubble {
+  position: absolute;
+
+  top: 129px;
+  left: 16px;
+
+  z-index: 10;
+
+  padding: 10px 16px;
+
+  border-radius: 16px;
+
+  background: #04b8ff;
+
+  color: var(--black-black);
+  font-size: 14px;
+  font-weight: 700;
+
+  height: 57px;
+  width: 214px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.blueBubble::after {
+  content: '';
+
+  position: absolute;
+
+  left: 24px;
+  bottom: -8px;
+
+  width: 16px;
+  height: 16px;
+
+  background: #04b8ff;
+
+  transform: rotate(45deg);
+}
+
+.grayBubble {
+  position: absolute;
+
+  width: 284px;
+  height: 57px;
+
+  padding: 10px;
+
+  border-radius: 16px;
+
+  background: #64656a;
+
+  display: flex;
+  align-items: center;
+
+  top: 219px;
+  left: 106px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.grayBubble::after {
+  content: '';
+
+  position: absolute;
+
+  right: 24px;
+  bottom: -8px;
+
+  width: 16px;
+  height: 16px;
+
+  background: #64656a;
+
+  transform: rotate(45deg);
+}
+
+.alarmImage {
+  width: 754px;
+  height: auto;
+  position: absolute;
+  left: 298px;
+}
+
+.glow {
+  position: absolute;
+  opacity: 0.2;
+
+  top: 438px;
+  left: 501px;
+
+  width: 1480px;
+  height: 1480px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(180deg, var(--main-main), var(--black-black));
+
+  border: 2px solid rgba(239, 255, 4, 0.3);
+}
+
+.blueGlow {
+  position: absolute;
+
+  width: 1606px;
+  min-width: 535px;
+  height: 1606px;
+  min-height: 535px;
+
+  border-radius: 50%;
+
+  opacity: 0.3;
+
+  background: linear-gradient(180deg, #0085ba 0%, #0f0f0f 100%);
+
+  border: 2px solid rgba(20, 156, 255, 0.4);
+  top: 407px;
+  left: 83px;
+}
+
+.marketButton {
+  background-color: var(--main-main);
+  width: 226px;
+  height: 55px;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black-black);
+}
+
+.randomBoxSection {
+  height: 900px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  height: 600px;
+}
+
+.cardTitle {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.randomBg {
+  position: absolute;
+  inset: 0;
+
+  height: 597px;
+  top: 307px;
+
+  background: linear-gradient(180deg, #0f0f0f 0%, #262900 100%);
+}
+
+.giftRight {
+  position: absolute;
+
+  opacity: 0.15;
+  transform: rotate(9deg);
+  right: 15%;
+  top: 50%;
+
+  width: 22%;
+  max-width: 280px;
+
+  z-index: 1;
+}
+
+.giftLeft {
+  position: absolute;
+  left: 5%;
+  top: 75%;
+
+  opacity: 0.15;
+  z-index: 1;
+
+  width: 40%;
+  max-width: 685px;
+
+  transform: rotate(-13deg);
+}
+
+.randomeBox {
+  margin: 30px auto;
+  width: 889px;
+  height: auto;
+}
+
+.tradeImageMd {
+  display: none;
+}
+
+.tradeImageSm {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    padding: 80px 0;
+    width: 85%;
+  }
+
+  .heroSection {
+    height: 745px;
+  }
+
+  .bg {
+    min-height: 722px;
+    padding: 23px 23px 0;
+  }
+
+  .glow {
+    width: 593px;
+    height: 593px;
+    top: 70%;
+    left: 40%;
+
+    background: linear-gradient(
+      180deg,
+      var(--main-main) 0%,
+      rgba(15, 15, 15, 0.9) 50%
+    );
+  }
+
+  .tradeImagePC {
+    display: none;
+  }
+
+  .tradeImageMd {
+    display: block;
+    margin-top: 30px;
+  }
+
+  .blueBubble {
+    width: 163px;
+    height: 43px;
+    border-radius: 12px;
+    font-size: 13px;
+    left: 7%;
+    top: 55px;
+  }
+
+  .grayBubble {
+    width: 218px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 13px;
+    left: 16%;
+    top: 145px;
+  }
+
+  .tradeSection {
+    height: 776px;
+  }
+
+  .imageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .alarmImage {
+    width: 558px;
+    height: 383px;
+    position: relative;
+    left: 0;
+    top: 140px;
+  }
+
+  .blueGlow {
+    width: 535px;
+    height: 535px;
+
+    left: -55px;
+    top: 518px;
+
+    background: linear-gradient(
+      180deg,
+      rgba(0, 133, 186, 0.9) 0%,
+      rgba(15, 15, 15, 0.9) 50%
+    );
+
+    opacity: 0.3;
+  }
+  .randomBoxSection {
+    height: 667px;
+  }
+  .giftRight {
+    right: -2%;
+    min-width: 128px;
+  }
+  .giftLeft {
+    left: -6%;
+    min-width: 353px;
+  }
+  .randomeBox {
+    width: 557px;
+    height: 357px;
+  }
+
+  .heroImage {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 743px) {
+  .tradeImageMd {
+    display: none;
+  }
+
+  .bg {
+    padding: 29px 16px 16px;
+    min-height: 412px;
+  }
+
+  .heroTitle {
+    margin-top: 70px;
+    font-size: 20px;
+  }
+
+  .blueBubble {
+    width: 135px;
+    height: 36px;
+    font-size: 10px;
+    top: 30px;
+  }
+  .grayBubble {
+    left: 100px;
+    top: 80px;
+    width: 180px;
+    height: 36px;
+    font-size: 10px;
+  }
+
+  .tradeSection {
+    height: 519px;
+  }
+
+  .giftRight {
+    min-width: 69px;
+  }
+
+  .glow {
+    width: 279px;
+    height: 279px;
+  }
+
+  .blueGlow {
+    width: 370px;
+    height: 370px;
+    top: 334px;
+    left: -55px;
+  }
+
+  .tradePhotoCard {
+    height: 440px;
+  }
+
+  .giftLeft {
+    min-width: 209px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .titleBox {
+    margin-left: 32px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .inner {
+    padding-top: 50px;
+    width: 100%;
+  }
+
+  .flexBox {
+    display: flex;
+    justify-content: end;
+  }
+
+  .alarmImage {
+    width: 326px;
+    height: 226px;
+  }
+
+  .randomeBox {
+    height: 198px;
+    width: 308px;
+  }
+
+  .randomBoxSection {
+    height: 390px;
+  }
+
+  .tradeImageSm {
+    display: block;
+    width: 343px;
+    height: 231px;
+    margin-top: 15px;
+  }
+
+  .cardImage {
+    height: auto;
+    width: 78px;
+  }
+
+  .cardinner {
+    max-height: 400px;
+  }
+
+  .cardTitle {
+    font-size: 20px;
+  }
+
+  .marketButton {
+    width: 150px;
+    height: 40px;
+    font-size: 12px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .tradePhoto {
+    height: 440px;
+  }
+
+  .heroSection {
+    height: 457px;
+  }
+  .heroImage {
+    margin-top: 16px;
+  }
+}

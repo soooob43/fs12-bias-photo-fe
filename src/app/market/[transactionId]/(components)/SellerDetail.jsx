@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchExchangeOffers } from '@/api/detailApi';
 import ExCard from './ExCard';
@@ -8,9 +8,12 @@ import { brBold, brRegular } from '@/fonts/index';
 import Image from 'next/image';
 import renew from '@/app/market/img/renew.svg';
 import karina from '@/app/market/img/sample_karina.png';
+import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
 
 export default function SellerDetail({ transactionId, loginId, data }) {
   const queryClient = useQueryClient();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // 수정하기 상태
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -141,7 +144,11 @@ export default function SellerDetail({ transactionId, loginId, data }) {
             </div>
           </div>
           <div className="flex flex-col gap-[1.25rem]">
-            <button className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]">
+            <button
+              type="button"
+              onClick={() => setIsEditModalOpen(true)}
+              className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
+            >
               <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
                 수정하기
               </p>
@@ -189,6 +196,29 @@ export default function SellerDetail({ transactionId, loginId, data }) {
           )}
         </div>
       </div>
+      <PhotoCardSellModal
+        mode="edit"
+        transactionId={transactionId}
+        card={{
+          cardId: cardInfo?.id,
+          title: cardInfo?.title,
+          imageUrl: cardInfo?.imageUrl,
+          grade: cardInfo?.grade,
+          genre: cardInfo?.genre,
+          creator: userInfo?.nickname,
+          quantity: data?.totalQuantity ?? 1,
+        }}
+        initialValues={{
+          totalQuantity: data?.totalQuantity,
+          price: data?.price,
+          exchangeGrade: data?.exchangeGrade,
+          exchangeGenre: data?.exchangeGenre,
+          exchangeDescription: data?.exchangeDescription,
+        }}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        title="나의 포토카드 판매 수정하기"
+      />
     </div>
   );
 }

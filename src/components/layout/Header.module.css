@@ -8,11 +8,11 @@
 }
 
 .inner {
-  max-width: 1920px;
+  max-width: 1520px;
   height: 80px;
 
   margin: 0 auto;
-  padding: 0 200px;
+  padding: 0 20px;
 
   display: flex;
   align-items: center;
@@ -96,6 +96,6 @@
 @media (max-width: 1023px) {
   .inner {
     height: 70px;
-    padding: 0 40px;
+    padding: 0 15px;
   }
 }

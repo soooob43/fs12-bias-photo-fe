@@ -1,5 +1,6 @@
 import LoginForm from './(components)/LoginForm';
 import Logo from '../(components)/Logo';
+import MobileHeader from '@/components/layout/MobileHeader';
 
 const page = () => {
   return (

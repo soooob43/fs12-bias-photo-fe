@@ -58,7 +58,6 @@ const LabelDropdown = ({
                   key={option}
                   value={option}
                   onClick={() => {
-                    console.log('option', option);
                     onChange({
                       target: {
                         name: name,

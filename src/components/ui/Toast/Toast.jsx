@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import styles from './Toast.module.css';
 
 /*---------------------------
  포토카드 생성 제한 토스트 메세지 컴포넌트 작업 

@@ -62,12 +62,10 @@ const ImageUpload = ({ labelName, name, file, setFile, errorMsg = null }) => {
           파일선택
         </button>
       </div>
-      {errorMsg ? (
+      {errorMsg && (
         <p className="text-[0.875rem] text-(--red-red) font-light md:text-[1rem]">
           {errorMsg}
         </p>
-      ) : (
-        <></>
       )}
     </div>
   );

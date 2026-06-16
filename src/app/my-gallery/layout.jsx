@@ -1,9 +1,9 @@
-import Header from '@/components/layout/Header';
+import ConditionalHeader from '@/components/layout/ConditionalHeader';
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <Header />
+      <ConditionalHeader />
       {children}
     </>
   );

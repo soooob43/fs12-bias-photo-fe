@@ -16,6 +16,7 @@ import { createCardSchema } from '@/schemas/cardSchema';
 const CreateCardForm = () => {
   const router = useRouter();
   const [touched, setTouched] = useState({});
+  const [isRouting, setIsRouting] = useState(false);
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
     title: '', // [String]
@@ -35,16 +36,19 @@ const CreateCardForm = () => {
     mutationFn: createPhotoCard,
     // 포토 카드 생성 성공 / 실패 시 결과 페이지로 이동
     onSuccess: () => {
+      setIsRouting(true);
       queryClient.invalidateQueries({ queryKey: ['my-gallery'] });
-      router.replace(
-        `/my-gallery/create/success?title=${formData.title}&grade=${formData.grade}`,
-      );
+      const resultData = { title: formData.title, grade: formData.grade };
+      // 세션 스토리지로 잘못된 접근 차단
+      sessionStorage.setItem('createCardResult', JSON.stringify(resultData));
+      router.replace('/my-gallery/create/success');
     },
     onError: (error) => {
+      setIsRouting(true);
       console.error(error);
-      router.replace(
-        `/my-gallery/create/fail?title=${formData.title}&grade=${formData.grade}`,
-      );
+      const resultData = { title: formData.title, grade: formData.grade };
+      sessionStorage.setItem('createCardResult', JSON.stringify(resultData));
+      router.replace('/my-gallery/create/fail');
     },
   });
 
@@ -90,6 +94,8 @@ const CreateCardForm = () => {
 
     postPhotoCardMutaion.mutate({ file, data: payloadData });
   };
+
+  const isProcessing = postPhotoCardMutaion.isPending || isRouting;
 
   return (
     <form
@@ -175,9 +181,9 @@ const CreateCardForm = () => {
       <PrimaryButton
         type="submit"
         className="py-[1.0625rem]"
-        disabled={!isFormValid || postPhotoCardMutaion.isPending}
+        disabled={!isFormValid || isProcessing}
       >
-        {postPhotoCardMutaion.isPending ? '포토 카드 생성중...' : '생성하기'}
+        {isProcessing ? '포토 카드 생성중...' : '생성하기'}
       </PrimaryButton>
     </form>
   );

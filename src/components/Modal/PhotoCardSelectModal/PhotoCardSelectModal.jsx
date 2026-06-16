@@ -3,10 +3,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import { fetchAvailableCards } from '@/api/transactionApi';
 import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
+import icSearch from '@/assets/icons/ic_search.svg';
+import icFilter from '@/assets/icons/ic_filter.svg';
+import { brBold } from '@/fonts';
 import styles from './PhotoCardSelectModal.module.css';
 
 export default function PhotoCardSelectModal({
@@ -49,17 +53,25 @@ export default function PhotoCardSelectModal({
   return (
     <CommonModal isOpen={isOpen} onClose={onClose}>
       <div className={styles.container}>
-        <p className={styles.eyebrow}>마이갤러리</p>
-        <h1 className={styles.title}>{title}</h1>
+        <p className={`${styles.eyebrow} ${brBold.className}`}>마이갤러리</p>
+        <h1 className={`${styles.title} ${brBold.className}`}>{title}</h1>
 
         <div className={styles.divider} />
 
         <div className={styles.controls}>
-          <button className={styles.filterButton} type="button">
+          <button className={styles.filterButton} type="button" aria-label="필터">
+            <Image src={icFilter} alt="" width={24} height={24} />
             필터
           </button>
 
           <label className={styles.search}>
+            <Image
+              className={styles.searchIcon}
+              src={icSearch}
+              alt=""
+              width={20}
+              height={20}
+            />
             <input
               type="search"
               value={keyword}
@@ -70,7 +82,7 @@ export default function PhotoCardSelectModal({
           </label>
 
           <select
-            className={styles.select}
+            className={`${styles.select} ${grade ? styles.selectedSelect : ''}`}
             value={grade}
             onChange={(event) => setGrade(event.target.value)}
           >
@@ -82,7 +94,7 @@ export default function PhotoCardSelectModal({
           </select>
 
           <select
-            className={styles.select}
+            className={`${styles.select} ${genre ? styles.selectedSelect : ''}`}
             value={genre}
             onChange={(event) => setGenre(event.target.value)}
           >

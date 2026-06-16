@@ -41,3 +41,10 @@ export const createPhotoCard = async ({ file, data }) => {
     }),
   });
 };
+
+/*------------------------------------------
+      포토 카드 생성 횟수 조회 API - 최혜성
+------------------------------------------*/
+export const getRemainingCreateCount = async () => {
+  return await authHeaderFetch('/cards/remaining-count');
+};

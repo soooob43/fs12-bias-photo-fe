@@ -40,7 +40,7 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`hidden md:block ${styles.header}`}>
       <div className={styles.inner}>
         <Link href="/market" className={styles.logo}>
           <Image src={logo} alt="최애의포토 로고" priority height={25} />

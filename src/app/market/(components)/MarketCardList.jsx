@@ -3,7 +3,7 @@
 import { fetchTransactions } from '@/api/marketApi';
 import Card from '@/components/ui/Card';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -13,8 +13,11 @@ const MarketCardList = ({
   filterValue,
   sortBy,
   sortOrder,
+  isLogin,
+  setIsLoginOpen,
 }) => {
   const { ref, inView } = useInView();
+  const router = useRouter();
 
   const {
     data,
@@ -89,7 +92,18 @@ const MarketCardList = ({
                 isSoldOut={transaction.remainingQuantity === 0}
               />
             ) : (
-              <Link key={transaction.id} href={`/market/${transaction.id}`}>
+              <button
+                type="button"
+                key={transaction.id}
+                onClick={() => {
+                  if (isLogin) {
+                    router.push(`/market/${transaction.id}`);
+                    return;
+                  }
+                  setIsLoginOpen(true);
+                }}
+                className="cursor-pointer"
+              >
                 <Card
                   title={transaction.card?.title}
                   imageUrl={transaction.card?.imageUrl}
@@ -101,7 +115,7 @@ const MarketCardList = ({
                   totalQuantity={transaction.totalQuantity}
                   isSoldOut={transaction.remainingQuantity === 0}
                 />
-              </Link>
+              </button>
             ),
           )
         )}

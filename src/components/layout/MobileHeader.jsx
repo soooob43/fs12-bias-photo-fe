@@ -16,7 +16,7 @@ const MobileHeader = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
-      <header className={styles.header}>
+      <header className={`${styles.header} md:hidden`}>
         <div className={styles.inner}>
           <button
             type="button"

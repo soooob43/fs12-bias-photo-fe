@@ -36,15 +36,16 @@ const CreateCardForm = () => {
     // 포토 카드 생성 성공 / 실패 시 결과 페이지로 이동
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['my-gallery'] });
-      router.replace(
-        `/my-gallery/create/success?title=${formData.title}&grade=${formData.grade}`,
-      );
+      const resultData = { title: formData.title, grade: formData.grade };
+      // 세션 스토리지로 잘못된 접근 차단
+      sessionStorage.setItem('createCardResult', JSON.stringify(resultData));
+      router.replace('/my-gallery/create/success');
     },
     onError: (error) => {
       console.error(error);
-      router.replace(
-        `/my-gallery/create/fail?title=${formData.title}&grade=${formData.grade}`,
-      );
+      const resultData = { title: formData.title, grade: formData.grade };
+      sessionStorage.setItem('createCardResult', JSON.stringify(resultData));
+      router.replace('/my-gallery/create/fail');
     },
   });
 

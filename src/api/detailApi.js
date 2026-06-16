@@ -35,6 +35,13 @@ export const fetchExchangeOffers = async (transactionId) => {
   return await defaultFetch(`/market/${transactionId}/exchange`);
 };
 
+//교환제안 취소하기
+export const deleteExchangeApi = async (exchangeOfferId) => {
+  return await defaultFetch(`/market/exchange/${exchangeOfferId}`, {
+    method: 'DELETE',
+  });
+};
+
 //판매글 내리기
 export const deleteMarketTransactionApi = async (transactionId) => {
   return await defaultFetch(`/market/${transactionId}`, {

@@ -44,10 +44,10 @@ const ExCard = ({
   genre,
   nickname,
   price = 0,
-  remainingQuantity = 0,
-  totalQuantity = 0,
   description = '설명 없음',
   isSoldOut = false,
+  transactionId,
+  exchangeOfferId,
 }) => {
   const [deniedOpen, setDeniedOpen] = useState(false);
   const [approvedOpen, setApprovedOpen] = useState(false);
@@ -116,7 +116,10 @@ const ExCard = ({
         ) : (
           <>
             <button
-              onClick={() => setDeniedOpen(true)}
+              onClick={() => {
+                setDeniedOpen(true);
+                console.log();
+              }}
               className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
             >
               <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
@@ -138,8 +141,11 @@ const ExCard = ({
 
       {deniedOpen && (
         <DeniedModal
+          page={page}
           grade={grade}
           title={title}
+          transactionId={transactionId}
+          exchangeOfferId={exchangeOfferId}
           onClose={() => {
             setDeniedOpen(false);
           }}

@@ -247,6 +247,8 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
                         nickname={card.proposer.nickname}
                         price={card.offeredCard.purchasePrice}
                         description={card.description}
+                        exchangeOfferId={card.id}
+                        transactionId={transactionId}
                       />
                     </li>
                   ))}

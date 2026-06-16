@@ -37,7 +37,7 @@ const GENRE_MAP = {
 };
 
 const ExCard = ({
-  type = 'default',
+  page = 'buyer',
   title,
   imageUrl,
   grade = 'COMMON',
@@ -104,23 +104,36 @@ const ExCard = ({
       </div>
 
       <div className="flex gap-[1.25rem]">
-        <button
-          onClick={() => setDeniedOpen(true)}
-          className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
-        >
-          <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
-            거절하기
-          </p>
-        </button>
+        {page === 'buyer' ? (
+          <button
+            onClick={() => setDeniedOpen(true)}
+            className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
+          >
+            <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+              취소하기
+            </p>
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() => setDeniedOpen(true)}
+              className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
+            >
+              <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+                거절하기
+              </p>
+            </button>
 
-        <button
-          onClick={() => setApprovedOpen(true)}
-          className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
-        >
-          <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1rem] font-bold">
-            승인하기
-          </p>
-        </button>
+            <button
+              onClick={() => setApprovedOpen(true)}
+              className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
+            >
+              <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+                승인하기
+              </p>
+            </button>
+          </>
+        )}
       </div>
 
       {deniedOpen && (

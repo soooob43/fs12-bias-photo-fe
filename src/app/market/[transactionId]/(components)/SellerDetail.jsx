@@ -163,7 +163,9 @@ export default function SellerDetail({ transactionId, loginId, data }) {
         </div>
         <div className="py-[3.75rem] flex gap-[5rem]">
           {photoCards.length <= 0 ? (
-            <div>제시된 카드가 없습니다</div>
+            <div className="w-full flex justify-center items-center text-[1.25rem]">
+              아직 교환 제시된 카드가 없습니다
+            </div>
           ) : (
             <ul className="flex gap-[5rem]">
               {photoCards.map((card) => (
@@ -172,7 +174,7 @@ export default function SellerDetail({ transactionId, loginId, data }) {
                   className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
                 >
                   <ExCard
-                    type="my"
+                    page="seller"
                     imageUrl={card.offeredCard.card.imageUrl}
                     title={card.offeredCard.card.title}
                     grade={card.offeredCard.card.grade}

@@ -1,31 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createTransaction } from '@/api/transactionApi';
+import { createTransaction, updateTransaction } from '@/api/transactionApi';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import styles from './PhotoCardSellModal.module.css';
 import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 
 export default function PhotoCardSellModal({
   card,
+  transactionId,
+  initialValues,
+  mode = 'create',
   isOpen,
   onClose,
   title = '나의 포토카드 판매하기',
 }) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const mockCard = card ?? {
-    cardId: 1,
-    title: '우리집 앞마당',
-    imageUrl: '../../images/img_photo_card_test.svg',
-    grade: 'LEGENDARY',
-    genre: '풍경',
-    creator: '유디',
-    quantity: 3,
-    ownershipIds: [1, 2, 3],
-  };
+
+  const isEditMode = mode === 'edit';
 
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState('');
@@ -34,31 +29,73 @@ export default function PhotoCardSellModal({
   const [description, setDescription] = useState('');
   const [formError, setFormError] = useState('');
 
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (isEditMode) {
+      setQuantity(initialValues?.totalQuantity ?? 1);
+      setPrice(String(initialValues?.price ?? ''));
+      setGrade(initialValues?.exchangeGrade ?? '');
+      setGenre(initialValues?.exchangeGenre ?? '');
+      setDescription(initialValues?.exchangeDescription ?? '');
+    } else {
+      setQuantity(1);
+      setPrice('');
+      setGrade('');
+      setGenre('');
+      setDescription('');
+    }
+
+    setFormError('');
+  }, [isOpen, isEditMode, initialValues]);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
   const transactionMutation = useMutation({
-    mutationFn: createTransaction,
+    mutationFn: (payload) =>
+      isEditMode
+        ? updateTransaction(transactionId, payload)
+        : createTransaction(payload),
     onSuccess: async () => {
+      if (isEditMode) {
+        await queryClient.invalidateQueries({
+          queryKey: ['marketDetail', String(transactionId)],
+        });
+        await queryClient.invalidateQueries({
+          queryKey: ['transactions'],
+        });
+        onClose();
+        return;
+      }
+
       await queryClient.invalidateQueries({
         queryKey: ['available-photo-cards'],
       });
 
       const query = new URLSearchParams({
-        title: mockCard.title,
-        grade: mockCard.grade,
+        title: card.title,
+        grade: card.grade,
         quantity: String(quantity),
       });
       router.push(
-        `/my-photo-card-sell/${mockCard.cardId}/success?${query.toString()}`,
+        `/my-photo-card-sell/${card.cardId}/success?${query.toString()}`,
       );
     },
     onError: (error) => {
+      if (isEditMode) {
+        setFormError(error.message || '판매글 수정에 실패했습니다.');
+        return;
+      }
+
       const query = new URLSearchParams({
-        title: mockCard.title,
-        grade: mockCard.grade,
+        title: card.title,
+        grade: card.grade,
         quantity: String(quantity),
         message: error.message,
       });
+
       router.push(
-        `/my-photo-card-sell/${mockCard.cardId}/fail?${query.toString()}`,
+        `/my-photo-card-sell/${card.cardId}/fail?${query.toString()}`,
       );
     },
   });
@@ -68,10 +105,15 @@ export default function PhotoCardSellModal({
   };
 
   const increaseQuantity = () => {
-    setQuantity((curr) => Math.min(mockCard.quantity, curr + 1));
+    setQuantity((curr) => Math.min(card.quantity, curr + 1));
   };
 
   const handleSubmit = () => {
+    if (!card) {
+      setFormError('판매할 포토카드 정보를 찾을 수 없습니다.');
+      return;
+    }
+
     const parsedPrice = Number(price);
 
     if (!Number.isInteger(parsedPrice) || parsedPrice <= 0) {
@@ -86,69 +128,50 @@ export default function PhotoCardSellModal({
 
     setFormError('');
 
-    if (mockCard.isMock) {
-      const mockTransaction = {
-        id: `mock-${Date.now()}`,
-        cardId: mockCard.cardId,
-        title: mockCard.title,
-        grade: mockCard.grade,
-        quantity,
-        price: parsedPrice,
-        exchangeGrade: grade,
-        exchangeGenre: genre,
-        exchangeDescription: description.trim(),
-        createdAt: new Date().toISOString(),
-      };
-      const previousTransactions = JSON.parse(
-        localStorage.getItem('mockTransactions') ?? '[]',
-      );
-      localStorage.setItem(
-        'mockTransactions',
-        JSON.stringify([mockTransaction, ...previousTransactions]),
-      );
-
-      const query = new URLSearchParams({
-        title: mockCard.title,
-        grade: mockCard.grade,
-        quantity: String(quantity),
-        mock: 'true',
-      });
-      router.push(
-        `/my-photo-card-sell/${mockCard.cardId}/success?${query.toString()}`,
-      );
-      return;
-    }
-
-    transactionMutation.mutate({
-      cardId: mockCard.cardId,
-      ownershipIds: mockCard.ownershipIds.slice(0, quantity),
+    const payload = {
       price: parsedPrice,
       exchangeGrade: grade,
       exchangeGenre: genre,
       exchangeDescription: description.trim(),
+    };
+
+    if (isEditMode) {
+      transactionMutation.mutate({
+        ...payload,
+        totalQuantity: quantity,
+      });
+      return;
+    }
+
+    transactionMutation.mutate({
+      ...payload,
+      cardId: card.cardId,
+      ownershipIds: card.ownershipIds.slice(0, quantity),
     });
   };
+
+  if (!isOpen || !card) return null;
 
   return (
     <CommonModal isOpen={isOpen} onClose={onClose}>
       <div className={styles.container}>
         <p className={styles.eyebrow}>{title}</p>
-        <h1 className={styles.title}>{mockCard.title}</h1>
+        <h1 className={styles.title}>{card.title}</h1>
 
         <section className={styles.cardSection}>
           <img
             className={styles.cardImage}
-            src={mockCard.imageUrl}
-            alt={mockCard.title}
+            src={card.imageUrl}
+            alt={card.title}
           />
 
           <div className={styles.cardInformation}>
             <div className={styles.cardMeta}>
-              <span className={styles.grade}>{mockCard.grade}</span>
+              <span className={styles.grade}>{card.grade}</span>
               <span className={styles.divider}>|</span>
-              <span>{mockCard.genre}</span>
-              {mockCard.creator && (
-                <strong className={styles.creator}>{mockCard.creator}</strong>
+              <span>{card.genre}</span>
+              {card.creator && (
+                <strong className={styles.creator}>{card.creator}</strong>
               )}
             </div>
 
@@ -168,15 +191,15 @@ export default function PhotoCardSellModal({
                   <button
                     type="button"
                     onClick={increaseQuantity}
-                    disabled={quantity === mockCard.quantity}
+                    disabled={quantity === card.quantity}
                     aria-label="판매 수량 늘리기"
                   >
                     +
                   </button>
                 </div>
                 <div className={styles.quantityLimit}>
-                  <strong>/ {mockCard.quantity}</strong>
-                  <small>최대 {mockCard.quantity}장</small>
+                  <strong>/ {card.quantity}</strong>
+                  <small>최대 {card.quantity}장</small>
                 </div>
               </div>
             </div>
@@ -261,7 +284,13 @@ export default function PhotoCardSellModal({
             onClick={handleSubmit}
             disabled={transactionMutation.isPending}
           >
-            {transactionMutation.isPending ? '등록 중...' : '판매하기'}
+            {transactionMutation.isPending
+              ? isEditMode
+                ? '수정 중...'
+                : '등록 중...'
+              : isEditMode
+                ? '수정하기'
+                : '판매하기'}
           </button>
         </div>
       </div>

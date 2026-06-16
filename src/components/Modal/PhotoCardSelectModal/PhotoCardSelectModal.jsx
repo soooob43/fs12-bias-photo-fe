@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import { fetchAvailableCards } from '@/api/transactionApi';
-import { DEV_MOCK_PHOTO_CARD } from '@/constants/mockPhotoCard';
+import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 import styles from './PhotoCardSelectModal.module.css';
 
 export default function PhotoCardSelectModal({
@@ -26,11 +26,7 @@ export default function PhotoCardSelectModal({
   });
 
   const photoCards = useMemo(() => {
-    const availableCards = data?.data ?? [];
-    const cards =
-      !isPending && !isError && availableCards.length === 0
-        ? [DEV_MOCK_PHOTO_CARD]
-        : availableCards;
+    const cards = data?.data ?? [];
     const normalizedKeyword = keyword.trim().toLowerCase();
 
     return cards.filter((card) => {
@@ -42,7 +38,7 @@ export default function PhotoCardSelectModal({
 
       return matchesKeyword && matchesGrade && matchesGenre;
     });
-  }, [data, grade, genre, isError, isPending, keyword]);
+  }, [data, grade, genre, keyword]);
 
   const handleSelectCard = (card) => {
     if (onSelectCard) {
@@ -91,9 +87,11 @@ export default function PhotoCardSelectModal({
             onChange={(event) => setGenre(event.target.value)}
           >
             <option value="">장르</option>
-            <option value="풍경">풍경</option>
-            <option value="인물">인물</option>
-            <option value="사물">사물</option>
+            {FILTER_CONFIG.genre.options.map((label) => (
+              <option key={label} value={FILTER_KEY_MAP.genre[label]}>
+                {label}
+              </option>
+            ))}
           </select>
         </div>
 

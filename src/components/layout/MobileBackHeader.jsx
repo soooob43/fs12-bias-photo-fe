@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import LeftArrowIcon from '../icons/LeftArrowIcon';
+import { brBold } from '@/fonts';
 
 const MobileBackHeader = ({ title }) => {
   const router = useRouter();
@@ -18,7 +19,9 @@ const MobileBackHeader = ({ title }) => {
       </button>
 
       {title && (
-        <h2 className="w-full text-center text-[20px] font-bold text-[var(--white-white)]">
+        <h2
+          className={`${brBold.className} w-full text-center text-[20px] text-[var(--white-white)]`}
+        >
           {title}
         </h2>
       )}

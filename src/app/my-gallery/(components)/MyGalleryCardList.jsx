@@ -11,6 +11,7 @@ import icFilter from '@/assets/icons/ic_filter.svg';
 import icSearch from '@/assets/icons/ic_search.svg';
 import styles from './MyGalleryCardList.module.css';
 import { useMe } from '@/hooks/useMe';
+import Spinner from '@/components/ui/Spinner';
 
 /*---------------------------
  마이갤러리 MyGalleryCardList 작업 
@@ -185,7 +186,12 @@ const MyGalleryCardList = () => {
       )}
 
       {isPending && (
-        <p className={styles.status}>포토카드를 불러오는 중입니다.</p>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-5 mt-10">
+          <Spinner />
+          <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse">
+            포토카드를 불러오는 중입니다...
+          </p>
+        </div>
       )}
 
       {isError && (

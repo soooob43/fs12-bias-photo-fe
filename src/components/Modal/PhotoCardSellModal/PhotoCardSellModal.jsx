@@ -9,6 +9,8 @@ import styles from './PhotoCardSellModal.module.css';
 import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 import { brBold } from '@/fonts';
 
+const DESCRIPTION_MAX_LENGTH = 300;
+
 export default function PhotoCardSellModal({
   card,
   transactionId,
@@ -38,7 +40,12 @@ export default function PhotoCardSellModal({
       setPrice(String(initialValues?.price ?? ''));
       setGrade(initialValues?.exchangeGrade ?? '');
       setGenre(initialValues?.exchangeGenre ?? '');
-      setDescription(initialValues?.exchangeDescription ?? '');
+      setDescription(
+        (initialValues?.exchangeDescription ?? '').slice(
+          0,
+          DESCRIPTION_MAX_LENGTH,
+        ),
+      );
     } else {
       setQuantity(1);
       setPrice('');
@@ -261,7 +268,12 @@ export default function PhotoCardSellModal({
             <span>교환 희망 설명</span>
             <textarea
               value={description}
-              onChange={(event) => setDescription(event.target.value)}
+              maxLength={DESCRIPTION_MAX_LENGTH}
+              onChange={(event) =>
+                setDescription(
+                  event.target.value.slice(0, DESCRIPTION_MAX_LENGTH),
+                )
+              }
               placeholder="설명을 입력해 주세요"
             />
           </label>

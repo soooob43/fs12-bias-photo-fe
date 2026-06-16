@@ -7,9 +7,7 @@ import Link from 'next/link';
 const ErrorPage = ({ title, content, btnName, href }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen mx-auto text-center gap-8 px-4">
-      <h1
-        className={`${brBold.className} text-[2.875rem] text-(--white-white)`}
-      >
+      <h1 className={`${brBold.className} text-[2.875rem] text-(--red-red)`}>
         {title}
       </h1>
       <p className="text-(--white-white)">{content}</p>

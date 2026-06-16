@@ -2,6 +2,7 @@
 
 import { fetchTransactions } from '@/api/marketApi';
 import Card from '@/components/ui/Card';
+import Spinner from '@/components/ui/Spinner';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -53,8 +54,11 @@ const MarketCardList = ({
 
   if (status === 'pending') {
     return (
-      <div className="mt-20 text-center text-(--white-white)">
-        데이터를 불러오는 중입니다...
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-5 mt-10">
+        <Spinner />
+        <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse">
+          마켓의 포토카드를 불러오는 중입니다...
+        </p>
       </div>
     );
   }
@@ -122,9 +126,7 @@ const MarketCardList = ({
       </div>
       {/* 무한 스크롤 트리거 역할 */}
       <div ref={ref} className="h-10 mt-5 flex justify-center items-center">
-        {isFetchingNextPage && (
-          <span className="text-(--gray-gray400)">더 불러오는 중...</span>
-        )}
+        {isFetchingNextPage && <Spinner />}
       </div>
     </>
   );

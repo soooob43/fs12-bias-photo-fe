@@ -9,8 +9,14 @@ import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoC
 import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
 import { MobileFilterSheet } from './(components)/MobileFilterSheet';
 import { FILTER_KEY_MAP } from '@/constants/filter';
+import { useMe } from '@/hooks/useMe';
+import LoginRequiredModal from '@/components/auth/LoginRequiredModal';
+import { useRouter } from 'next/navigation';
 
-const ClientPage = () => {
+const MarketClientPage = () => {
+  const router = useRouter();
+  const { data: user } = useMe();
+
   const [keyword, setKeyword] = useState('');
   const debouncedKeyword = useDebounce(keyword, 500);
 
@@ -22,11 +28,16 @@ const ClientPage = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isFilterOpen, setFilterIsOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleSaleOpen = () => {
-    setFilterIsOpen(false);
+    setIsFilterOpen(false);
     setSelectedCard(null);
+    if (!user) {
+      setIsLoginOpen(true);
+      return;
+    }
     setIsOpen(true);
   };
 
@@ -37,6 +48,10 @@ const ClientPage = () => {
 
   const handleSelectCard = (card) => {
     setIsOpen(false);
+    if (!user) {
+      setIsLoginOpen(true);
+      return;
+    }
     setSelectedCard(card);
   };
 
@@ -47,11 +62,20 @@ const ClientPage = () => {
   const handleFilterOpen = () => {
     setIsOpen(false);
     setSelectedCard(null);
-    setFilterIsOpen(true);
+    setIsFilterOpen(true);
   };
 
   const handleFilterClose = () => {
-    setFilterIsOpen(false);
+    setIsFilterOpen(false);
+  };
+
+  const handleLoginModalClose = () => {
+    setIsLoginOpen(false);
+  };
+
+  const handleLoginModalConfirm = () => {
+    setIsLoginOpen(false);
+    router.push('/login');
   };
 
   // 모바일 필터 시트와 태블릿, 데스크탑 드롭다운 동기화
@@ -126,6 +150,8 @@ const ClientPage = () => {
         filterValue={filterValue}
         sortBy={sortBy}
         sortOrder={sortOrder}
+        isLogin={user}
+        setIsLoginOpen={setIsLoginOpen}
       />
       <div className="fixed bottom-0 left-0 right-0 py-[15px] px-[15px] mx-auto w-full max-w-[1480px] md:hidden z-50">
         <button
@@ -157,8 +183,13 @@ const ClientPage = () => {
       ) : (
         <></>
       )}
+      <LoginRequiredModal
+        isOpen={isLoginOpen}
+        onClose={handleLoginModalClose}
+        onConfirm={handleLoginModalConfirm}
+      />
     </>
   );
 };
 
-export default ClientPage;
+export default MarketClientPage;

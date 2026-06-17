@@ -17,7 +17,6 @@ export default function DeleteTransaction({ transactionId, onClose }) {
 
       await deleteMarketTransactionApi(transactionId);
 
-      alert(`해당 판매글이 성공적으로 삭제되었습니다.`);
       router.push('/market');
 
       onClose();

@@ -132,11 +132,11 @@ const CreateCardForm = () => {
       />
       <TextField
         type="number"
-        labelName="최소 가격"
+        labelName="가격"
         name="minimumPrice"
         value={formData.minimumPrice}
         onChange={handleChange}
-        placeholder="최소 가격을 입력해주세요"
+        placeholder="가격을 입력해주세요"
         errorMsg={
           touched.minimumPrice
             ? errorTree?.properties?.minimumPrice?.errors?.[0]

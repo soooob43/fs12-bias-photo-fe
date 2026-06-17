@@ -30,11 +30,14 @@ export default function PurchaseModal({
         return onClose();
       }
 
+      alert(error.message || '구매 진행 중 오류가 발생했습니다.');
       console.error('구매 요청 중 오류 발생: ', error);
 
       router.push(
         `/market/${transactionId}/result?isSuccess=false&grade=${encodeURIComponent(cardInfo.grade)}&title=${encodeURIComponent(cardInfo.title)}&quantity=${quantity}`,
       );
+
+      onClose();
     }
   };
 

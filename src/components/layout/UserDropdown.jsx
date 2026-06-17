@@ -25,7 +25,7 @@ const UserDropdown = ({ user }) => {
         </li>
 
         <li className={styles.menuItem}>
-          <Link href="/my-photo-card-sell">판매 중인 포토카드</Link>
+          <Link href="/my-sales">판매 중인 포토카드</Link>
         </li>
       </ul>
     </nav>

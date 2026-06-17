@@ -41,7 +41,7 @@ const MySaleCard = ({
         />
 
         {status && !isSoldOut && (
-          <div className="absolute top-[10px] left-[10px] bg-(--gray-gray500) px-[8px] py-[4px] text-[10px] md:text-[12px]">
+          <div className="absolute top-[6px] left-[6px] bg-(--gray-gray500) px-[8px] py-[4px] text-[10px] md:top-[10px] md:left-[10px] md:text-[12px]">
             <span className={STATUS_STYLE[status]}>{STATUS_MAP[status]}</span>
           </div>
         )}
@@ -61,8 +61,8 @@ const MySaleCard = ({
           {title}
         </h1>
 
-        <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400) md:pb-[20px]">
-          <div className="flex">
+        <section className="flex justify-between items-center gap-[6px] pb-[10px] border-b-1 border-(--gray-gray400) md:gap-[10px] md:pb-[20px]">
+          <div className="flex min-w-0">
             <p
               className={`pr-[5px] border-r-1 border-(--gray-gray400) ${
                 GRADE_COLORS[grade] || 'text-(--white-white)'
@@ -74,7 +74,7 @@ const MySaleCard = ({
             <p className="pl-[5px] md:pl-[10px]">{GENRE_MAP[genre] || genre}</p>
           </div>
 
-          <p className="text-(--white-white) underline underline-offset-3">
+          <p className="truncate text-(--white-white) underline underline-offset-3">
             {nickname}
           </p>
         </section>

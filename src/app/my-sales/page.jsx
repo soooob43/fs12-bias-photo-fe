@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchMySales } from '@/api/mySaleApi';
+import MobileBackHeader from '@/components/layout/MobileBackHeader';
 import { useMe } from '@/hooks/useMe';
 
 import MySaleGradeStats from './(components)/MySaleGradeStats';
@@ -49,40 +50,44 @@ const MySalesPage = () => {
   }
 
   return (
-    <main className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
-      <h1 className="text-[24px] font-bold text-white md:text-[32px]">
-        나의 판매 포토카드
-      </h1>
+    <>
+      <MobileBackHeader title={'\uB098\uC758 \uD310\uB9E4 \uD3EC\uD1A0\uCE74\uB4DC'} />
 
-      <div className="mt-[20px] border-b border-(--gray-gray300)" />
+      <main className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
+        <h1 className="hidden text-[24px] font-bold text-white md:block md:text-[32px]">
+          나의 판매 포토카드
+        </h1>
 
-      <MySaleGradeStats
-        nickname={user?.nickname}
-        totalQuantity={data?.pagination?.totalCount ?? 0}
-        gradeCounts={data?.gradeCounts ?? {}}
-      />
+        <div className="hidden mt-[20px] border-b border-(--gray-gray300) md:block" />
 
-      <MySalesFilter
-        keyword={keyword}
-        setKeyword={setKeyword}
-        setGrade={setGrade}
-        setGenre={setGenre}
-        setSaleMethod={setSaleMethod}
-        setSoldOut={setSoldOut}
-      />
-
-      <div className="mt-[40px]">
-        <MySaleCardList cards={data?.data ?? []} />
-      </div>
-
-      <div className="mt-[80px]">
-        <Pagination
-          currentPage={page}
-          totalPages={Math.max(data?.pagination?.totalPages ?? 0, 1)}
-          onPageChange={setPage}
+        <MySaleGradeStats
+          nickname={user?.nickname}
+          totalQuantity={data?.pagination?.totalCount ?? 0}
+          gradeCounts={data?.gradeCounts ?? {}}
         />
-      </div>
-    </main>
+
+        <MySalesFilter
+          keyword={keyword}
+          setKeyword={setKeyword}
+          setGrade={setGrade}
+          setGenre={setGenre}
+          setSaleMethod={setSaleMethod}
+          setSoldOut={setSoldOut}
+        />
+
+        <div className="mt-[40px]">
+          <MySaleCardList cards={data?.data ?? []} />
+        </div>
+
+        <div className="mt-[80px]">
+          <Pagination
+            currentPage={page}
+            totalPages={Math.max(data?.pagination?.totalPages ?? 0, 1)}
+            onPageChange={setPage}
+          />
+        </div>
+      </main>
+    </>
   );
 };
 

@@ -209,8 +209,9 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
                     nickname={card.proposer.nickname}
                     price={card.offeredCard.purchasePrice}
                     description={card.description}
-                    exchangeOfferId={card.id}
                     transactionId={transactionId}
+                    exchangeOfferId={card.id}
+                    loginId={loginId}
                   />
                 </li>
               ))}

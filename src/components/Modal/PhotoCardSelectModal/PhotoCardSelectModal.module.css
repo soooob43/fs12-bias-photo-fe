@@ -1,19 +1,23 @@
 .container {
-  width: 100%;
+  width: min(100%, 968px);
+  margin: 0 auto;
+  font-family: var(--font-noto-sans), Arial, Helvetica, sans-serif;
+  padding: 18px 0 48px;
 }
 
 .eyebrow {
-  margin: 0 0 24px;
+  margin: 0 0 38px;
   color: var(--gray-gray200);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1.5;
 }
 
 .title {
   margin: 0;
   color: var(--white-white);
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 100;
   line-height: 1.2;
 }
 
@@ -38,13 +42,22 @@
 .search {
   display: flex;
   align-items: center;
-  width: 260px;
+  gap: 12px;
+  width: 280px;
   height: 44px;
   border: 1px solid var(--gray-gray300);
-  padding: 0 16px;
+  padding: 0 18px;
+  background: var(--black-black);
+}
+
+.searchIcon {
+  order: 2;
+  flex: 0 0 auto;
+  opacity: 0.8;
 }
 
 .search input {
+  order: 1;
   flex: 1;
   min-width: 0;
   border: 0;
@@ -55,17 +68,26 @@
 }
 
 .search span {
-  color: var(--gray-gray200);
-  font-size: 13px;
+  display: none;
 }
 
 .select {
   height: 44px;
   border: 0;
-  background: transparent;
-  color: var(--gray-gray200);
+  border-radius: 2px;
+  color: var(--white-white);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.select option {
+  background: var(--black-black);
+  color: var(--white-white);
+}
+
+.select option:checked {
+  color: var(--white-white);
 }
 
 .cardList {
@@ -87,7 +109,7 @@
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: transparent;
-  padding: 32px;
+  padding: 38px;
   color: var(--white-white);
   text-align: left;
   cursor: pointer;
@@ -97,7 +119,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 305 / 220;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   object-fit: cover;
 }
 
@@ -215,7 +237,7 @@
   }
 
   .card {
-    padding: 24px;
+    padding: 30px;
   }
 }
 
@@ -241,13 +263,18 @@
   }
 
   .filterButton {
-    display: block;
+    display: grid;
+    place-items: center;
     height: 52px;
     border: 1px solid var(--gray-gray300);
     background: transparent;
     color: var(--white-white);
-    font-size: 12px;
+    font-size: 0;
     font-weight: 700;
+  }
+
+  .filterButton img {
+    display: block;
   }
 
   .search {
@@ -265,7 +292,7 @@
   }
 
   .card {
-    padding: 10px;
+    padding: 12px;
   }
 
   .thumbnail {

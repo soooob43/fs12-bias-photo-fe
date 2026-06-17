@@ -12,6 +12,7 @@ import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './SignupForm.module.css';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import SignupSkeleton from '@/components/ui/Skeleton/SignupSkeleton';
 
 const signupSchema = z
   .object({
@@ -38,7 +39,7 @@ const signupSchema = z
       .string()
       .trim()
       .min(1, '닉네임을 입력해주세요.')
-      .max(20, '닉네임은 20자 이하여야 합니다.')
+      .max(8, '닉네임은 8자 이하여야 합니다.')
       .regex(
         /^[가-힣a-zA-Z0-9_-]+$/,
         '닉네임은 한글, 영문, 숫자, -, _만 사용할 수 있습니다.',
@@ -55,7 +56,7 @@ const signupSchema = z
     message: '비밀번호가 일치하지 않습니다.',
   });
 
-const SignupForm = () => {
+const SignupFormContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -152,7 +153,7 @@ const SignupForm = () => {
   };
 
   return (
-    <Suspense>
+    <>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -247,6 +248,14 @@ const SignupForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
+    </>
+  );
+};
+
+const SignupForm = () => {
+  return (
+    <Suspense fallback={<SignupSkeleton />}>
+      <SignupFormContent />
     </Suspense>
   );
 };

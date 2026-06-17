@@ -12,6 +12,7 @@ import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './LoginForm.module.css';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import LoginSkeleton from '@/components/ui/Skeleton/LoginSkeleton';
 
 const loginSchema = z.object({
   email: z
@@ -22,7 +23,7 @@ const loginSchema = z.object({
   password: z.string().trim().nonempty('비밀번호를 입력해주세요.'),
 });
 
-const LoginForm = () => {
+const LoginFormContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -99,7 +100,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Suspense>
+    <>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
@@ -162,6 +163,14 @@ const LoginForm = () => {
       <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
         <p>{modal.message}</p>
       </AlertModal>
+    </>
+  );
+};
+
+const LoginForm = () => {
+  return (
+    <Suspense fallback={<LoginSkeleton />}>
+      <LoginFormContent />
     </Suspense>
   );
 };

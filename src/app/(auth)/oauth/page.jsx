@@ -3,9 +3,9 @@
 import { getMe } from '@/api/authApi';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
-const page = () => {
+const OAuthPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
@@ -51,4 +51,12 @@ const page = () => {
   );
 };
 
-export default page;
+const OAuthPage = () => {
+  return (
+    <Suspense fallback={<p>로딩중...</p>}>
+      <OAuthPageContent />
+    </Suspense>
+  );
+};
+
+export default OAuthPage;

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { proposeExchangeApi } from '@/api/detailApi';
+import { useQueryClient } from '@tanstack/react-query';
 import { brBold } from '@/fonts';
 import styles from '@/components/features/PhotoCardSelectModal/PhotoCardSelectModal.module.css';
 
@@ -12,6 +13,7 @@ export default function ExchangeModal({
   onClose,
 }) {
   const [exdescription, setExdescription] = useState(''); //입력받은 교환 요청 설명 기입
+  const queryClient = useQueryClient();
 
   if (!cardInfo) {
     alert('카드 정보가 조회되지 않습니다!');
@@ -39,6 +41,13 @@ export default function ExchangeModal({
       });
 
       alert('교환 요청 성공!');
+      await queryClient.invalidateQueries({
+        queryKey: ['exchangeList', transactionId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['available-photo-cards'],
+      });
+
       onClose();
     } catch (error) {
       alert('교환 요청 카드에 문제가 있습니다!');
@@ -60,7 +69,7 @@ export default function ExchangeModal({
       <div className="flex justify-between w-full h-full">
         <div className="w-[34rem] h-[43rem] px-[1.5rem] py-[2rem] border border-white/10 rounded-[0.125rem] bg-[#161616]">
           <img
-            className={styles.thumbnail}
+            className={`${styles.thumbnail} object-cover`}
             src={cardInfo.imageUrl}
             alt={cardInfo.title}
           />

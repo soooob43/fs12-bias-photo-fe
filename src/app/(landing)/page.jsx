@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import logoImage from '@/assets/images/img_logo.svg';
-import cardImage from '@/assets/images/img_landing_card.png';
-import heroImage from '@/assets/images/img_landing_01.png';
-import tradeImage from '@/assets/images/img_landing_02.png';
-import alarmImage from '@/assets/images/img_landing_03.png';
-import randomBoxImage from '@/assets/images/img_landing_04.png';
-import randomBoxBlue from '@/assets/images/img_landing_box01.png';
-import randomBoxRed from '@/assets/images/img_landing_box02.png';
-import tradeImageMd from '@/assets/images/img_landing_md.png';
-import tradeImageSm from '@/assets/images/img_landing_sm.png';
-import heroBg from '@/assets/images/img_landing_bg.png';
+import cardImage from '@/assets/images/img_landing_card.webp';
+import heroImage from '@/assets/images/img_landing_01.webp';
+import tradeImage from '@/assets/images/img_landing_02.webp';
+import alarmImage from '@/assets/images/img_landing_03.webp';
+import randomBoxImage from '@/assets/images/img_landing_04.webp';
+import randomBoxBlue from '@/assets/images/img_landing_box01.webp';
+import randomBoxRed from '@/assets/images/img_landing_box02.webp';
+import tradeImageMd from '@/assets/images/img_landing_md.webp';
+import tradeImageSm from '@/assets/images/img_landing_sm.webp';
+import heroBg from '@/assets/images/img_landing_bg.webp';
 import Link from 'next/link';
 import styles from './landing.module.css';
 
@@ -17,7 +17,13 @@ const Home = () => {
   return (
     <main>
       <section className={`${styles.section} ${styles.heroSection}`}>
-        <Image src={heroBg} alt="bg" className={styles.bg} />
+        <Image
+          src={heroBg}
+          alt="bg"
+          className={styles.bg}
+          sizes="100vw"
+          priority
+        />
         <div className={styles.hero}>
           <Image src={logoImage} alt="로고" className={styles.logo} />
           <h2 className={styles.heroTitle}>
@@ -28,7 +34,12 @@ const Home = () => {
           <Link href="/market" className={styles.marketButton}>
             최애 찾으러 가기
           </Link>
-          <Image src={heroImage} alt="hero" className={styles.heroImage} />
+          <Image
+            src={heroImage}
+            alt="hero"
+            className={styles.heroImage}
+            sizes="100vw"
+          />
         </div>
       </section>
       <section className={`${styles.tradeSection} ${styles.tradePhoto}`}>
@@ -44,17 +55,24 @@ const Home = () => {
               포인트로 안전하게 교환하세요
             </p>
           </div>
-          <Image src={tradeImage} alt="trade" className={styles.tradeImagePC} />
+          <Image
+            src={tradeImage}
+            alt="trade"
+            className={styles.tradeImagePC}
+            sizes="100vw"
+          />
           <Image
             src={tradeImageMd}
             alt="trade"
             className={styles.tradeImageMd}
+            sizes="100vw"
           />
           <div className={styles.flexBox}>
             <Image
               src={tradeImageSm}
               alt="trade"
               className={styles.tradeImageSm}
+              sizes="100vw"
             />
           </div>
         </div>
@@ -74,7 +92,12 @@ const Home = () => {
             </p>
           </div>
           <div className={styles.imageWrapper}>
-            <Image src={alarmImage} alt="alarm" className={styles.alarmImage} />
+            <Image
+              src={alarmImage}
+              alt="alarm"
+              className={styles.alarmImage}
+              sizes="100vw"
+            />
             <div className={styles.blueBubble}>제 포카랑 교환해요 ✌🏻</div>
             <div className={styles.grayBubble}>
               [스페인 여행] 포카 사고 싶어요! ⛰
@@ -109,6 +132,7 @@ const Home = () => {
             src={randomBoxImage}
             className={styles.randomeBox}
             alt="randomeBox"
+            sizes="100vw"
           />
         </div>
       </section>

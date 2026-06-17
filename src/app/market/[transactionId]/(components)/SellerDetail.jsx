@@ -190,18 +190,16 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
             교환 제시 목록
           </span>
         </div>
-        <div className="py-[3.75rem] flex gap-[5rem]">
+        {/* <div className="py-[3.75rem] flex gap-[5rem]"> */}
+        <div className="mb-[1.25rem] md:mb-[3.125rem]">
           {photoCards.length <= 0 ? (
             <div className="w-full flex py-[3.75rem] justify-center items-center text-[1.25rem] text-(--gray-gray300) md:py-[6.25rem]">
               아직 교환 제시된 카드가 없습니다
             </div>
           ) : (
-            <ul className="flex gap-[5rem]">
+            <ul className="mt-[1.25rem] grid grid-cols-2 gap-[0.625rem] md:mt-[2.5rem] md:gap-[1.25rem] lg:mt-[3.75rem] lg:grid-cols-3 lg:gap-5">
               {photoCards.map((card) => (
-                <li
-                  key={card.id}
-                  className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
-                >
+                <li key={card.id}>
                   <ExCard
                     page="seller"
                     imageUrl={card.offeredCard.card.imageUrl}

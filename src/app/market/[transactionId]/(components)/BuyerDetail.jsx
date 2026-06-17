@@ -251,7 +251,7 @@ export default function TestBuyerDetail({ transactionId, loginId, data }) {
                 </span>
               </div>
               <div className="mb-[1.25rem] md:mb-[3.125rem]">
-                <ul className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
+                <ul className="mt-[1.25rem] grid grid-cols-2 gap-[0.625rem] md:mt-[2.5rem] md:gap-[1.25rem] lg:mt-[3.75rem] lg:grid-cols-3 lg:gap-5">
                   {photoCards.map((card) => (
                     <li key={card.id}>
                       <ExCard

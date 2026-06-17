@@ -33,7 +33,7 @@ export const STATUS_MAP = {
   ON_EXCHANGE: '교환 제시 대기 중',
 };
 
-const STATUS_STYLE = {
+export const STATUS_STYLE = {
   ON_SALE: 'text-(--white-white)',
   ON_EXCHANGE: 'text-(--main-main)',
 };

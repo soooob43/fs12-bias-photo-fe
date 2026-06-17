@@ -10,7 +10,7 @@ const CreateCardHeader = () => {
           포토카드 생성
         </h1>
       </header>
-      <MobileGNB title="포토카드 생성" />
+      <MobileGNB title="포토카드 생성" href="/my-gallery/create" />
     </>
   );
 };

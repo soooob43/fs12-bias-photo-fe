@@ -99,7 +99,7 @@ const ExCard = ({
           </p>
         </section>
         <section className="flex justify-between mt-[5px] md:mt-[10px]">
-          <p className="text-(--white-white)">{description}</p>
+          <p className="text-(--white-white) truncate">{description}</p>
         </section>
       </div>
 
@@ -107,9 +107,9 @@ const ExCard = ({
         {page === 'buyer' ? (
           <button
             onClick={() => setDeniedOpen(true)}
-            className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
+            className="flex w-full flex-1 h-[2.5rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE] md:h-[3.4375rem] lg:h-[3.75rem]"
           >
-            <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+            <p className="text-[#FFF] text-[12px] font-bold md:text-[1rem]">
               취소하기
             </p>
           </button>
@@ -118,7 +118,6 @@ const ExCard = ({
             <button
               onClick={() => {
                 setDeniedOpen(true);
-                console.log();
               }}
               className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
             >

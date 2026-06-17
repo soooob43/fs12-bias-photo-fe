@@ -9,7 +9,7 @@ import { useMe } from '@/hooks/useMe';
 import MySaleGradeStats from './(components)/MySaleGradeStats';
 import MySalesFilter from './(components)/MySalesFilter';
 import MySaleCardList from './(components)/MySaleCardList';
-import Pagination from './(components)/Pagination';
+import Pagination from './(components)/pagination';
 
 const MySalesPage = () => {
   const { data: user } = useMe();

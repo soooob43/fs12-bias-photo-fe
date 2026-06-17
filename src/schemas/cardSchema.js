@@ -28,6 +28,7 @@ export const createCardSchema = z.object({
   description: z
     .string()
     .trim()
-    .max(255, '설명은 255자 이하여야 합니다.')
+    .min(1, '포토 카드 설명을 입력해주세요.')
+    .max(255, '포토 카드 설명은 255자 이하여야 합니다.')
     .optional(),
 });

@@ -1,4 +1,4 @@
-import { defaultFetch } from './core/fetchClient'; // 공통 fetch 클라이언트 호출
+import { defaultFetch, authHeaderFetch } from './core/fetchClient'; // 공통 fetch 클라이언트 호출
 
 //상세 페이지 정보 조회
 export const fetchMarketDetail = async (transactionId) => {
@@ -11,7 +11,7 @@ export const purchasePhotocardApi = async ({
   buyerId,
   quantity,
 }) => {
-  return await defaultFetch(`/market/${transactionId}/purchase`, {
+  return await authHeaderFetch(`/market/${transactionId}/purchase`, {
     method: 'POST',
     body: JSON.stringify({ buyerId, quantity }),
   });
@@ -37,14 +37,26 @@ export const fetchExchangeOffers = async (transactionId) => {
 
 //교환제안 취소하기
 export const deleteExchangeApi = async (exchangeOfferId) => {
-  return await defaultFetch(`/market/exchange/${exchangeOfferId}`, {
+  return await authHeaderFetch(`/market/exchange/${exchangeOfferId}`, {
     method: 'DELETE',
   });
 };
 
 //판매글 내리기
 export const deleteMarketTransactionApi = async (transactionId) => {
-  return await defaultFetch(`/market/${transactionId}`, {
+  return await authHeaderFetch(`/market/${transactionId}`, {
     method: 'DELETE',
+  });
+};
+
+//교환 요청 수락하기
+export const acceptExchangeOfferApi = async ({
+  transactionId,
+  exchangeOfferId,
+  loginId,
+}) => {
+  return await authHeaderFetch(`/market/${transactionId}/exchange`, {
+    method: 'PATCH',
+    body: JSON.stringify({ exchangeOfferId, loginId }),
   });
 };

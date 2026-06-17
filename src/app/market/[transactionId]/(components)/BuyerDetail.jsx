@@ -194,7 +194,7 @@ export default function TestBuyerDetail({ transactionId, loginId, data }) {
           <button
             onClick={() => setPurchaseModalOpen(true)}
             disabled={quantity === 0}
-            className="flex w-full h-[4.6875rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer md:max-w-[440px]"
+            className="flex w-full h-[4.6875rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer disabled:bg-[#949494] disabled:cursor-not-allowed md:max-w-[440px]"
           >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 구매하기

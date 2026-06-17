@@ -48,3 +48,15 @@ export const deleteMarketTransactionApi = async (transactionId) => {
     method: 'DELETE',
   });
 };
+
+//교환 요청 수락하기
+export const acceptExchangeOfferApi = async ({
+  transactionId,
+  exchangeOfferId,
+  loginId,
+}) => {
+  return await authHeaderFetch(`/market/${transactionId}/exchange`, {
+    method: 'PATCH',
+    body: JSON.stringify({ exchangeOfferId, loginId }),
+  });
+};

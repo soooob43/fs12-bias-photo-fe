@@ -125,7 +125,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
               </span>
               <span>
                 <span className="text-(--white-white) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
-                  {data?.remainingQuantity || '?'}{' '}
+                  {data?.remainingQuantity || 0}{' '}
                 </span>
                 <span className="text-(--gray-gray300) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
                   / {data?.totalQuantity || '?'}
@@ -211,7 +211,6 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
                     description={card.description}
                     transactionId={transactionId}
                     exchangeOfferId={card.id}
-                    loginId={loginId}
                   />
                 </li>
               ))}

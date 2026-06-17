@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import styles from '@/app/(auth)/signup/(components)/SignupForm.module.css'; // 회원가입 페이지에서 사용하는 CSS 모듈 경로로 맞춰주세요.
+import styles from '@/app/(guest)/(auth)/signup/(components)/SignupForm.module.css'; // 회원가입 페이지에서 사용하는 CSS 모듈 경로로 맞춰주세요.
 
 const SignupSkeleton = () => {
   return (

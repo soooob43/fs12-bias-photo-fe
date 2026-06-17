@@ -2,6 +2,7 @@
 
 import { useMe } from '@/hooks/useMe';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const GuestRoute = ({ children }) => {
   const router = useRouter();

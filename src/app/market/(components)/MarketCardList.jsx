@@ -57,7 +57,7 @@ const MarketCardList = ({
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-5 mt-10">
         <Spinner />
         <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse">
-          마켓의 포토카드를 불러오는 중입니다...
+          포토카드를 불러오는 중입니다...
         </p>
       </div>
     );

@@ -99,43 +99,44 @@ const ExCard = ({
           </p>
         </section>
         <section className="flex justify-between mt-[5px] md:mt-[10px]">
-          <p className="text-(--white-white)">{description}</p>
+          <p className="text-(--white-white) truncate">{description}</p>
         </section>
       </div>
 
-      <div className="flex gap-[1.25rem]">
+      <div className="flex w-full gap-[1.25rem]">
         {page === 'buyer' ? (
           <button
             onClick={() => setDeniedOpen(true)}
-            className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
+            className="flex w-full flex-1 h-[2.5rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE] md:h-[3.4375rem] lg:h-[3.75rem]"
           >
-            <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+            <p className="text-[#FFF] text-[12px] font-bold md:text-[1rem]">
               취소하기
             </p>
           </button>
         ) : (
-          <>
+          <div className="flex w-full gap-[0.3125rem] md:gap-[1.25rem]">
             <button
+              type="button"
               onClick={() => {
                 setDeniedOpen(true);
-                console.log();
               }}
-              className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE]"
+              className="flex flex-1 w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--gray-gray100) bg-(--gray-gray500) cursor-pointer md:h-[3.4375rem] lg:h-[3.75rem] lg:max-w-[10.625rem]"
             >
-              <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+              <p className="text-(--white-white) text-[0.75rem] font-bold md:text-[1rem] lg:text-[1.125rem]">
                 거절하기
               </p>
             </button>
 
             <button
+              type="button"
               onClick={() => setApprovedOpen(true)}
-              className="flex flex-1 h-[3.4rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04]"
+              className="flex flex-1 w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--main-main) bg-(--main-main) cursor-pointer md:h-[3.4375rem] lg:h-[3.75rem] lg:max-w-[10.625rem]"
             >
-              <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1rem] font-bold">
+              <p className="text-(--black-black) text-[0.75rem] font-bold md:text-[1rem] lg:text-[1.125rem]">
                 승인하기
               </p>
             </button>
-          </>
+          </div>
         )}
       </div>
 

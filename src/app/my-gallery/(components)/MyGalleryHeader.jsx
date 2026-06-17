@@ -22,7 +22,7 @@ const MyGalleryHeader = ({
 
   return (
     <>
-      <MobileGNB title="마이갤러리" />
+      <MobileGNB title="마이갤러리" href="/my-gallery" />
       <header className="hidden items-center justify-between border-b border-(--gray-gray200) pb-[0.3125rem] md:flex md:pb-[0.625rem]">
         <h1 className={`${brBold.className} text-[48px] lg:text-[62px]`}>
           마이갤러리

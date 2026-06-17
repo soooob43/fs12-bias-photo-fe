@@ -6,7 +6,7 @@ import { fetchExchangeOffers } from '@/api/detailApi';
 import ExCard from './ExCard';
 import { useRouter } from 'next/navigation';
 
-import { brBold, brRegular } from '@/fonts/index';
+import { brBold } from '@/fonts/index';
 import Image from 'next/image';
 import karina from '@/app/market/img/sample_karina.png';
 import PurchaseModal from './PurchaseModal';
@@ -14,8 +14,11 @@ import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoC
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import ExchangeModal from './ExchangeModal';
 import Link from 'next/link';
+import { GENRE_MAP, GRADE_COLORS, GRADE_MAP } from '@/constants/card';
+import Spinner from '@/components/ui/Spinner';
+import ErrorPage from '@/components/layout/ErrorPage';
 
-export default function BuyerDetail({ transactionId, loginId, data }) {
+export default function TestBuyerDetail({ transactionId, loginId, data }) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -37,20 +40,19 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
     retry: false,
   });
 
-  console.log(`제안된 카드 데이터: `, exdata);
-
   const photoCards =
     loginId && exdata
       ? exdata.filter((card) => card.proposerId === loginId)
       : [];
 
-  console.log(`내가 제안한 데이터: `, photoCards);
-
   //로딩 상태 화면 처리
   if (isLoading || (!data && !isError)) {
     return (
-      <div className="text-white text-center py-20 font-['Noto_Sans_KR']">
-        데이터를 불러오는 중입니다...
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-5 mt-10">
+        <Spinner />
+        <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse">
+          포토카드를 불러오는 중입니다...
+        </p>
       </div>
     );
   }
@@ -58,13 +60,14 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
   //에러 상태 화면 처리
   if (isError) {
     return (
-      <div className="text-red-500 text-center py-20 font-['Noto_Sans_KR']">
-        오류가 발생했습니다: {error.message}
-      </div>
+      <ErrorPage
+        title="오류가 발생했습니다!"
+        content={error.message}
+        btnName="마켓플레이스로 돌아가기"
+        href="/market"
+      />
     );
   }
-
-  console.log('현재 에러 상태: ', error);
 
   const cardInfo = data?.card; // data 불러와지면 card 정보를 cardInfo 변수에 담아서 쓰기
   const userInfo = data?.seller; // data 불러와지면 user 정보를 userInfo 변수에 담아서 쓰기
@@ -80,76 +83,82 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
   };
 
   return (
-    <div className="w-[92.5rem] h-[95rem] flex flex-col justify-between">
-      <Link
-        href="/market"
-        className="text-[#A4A4A4] font-['brBold'] text-[1.5rem] mb-[3.75rem]"
-      >
-        마켓플레이스
-      </Link>
-      <div className="text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold pb-[1.25rem] mb-[4.37rem] border-b-[2px] border-[#EEE]">
-        {cardInfo?.title || '로딩된 제목 없음'}
-      </div>
-      <div className="flex justify-between items-start">
-        <div className="relative w-[60rem] h-[45rem]">
+    <div className="w-full max-w-[92.5rem] mx-auto flex flex-col">
+      <header>
+        <Link
+          href="/market"
+          className={`hidden md:block text-(--gray-gray300) text-[1rem] my-[2.5rem] ${brBold.className} lg:text-[1.5rem]`}
+        >
+          마켓플레이스
+        </Link>
+        <div className="text-(--white-white) text-[1.5rem] font-bold pb-[0.625rem] border-b-2 border-(--gray-gray100) md:pb-[1.25rem] md:text-[2rem] lg:text-[2.5rem]">
+          {cardInfo?.title || '로딩된 제목 없음'}
+        </div>
+      </header>
+      <div className="flex flex-col gap-[2.5rem] w-full mt-[1.625rem] md:flex-row md:mt-[3rem] lg:gap-[5rem]">
+        <div className="relative w-full aspect-[345/259] overflow-hidden lg:max-w-[60rem]">
           <Image
             // url없는 경우에 karina 이미지로 대체
             src={cardInfo?.imageUrl || karina}
             alt={cardInfo?.title || '포토카드 이미지'}
             fill
-            className="object-cover"
+            priority
+            className="object-contain object-left-top"
             unoptimized={cardInfo?.imageUrl ? true : false} // 외부 URL 이미지를 최적화 없이 그대로 가져올 때 에러 방지
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw"
           />
         </div>
-        <div className="flex flex-col w-[27.5rem] h-[45rem] gap-[5rem]">
+        <div className="flex flex-col w-full gap-[5rem] md:max-w-[27.5rem]">
           <div className="flex flex-col gap-[1.875rem]">
-            <div className="flex justify-between items-center w-full">
+            <div className="flex text-[1.125rem] font-bold justify-between items-center w-full lg:text-[1.5rem]">
               <div className="flex items-start gap-[0.9rem]">
-                <span className="text-[#FF2A6A] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  {cardInfo?.grade || '포토카드 등급 없음'}
+                <span
+                  className={`${GRADE_COLORS[cardInfo?.grade] || 'text-(--white-white)'}`}
+                >
+                  {GRADE_MAP[cardInfo?.grade] || '포토카드 등급 없음'}
                 </span>
-                |
-                <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  {cardInfo?.genre || '포토카드 종류 없음'}
+                <span className="text-(--gray-gray400)">|</span>
+                <span className="text-(--gray-gray300)">
+                  {GENRE_MAP[cardInfo?.genre] || '포토카드 종류 없음'}
                 </span>
               </div>
-              <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold underline">
+              <span className="text-(--white-white) underline  underline-offset-3">
                 {userInfo?.nickname || '판매자 미상'}
               </span>
             </div>
-            <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
-            <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
+            <div className="w-full border-t border-[0.0625rem] border-(--gray-gray400)" />
+            <p className="text-(--white-white) text-[1rem] lg:text-[1.125rem]">
               {cardInfo?.description || '포토카드 설명 없음'}
             </p>
-            <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
+            <div className="w-full border-t border-[0.0625rem] border-(--gray-gray400)" />
             <p className="flex justify-between w-full">
-              <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.25rem]">
+              <span className="text-[1.125rem] text-(--gray-gray300) lg:text-[1.25rem]">
                 가격
               </span>
-              <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
+              <span className="text-(--white-white) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
                 {data?.price ? data.price.toLocaleString() : '?'} P
               </span>
             </p>
             <p className="flex justify-between w-full">
-              <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.25rem]">
+              <span className="text-[1.125rem] text-(--gray-gray300) lg:text-[1.25rem]">
                 잔여
               </span>
               <span>
-                <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-                  {data?.remainingQuantity || '?'}
+                <span className="text-(--white-white) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
+                  {data?.remainingQuantity || '?'}{' '}
                 </span>
-                <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem]">
-                  /{data?.totalQuantity || '?'}
+                <span className="text-(--gray-gray300) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
+                  / {data?.totalQuantity || '?'}
                 </span>
               </span>
             </p>
 
-            <div className="w-full border-t border-[1px] border-[#5A5A5A]" />
-            <p className="flex justify-between w-fulls">
-              <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
+            <div className="w-full border-t border-[0.0625rem] border-(--gray-gray400)" />
+            <p className="flex justify-between items-center w-full">
+              <span className="text-(--white-white) text-[1.125rem] lg:text-[1.25rem]">
                 구매수량
               </span>
-              <span className="w-[11rem] h-[3.125rem] flex justify-between rounded-[0.125rem] p-[0.6rem] border border-[#FFF] text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
+              <span className="max-w-[144px] w-full h-[2.8125rem] py-[0.625rem] px-[0.75rem] flex items-center justify-between rounded-[0.125rem] border border-(--gray-gray200) text-(--white-white) text-[1.125rem] lg:text-[1.25rem] lg:max-w-[11rem] lg:h-[3.125rem]">
                 <button
                   onClick={handleDecrease}
                   disabled={quantity <= 0}
@@ -167,15 +176,15 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
                 </button>
               </span>
             </p>
-            <p className="flex justify-between w-full">
-              <span className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.25rem]">
+            <p className="flex justify-between items-center w-full">
+              <span className="text-(--white-white) text-[1.125rem] lg:text-[1.25rem]">
                 총 가격
               </span>
-              <span>
-                <span className="text-[#FFF] text-right font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
+              <span className="flex gap-[0.625rem]">
+                <span className="text-(--white-white) text-[1.25rem] font-bold lg:text-[1.5rem]">
                   {totalPrice.toLocaleString()} P
                 </span>
-                <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem]">
+                <span className="text-(--gray-gray300) text-[1.125rem] lg:text-[1.25rem]">
                   ({quantity}장)
                 </span>
               </span>
@@ -185,7 +194,7 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
           <button
             onClick={() => setPurchaseModalOpen(true)}
             disabled={quantity === 0}
-            className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
+            className="flex w-full h-[4.6875rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer md:max-w-[440px]"
           >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 구매하기
@@ -193,51 +202,58 @@ export default function BuyerDetail({ transactionId, loginId, data }) {
           </button>
         </div>
       </div>
-      <div>
-        <div className="flex justify-between pb-[1.25rem] border-b-[2px] border-[#EEE]">
-          <span className="inline-flex items-end text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold">
+      <div className="mt-[7.5rem]">
+        <div className="flex justify-between pb-[0.625rem] border-b-[0.125rem] border-(--gray-gray100) md:pb-[1.25rem]">
+          <span className="text-(--white-white) text-[1.5rem] font-bold md:text-[2rem] lg:[2.5rem]">
             교환 희망 정보
           </span>
           <button
             onClick={() => setExchangeModalOpen(true)}
-            className="flex w-[27.5rem] h-[5rem] px-[9rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-[#EFFF04] cursor-pointer"
+            className="hidden w-full max-w-[21.375rem] h-[3.75rem] py-[1.0625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer md:flex lg:max-w-[27.5rem]"
           >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 교환하기
             </p>
           </button>
         </div>
-        <div className="py-[3.75rem]">
-          <p className="mb-[1.25rem] text-[#FFF] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
+        <div className="flex flex-col gap-[1.25rem] py-[3.75rem] text-[1.125rem] font-bold lg:text-[1.5rem]">
+          <p className="text-(--white-white)">
             {data?.exchangeDescription || '교환 희망 정보 없음'}
           </p>
-          <p className="flex gap-[0.62rem] text-[#A4A4A4]">
-            <span className="text-[#29C9F9] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-              {data?.exchangeGrade || '교환 희망 등급 없음'}
+          <p className="flex gap-[0.625rem] text-(--gray-gray400)">
+            <span
+              className={`${GRADE_COLORS[data?.exchangeGrade] || 'text-(--white-white)'}`}
+            >
+              {GRADE_MAP[data?.exchangeGrade] || '교환 희망 등급 없음'}
             </span>
             |
-            <span className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1.5rem] font-bold">
-              {data?.exchangeGenre || '교환 희망 종류 없음'}
+            <span className="text-(--gray-gray300)">
+              {GENRE_MAP[data?.exchangeGenre] || '교환 희망 종류 없음'}
             </span>
           </p>
+          <button
+            onClick={() => setExchangeModalOpen(true)}
+            className="flex w-full h-[3.4375rem] mt-[1.25rem] py-[1.0625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer md:hidden"
+          >
+            <p className="text-(--black-black) text-[1rem] font-bold">
+              포토카드 교환하기
+            </p>
+          </button>
         </div>
         <div>
           {photoCards.length <= 0 ? (
             <></>
           ) : (
             <>
-              <div className="flex justify-between pb-[1.25rem] border-b-[2px] border-[#EEE]">
-                <span className="inline-flex items-end text-[#FFF] font-['Noto_Sans_KR'] text-[2.5rem] font-bold">
+              <div className="flex pb-[0.625rem] border-b-[0.125rem] border-(--gray-gray100) md:pb-[1.25rem] lg:mt-[3.75rem]">
+                <span className="text-(--white-white) text-[24px] font-bold md:text-[32px] lg:text-[40px]">
                   내가 제시한 교환 목록
                 </span>
               </div>
-              <div className="py-[3.75rem] flex gap-[5rem]">
-                <ul className="flex gap-[5rem]">
+              <div className="mb-[1.25rem] md:mb-[3.125rem]">
+                <ul className="mt-[1.25rem] grid grid-cols-2 gap-[0.625rem] md:mt-[2.5rem] md:gap-[1.25rem] lg:mt-[3.75rem] lg:grid-cols-3 lg:gap-5">
                   {photoCards.map((card) => (
-                    <li
-                      key={card.id}
-                      className="w-[27.5rem] h-[39.125rem] flex justify-center items-center rounded-[0.125rem] border border-[#FFF]/10 bg-[#161616] text-[2rem]"
-                    >
+                    <li key={card.id}>
                       <ExCard
                         page="buyer"
                         imageUrl={card.offeredCard.card.imageUrl}

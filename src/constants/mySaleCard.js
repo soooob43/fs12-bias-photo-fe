@@ -1,5 +1,5 @@
 // 등급에 따른 색깔 설정 객체
-const GRADE_COLORS = {
+export const GRADE_COLORS = {
   COMMON: 'text-(--main-main)',
   RARE: 'text-(--blue-blue)',
   SUPER_RARE: 'text-(--purple-purple)',
@@ -7,7 +7,7 @@ const GRADE_COLORS = {
 };
 
 // 등급 이름 매핑 객체
-const GRADE_MAP = {
+export const GRADE_MAP = {
   COMMON: 'COMMON',
   RARE: 'RARE',
   SUPER_RARE: 'SUPER RARE',
@@ -15,7 +15,7 @@ const GRADE_MAP = {
 };
 
 // 장르 이름 매핑 객체
-const GENRE_MAP = {
+export const GENRE_MAP = {
   ALBUM: '앨범',
   BENEFIT: '특전',
   FAN_SIGN: '팬싸',
@@ -28,7 +28,7 @@ const GENRE_MAP = {
   ETC: '기타',
 };
 
-const STATUS_MAP = {
+export const STATUS_MAP = {
   ON_SALE: '판매 중',
   ON_EXCHANGE: '교환 제시 대기 중',
 };

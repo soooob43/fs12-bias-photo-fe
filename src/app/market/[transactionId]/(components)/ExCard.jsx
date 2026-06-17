@@ -5,36 +5,7 @@ import imgLogo from '@/assets/images/img_logo.svg';
 import icSoldOut from '@/assets/icons/ic_sold_out.svg';
 import DeniedModal from './DeniedModal';
 import ApprovedModal from './ApprovedModal';
-
-// 둥급에 따른 색깔 설정 객체
-const GRADE_COLORS = {
-  COMMON: 'text-(--main-main)',
-  RARE: 'text-(--blue-blue)',
-  SUPER_RARE: 'text-(--purple-purple)',
-  LEGENDARY: 'text-(--pink-pink)',
-};
-
-// 등급 이름 매핑 객체
-const GRADE_MAP = {
-  COMMON: 'COMMON',
-  RARE: 'RARE',
-  SUPER_RARE: 'SUPER RARE',
-  LEGENDARY: 'LEGENDARY',
-};
-
-// 장르 이름 매핑 객체
-const GENRE_MAP = {
-  ALBUM: '앨범',
-  BENEFIT: '특전',
-  FAN_SIGN: '팬싸',
-  SEASON_GREETING: '시즌그리팅',
-  FAN_MEETING: '팬미팅',
-  CONCERT: '콘서트',
-  MD: 'MD',
-  COLLAB: '콜라보',
-  FAN_CLUB: '팬클럽',
-  ETC: '기타',
-};
+import { GENRE_MAP, GRADE_COLORS, GRADE_MAP } from '@/constants/card';
 
 const ExCard = ({
   page = 'buyer',
@@ -89,20 +60,22 @@ const ExCard = ({
             </p>
             <p className="flex px-[0.6rem]">{GENRE_MAP[genre] || genre}</p>
           </div>
-          <div className="flex w-full flex-1 items-center justify-between">
-            <p>
-              <span className="text-(--white-white) truncate font-bold">
+          <div className="flex w-full flex-1 gap-2 items-center justify-between">
+            <p className="flex items-center min-w-0">
+              <span className="text-(--white-white) font-bold truncate inline-block lg:max-w-[10rem]">
                 {price} P
-              </span>{' '}
-              에 구매
+              </span>
+              <span className="whitespace-nowrap shrink-0 ml-1">에 구매</span>
             </p>
-            <p className="text-(--white-white) underline underline-offset-3">
+            <p className="text-(--white-white) shrink-0 underline underline-offset-3">
               {nickname}
             </p>
           </div>
         </section>
-        <section className="flex justify-between mt-[5px] md:mt-[10px]">
-          <p className="text-(--white-white) truncate">{description}</p>
+        <section className="flex w-full my-[0.3125rem] md:my-[0.625rem]">
+          <p className="text-(--white-white) w-full leading-[1.5] h-[3em] overflow-y-auto break-words whitespace-pre-wrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {description}
+          </p>
         </section>
       </div>
 

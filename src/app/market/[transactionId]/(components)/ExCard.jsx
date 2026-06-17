@@ -80,23 +80,26 @@ const ExCard = ({
         <h1 className="truncate text-[14px] font-bold text-(--white-white) md:text-[22px]">
           {title}
         </h1>
-        <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400)">
-          <div className="flex">
+        <section className="flex flex-col w-full items-start gap-1 pb-[10px] border-b-1 border-(--gray-gray400) md:gap-2">
+          <div className="flex w-full items-center">
             <p
               className={`border-r-1 border-(--gray-gray400) pr-[0.6rem] ${GRADE_COLORS[grade] || 'text-(--white-white)'}`}
             >
               {GRADE_MAP[grade] || grade}
             </p>
-            <p className="border-r-1 border-(--gray-gray400)  px-[0.6rem]">
-              {GENRE_MAP[genre] || genre}
+            <p className="flex px-[0.6rem]">{GENRE_MAP[genre] || genre}</p>
+          </div>
+          <div className="flex w-full flex-1 items-center justify-between">
+            <p>
+              <span className="text-(--white-white) truncate font-bold">
+                {price} P
+              </span>{' '}
+              에 구매
             </p>
-            <p className="md:pl-[5px] pl-[0.6rem]">
-              <span className="text-[#FFF] font-bold">{price} P</span> 에 구매
+            <p className="text-(--white-white) underline underline-offset-3">
+              {nickname}
             </p>
           </div>
-          <p className="text-(--white-white) underline underline-offset-3">
-            {nickname}
-          </p>
         </section>
         <section className="flex justify-between mt-[5px] md:mt-[10px]">
           <p className="text-(--white-white) truncate">{description}</p>
@@ -107,9 +110,9 @@ const ExCard = ({
         {page === 'buyer' ? (
           <button
             onClick={() => setDeniedOpen(true)}
-            className="flex w-full flex-1 h-[2.5rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE] md:h-[3.4375rem] lg:h-[3.75rem]"
+            className="flex w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--gray-gray100) md:h-[3.4375rem] lg:h-[3.75rem]"
           >
-            <p className="text-[#FFF] text-[12px] font-bold md:text-[1rem]">
+            <p className="text-(--white-white) text-[0.75rem] font-bold md:text-[1rem] lg:text-[1.125rem]">
               취소하기
             </p>
           </button>

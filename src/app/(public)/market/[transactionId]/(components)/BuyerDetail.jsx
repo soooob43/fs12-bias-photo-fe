@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import { brBold } from '@/fonts/index';
 import Image from 'next/image';
-import karina from '@/app/market/img/sample_karina.png';
+import karina from '@/app/(public)/market/img/sample_karina.png';
 import PurchaseModal from './PurchaseModal';
 import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';

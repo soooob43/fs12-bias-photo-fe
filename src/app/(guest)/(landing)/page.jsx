@@ -2,11 +2,11 @@ import Image from 'next/image';
 import logoImage from '@/assets/images/img_logo.svg';
 import cardImage from '@/assets/images/img_landing_card.webp';
 import heroImage from '@/assets/images/img_landing_01.webp';
-import tradeImage from '@/assets/images/img_landing_02.webp';
 import alarmImage from '@/assets/images/img_landing_03.webp';
 import randomBoxImage from '@/assets/images/img_landing_04.webp';
 import randomBoxBlue from '@/assets/images/img_landing_box01.webp';
 import randomBoxRed from '@/assets/images/img_landing_box02.webp';
+import tradeImage from '@/assets/images/img_landing_02.webp';
 import tradeImageMd from '@/assets/images/img_landing_md.webp';
 import tradeImageSm from '@/assets/images/img_landing_sm.webp';
 import heroBg from '@/assets/images/img_landing_bg.webp';
@@ -22,7 +22,7 @@ const Home = () => {
           alt="bg"
           className={styles.bg}
           sizes="100vw"
-          priority
+          preload
         />
         <div className={styles.hero}>
           <Image src={logoImage} alt="로고" className={styles.logo} />

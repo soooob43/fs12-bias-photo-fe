@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import styles from '@/app/(auth)/login/(components)/LoginForm.module.css';
+import styles from '@/app/(guest)/(auth)/login/(components)/LoginForm.module.css';
 
 const LoginSkeleton = () => {
   return (

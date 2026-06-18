@@ -19,7 +19,6 @@ const ExCard = ({
   isSoldOut = false,
   transactionId,
   exchangeOfferId,
-  loginId,
 }) => {
   const [deniedOpen, setDeniedOpen] = useState(false);
   const [approvedOpen, setApprovedOpen] = useState(false);
@@ -136,7 +135,6 @@ const ExCard = ({
           title={title}
           transactionId={transactionId}
           exchangeOfferId={exchangeOfferId}
-          loginId={loginId}
           onClose={() => {
             setApprovedOpen(false);
           }}

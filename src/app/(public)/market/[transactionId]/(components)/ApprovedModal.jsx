@@ -3,16 +3,17 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { acceptExchangeOfferApi } from '@/api/detailApi';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function ApprovedModal({
   grade,
   title,
   transactionId,
   exchangeOfferId,
-  loginId,
   onClose,
 }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleAccept = async () => {
     try {
@@ -20,7 +21,6 @@ export default function ApprovedModal({
       await acceptExchangeOfferApi({
         transactionId,
         exchangeOfferId,
-        loginId,
       });
 
       alert('교환 요청이 성공적으로 수락되었습니다!');
@@ -28,7 +28,7 @@ export default function ApprovedModal({
 
       onClose();
     } catch (error) {
-      alert('error.message || 교환 수락 중 오류가 발생했습니다.');
+      alert(error.message || '교환 수락 중 오류가 발생했습니다.');
       console.error(error);
     }
   };

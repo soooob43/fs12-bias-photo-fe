@@ -18,7 +18,11 @@ export default function purchaseModalResult() {
 
   return isSuccess ? (
     <div className={styles.container}>
-      <Link className={styles.closeButton} href={`/market/${transactionId}`}>
+      <Link
+        className={styles.closeButton}
+        href={`/market/${transactionId}`}
+        replace
+      >
         <span>&times;</span>
       </Link>
 
@@ -30,13 +34,17 @@ export default function purchaseModalResult() {
         [{grade} | {title}] {quantity}장 구매에 성공했습니다!
       </p>
 
-      <Link className={styles.btn} href="/my-gallery">
+      <Link className={styles.btn} href="/my-gallery" replace>
         마이갤러리에서 확인하기
       </Link>
     </div>
   ) : (
     <div className={styles.container}>
-      <Link className={styles.closeButton} href={`/market/${transactionId}`}>
+      <Link
+        className={styles.closeButton}
+        href={`/market/${transactionId}`}
+        replace
+      >
         <span>&times;</span>
       </Link>
 
@@ -48,7 +56,7 @@ export default function purchaseModalResult() {
         [{grade} | {title}] {quantity}장 구매에 실패했습니다.
       </p>
 
-      <Link className={styles.btn} href="/market">
+      <Link className={styles.btn} href="/market" replace>
         마켓플레이스로 돌아가기
       </Link>
     </div>

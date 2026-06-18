@@ -13,7 +13,11 @@ export const createCardSchema = z.object({
     .trim()
     .min(1, '최소 가격을 입력해주세요.')
     .regex(/^[0-9]+$/, '소수점은 입력할 수 없습니다.')
-    .refine((val) => Number(val) >= 1, '최소 가격은 1P 이상이어야 합니다.'),
+    .refine((val) => Number(val) >= 1, '최소 가격은 1P 이상이어야 합니다.')
+    .refine(
+      (val) => Number(val) <= 1000000000,
+      '가격은 1,000,000,000P 이하여야 합니다.',
+    ),
   totalQuantity: z
     .string()
     .trim()

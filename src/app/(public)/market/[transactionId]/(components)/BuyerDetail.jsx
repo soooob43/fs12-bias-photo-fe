@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import { brBold } from '@/fonts/index';
 import Image from 'next/image';
-import karina from '@/app/market/img/sample_karina.png';
+import karina from '@/app/(public)/market/img/sample_karina.png';
 import PurchaseModal from './PurchaseModal';
 import PhotoCardSelectModal from '@/components/Modal/PhotoCardSelectModal/PhotoCardSelectModal';
 import CommonModal from '@/components/ui/CommonModal/CommonModal';
@@ -103,7 +103,7 @@ export default function TestBuyerDetail({ transactionId, loginId, data }) {
             alt={cardInfo?.title || '포토카드 이미지'}
             fill
             priority
-            className="object-contain object-left-top"
+            className="object-contain object-center"
             unoptimized={cardInfo?.imageUrl ? true : false} // 외부 URL 이미지를 최적화 없이 그대로 가져올 때 에러 방지
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw"
           />
@@ -194,7 +194,7 @@ export default function TestBuyerDetail({ transactionId, loginId, data }) {
           <button
             onClick={() => setPurchaseModalOpen(true)}
             disabled={quantity === 0}
-            className="flex w-full h-[4.6875rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer md:max-w-[440px]"
+            className="flex w-full h-[4.6875rem] py-[1.5625rem] justify-center items-center shrink-0 rounded-[0.125rem] bg-(--main-main) cursor-pointer disabled:bg-[#949494] disabled:cursor-not-allowed md:max-w-[440px]"
           >
             <p className="text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
               포토카드 구매하기

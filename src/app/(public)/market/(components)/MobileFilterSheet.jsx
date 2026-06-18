@@ -107,6 +107,7 @@ export const MobileFilterSheet = ({
           {tabs.map((tab) => (
             <li key={tab}>
               <button
+                type="button"
                 onClick={() => setActiveTab(tab)}
                 className={`text-[16px] p-4 transition-colors duration-150 ${
                   activeTab === tab
@@ -130,6 +131,7 @@ export const MobileFilterSheet = ({
             return (
               <li key={option}>
                 <button
+                  type="button"
                   onClick={() => selectOption(option)}
                   className={`text-[14px] flex shrink-0 w-full items-center justify-between px-8 py-4 text-left transition-colors duration-150 ${
                     isSelected(option)
@@ -168,12 +170,17 @@ export const MobileFilterSheet = ({
 
         <footer className="flex w-full shrink-0 gap-2 px-[18px] pb-[2.5rem]">
           {/* 필터 초기화 버튼 */}
-          <button onClick={resetFilter} className="group  p-[0.94rem]">
+          <button
+            type="button"
+            onClick={resetFilter}
+            className="group  p-[0.94rem]"
+          >
             <RefreshIcon className="text-(--gray-gray400) transition-colors duration-150 group-hover:text-(--white-white)" />
           </button>
 
           {/* 필터 조회하기 버튼 */}
           <button
+            type="button"
             onClick={handleLookup}
             className="w-full max-h-[55px] py-[17px] bg-(--main-main) text-(--black-black) font-semibold text-[16px] rounded-[2px] cursor-pointer lg:text-[18px] hover:bg-[#b8c41a]"
           >

@@ -6,8 +6,8 @@ import { fetchExchangeOffers } from '@/api/detailApi';
 import ExCard from './ExCard';
 import { brBold } from '@/fonts/index';
 import Image from 'next/image';
-import renew from '@/app/market/img/renew.svg';
-import karina from '@/app/market/img/sample_karina.png';
+import renew from '@/app/(public)/market/img/renew.svg';
+import karina from '@/app/(public)/market/img/sample_karina.png';
 import PhotoCardSellModal from '@/components/Modal/PhotoCardSellModal/PhotoCardSellModal';
 import DeleteTransaction from './DeleteTransction';
 import Link from 'next/link';
@@ -83,7 +83,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
             alt={cardInfo?.title || '포토카드 이미지'}
             fill
             priority
-            className="object-contain object-left-top"
+            className="object-contain object-center"
             unoptimized={cardInfo?.imageUrl ? true : false} // 외부 URL 이미지를 최적화 없이 그대로 가져올 때 에러 방지
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw"
           />
@@ -125,7 +125,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
               </span>
               <span>
                 <span className="text-(--white-white) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
-                  {data?.remainingQuantity || '?'}{' '}
+                  {data?.remainingQuantity || 0}{' '}
                 </span>
                 <span className="text-(--gray-gray300) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
                   / {data?.totalQuantity || '?'}
@@ -209,8 +209,8 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
                     nickname={card.proposer.nickname}
                     price={card.offeredCard.purchasePrice}
                     description={card.description}
-                    exchangeOfferId={card.id}
                     transactionId={transactionId}
+                    exchangeOfferId={card.id}
                   />
                 </li>
               ))}

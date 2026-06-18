@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '@/app/my-gallery/(components)/MyGalleryCardList.module.css';
+import styles from '@/app/(protected)/my-gallery/(components)/MyGalleryCardList.module.css';
 
 const GRADE_STYLES = {
   COMMON: styles.common,

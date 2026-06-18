@@ -5,36 +5,7 @@ import imgLogo from '@/assets/images/img_logo.svg';
 import icSoldOut from '@/assets/icons/ic_sold_out.svg';
 import DeniedModal from './DeniedModal';
 import ApprovedModal from './ApprovedModal';
-
-// 둥급에 따른 색깔 설정 객체
-const GRADE_COLORS = {
-  COMMON: 'text-(--main-main)',
-  RARE: 'text-(--blue-blue)',
-  SUPER_RARE: 'text-(--purple-purple)',
-  LEGENDARY: 'text-(--pink-pink)',
-};
-
-// 등급 이름 매핑 객체
-const GRADE_MAP = {
-  COMMON: 'COMMON',
-  RARE: 'RARE',
-  SUPER_RARE: 'SUPER RARE',
-  LEGENDARY: 'LEGENDARY',
-};
-
-// 장르 이름 매핑 객체
-const GENRE_MAP = {
-  ALBUM: '앨범',
-  BENEFIT: '특전',
-  FAN_SIGN: '팬싸',
-  SEASON_GREETING: '시즌그리팅',
-  FAN_MEETING: '팬미팅',
-  CONCERT: '콘서트',
-  MD: 'MD',
-  COLLAB: '콜라보',
-  FAN_CLUB: '팬클럽',
-  ETC: '기타',
-};
+import { GENRE_MAP, GRADE_COLORS, GRADE_MAP } from '@/constants/card';
 
 const ExCard = ({
   page = 'buyer',
@@ -80,26 +51,31 @@ const ExCard = ({
         <h1 className="truncate text-[14px] font-bold text-(--white-white) md:text-[22px]">
           {title}
         </h1>
-        <section className="flex justify-between items-center pb-[10px] border-b-1 border-(--gray-gray400)">
-          <div className="flex">
+        <section className="flex flex-col w-full items-start gap-1 pb-[10px] border-b-1 border-(--gray-gray400) md:gap-2">
+          <div className="flex w-full items-center">
             <p
               className={`border-r-1 border-(--gray-gray400) pr-[0.6rem] ${GRADE_COLORS[grade] || 'text-(--white-white)'}`}
             >
               {GRADE_MAP[grade] || grade}
             </p>
-            <p className="border-r-1 border-(--gray-gray400)  px-[0.6rem]">
-              {GENRE_MAP[genre] || genre}
+            <p className="flex px-[0.6rem]">{GENRE_MAP[genre] || genre}</p>
+          </div>
+          <div className="flex w-full flex-1 gap-2 items-center justify-between">
+            <p className="flex items-center min-w-0">
+              <span className="text-(--white-white) font-bold truncate inline-block lg:max-w-[10rem]">
+                {price} P
+              </span>
+              <span className="whitespace-nowrap shrink-0 ml-1">에 구매</span>
             </p>
-            <p className="md:pl-[5px] pl-[0.6rem]">
-              <span className="text-[#FFF] font-bold">{price} P</span> 에 구매
+            <p className="text-(--white-white) shrink-0 underline underline-offset-3">
+              {nickname}
             </p>
           </div>
-          <p className="text-(--white-white) underline underline-offset-3">
-            {nickname}
-          </p>
         </section>
-        <section className="flex justify-between mt-[5px] md:mt-[10px]">
-          <p className="text-(--white-white) truncate">{description}</p>
+        <section className="flex w-full my-[0.3125rem] md:my-[0.625rem]">
+          <p className="text-(--white-white) w-full leading-[1.5] h-[3em] overflow-y-auto break-words whitespace-pre-wrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {description}
+          </p>
         </section>
       </div>
 
@@ -107,9 +83,9 @@ const ExCard = ({
         {page === 'buyer' ? (
           <button
             onClick={() => setDeniedOpen(true)}
-            className="flex w-full flex-1 h-[2.5rem] px-[2.5625rem] py-[1rem] justify-center items-center shrink-0 rounded-[0.125rem] border border-[#EEE] md:h-[3.4375rem] lg:h-[3.75rem]"
+            className="flex w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--gray-gray100) md:h-[3.4375rem] lg:h-[3.75rem]"
           >
-            <p className="text-[#FFF] text-[12px] font-bold md:text-[1rem]">
+            <p className="text-(--white-white) text-[0.75rem] font-bold md:text-[1rem] lg:text-[1.125rem]">
               취소하기
             </p>
           </button>
@@ -157,6 +133,8 @@ const ExCard = ({
         <ApprovedModal
           grade={grade}
           title={title}
+          transactionId={transactionId}
+          exchangeOfferId={exchangeOfferId}
           onClose={() => {
             setApprovedOpen(false);
           }}

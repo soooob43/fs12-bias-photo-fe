@@ -83,7 +83,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
             alt={cardInfo?.title || '포토카드 이미지'}
             fill
             priority
-            className="object-contain object-left-top"
+            className="object-contain object-center"
             unoptimized={cardInfo?.imageUrl ? true : false} // 외부 URL 이미지를 최적화 없이 그대로 가져올 때 에러 방지
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw"
           />

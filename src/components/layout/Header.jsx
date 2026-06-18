@@ -12,6 +12,7 @@ import { logout } from '@/api/authApi';
 import { readAllNotifications } from '@/api/notificationApi';
 import { useUnreadNotificationCount } from '@/hooks/useUnreadNotificationCount';
 import { useRecentNotifications } from '@/hooks/useRecentNotifications';
+import { useNotificationSse } from '@/hooks/useNotificationSse';
 
 import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
@@ -22,6 +23,8 @@ import NotificationDropdown from '@/components/notification/NotificationDropdown
 import styles from './Header.module.css';
 
 const Header = () => {
+  useNotificationSse();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -33,7 +36,6 @@ const Header = () => {
   const { data: unreadCount = 0 } = useUnreadNotificationCount();
 
   const { data: notifications = [] } = useRecentNotifications();
-  console.log('현재 notifications', notifications);
 
   const queryClient = useQueryClient();
   const router = useRouter();

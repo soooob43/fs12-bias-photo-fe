@@ -6,6 +6,7 @@ import icFilter from '@/assets/icons/ic_filter.svg';
 import icSearch from '@/assets/icons/ic_search.svg';
 import Dropdown from '@/components/ui/Dropdown';
 import { FILTER_KEY_MAP, FILTER_CONFIG } from '@/constants/filter';
+import RefreshIcon from '@/components/icons/RefreshIcon';
 
 const MarketFilter = ({
   keyword,
@@ -69,17 +70,24 @@ const MarketFilter = ({
     }
   };
 
+  // 검색, 필터 초기화 핸들러
+  const handleFilterReset = () => {
+    setKeyword('');
+    setFilterType(null);
+    setFilterValue(null);
+  };
+
   return (
     <>
-      <div className="mt-[15px] flex justify-between items-center md:mt-[20px]">
+      <div className="mt-[0.9375rem] flex justify-between items-center md:mt-[1.25rem]">
         <button
           onClick={onOpen}
-          className="p-[6.5px] border border-(--gray-gray200) rounded-[2px] cursor-pointer md:hidden"
+          className="p-[0.4063rem] border border-(--gray-gray200) rounded-[0.125rem] cursor-pointer md:hidden"
         >
           <Image src={icFilter} alt="필터 아이콘" width={20} height={20} />
         </button>
-        <div className="hidden md:flex gap-[25px] items-center flex-1">
-          <div className="relative w-full max-w-[200px] md:inline-block lg:max-w-[320px]">
+        <div className="hidden md:flex gap-[1.5625rem] items-center flex-1">
+          <div className="relative w-full max-w-[12.5rem] md:inline-block lg:max-w-[20rem]">
             <input
               type="text"
               value={keyword}
@@ -87,14 +95,14 @@ const MarketFilter = ({
                 setKeyword(e.target.value);
               }}
               placeholder="검색"
-              className="w-full pl-[20px] pr-[46px] py-[9.5px] text-(--white-white) bg-(--black-black) border-1 border-(--gray-gray200) rounded-[2px] outline-none lg:py-[12px]"
+              className="w-full pl-[1.25rem] pr-[2.875rem] py-[0.5938rem] text-(--white-white) bg-(--black-black) border-1 border-(--gray-gray200) rounded-[0.125rem] outline-none lg:py-[0.75rem]"
             />
             <Image
               src={icSearch}
               alt="검색 아이콘"
               width={22}
               height={22}
-              className="absolute top-1/2 -translate-y-1/2 right-[20px] cursor-pointer"
+              className="absolute top-1/2 -translate-y-1/2 right-[1.25rem]"
             />
           </div>
           <Dropdown
@@ -112,6 +120,13 @@ const MarketFilter = ({
             value={displayStatus}
             onChange={(val) => handleFilterChange('SALE_STATUS', val)}
           />
+          <button
+            type="button"
+            onClick={handleFilterReset}
+            className="group p-[0.125rem] cursor-pointer"
+          >
+            <RefreshIcon className="text-(--gray-gray400) transition-colors duration-150 group-hover:text-(--white-white)" />
+          </button>
         </div>
         <Dropdown
           type={'sort'}

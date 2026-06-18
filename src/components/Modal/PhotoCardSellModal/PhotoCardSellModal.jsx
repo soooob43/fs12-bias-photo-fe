@@ -8,6 +8,7 @@ import CommonModal from '@/components/ui/CommonModal/CommonModal';
 import styles from './PhotoCardSellModal.module.css';
 import { FILTER_CONFIG, FILTER_KEY_MAP } from '@/constants/filter';
 import { brBold } from '@/fonts';
+import { GENRE_MAP, GRADE_MAP } from '@/constants/card';
 
 const DESCRIPTION_MAX_LENGTH = 300;
 
@@ -173,9 +174,9 @@ export default function PhotoCardSellModal({
 
           <div className={styles.cardInformation}>
             <div className={styles.cardMeta}>
-              <span className={styles.grade}>{card.grade}</span>
+              <span className={styles.grade}>{GRADE_MAP[card.grade]}</span>
               <span className={styles.divider}>|</span>
-              <span>{card.genre}</span>
+              <span>{GENRE_MAP[card.genre]}</span>
               {card.creator && (
                 <strong className={styles.creator}>{card.creator}</strong>
               )}

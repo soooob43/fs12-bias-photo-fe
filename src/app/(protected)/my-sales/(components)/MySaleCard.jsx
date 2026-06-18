@@ -57,21 +57,23 @@ const MySaleCard = ({
       </div>
 
       <div className="flex flex-col gap-[5px] text-[10px] text-(--gray-gray300) md:text-[16px] md:gap-[10px] lg:text-[18px]">
-        <h1 className="truncate text-[14px] font-bold text-(--white-white) md:text-[22px]">
+        <h1 className="truncate text-[0.875rem] font-bold text-(--white-white) md:text-[1.375rem]">
           {title}
         </h1>
 
         <section className="flex justify-between items-center gap-[6px] pb-[10px] border-b-1 border-(--gray-gray400) md:gap-[10px] md:pb-[20px]">
           <div className="flex min-w-0">
             <p
-              className={`pr-[5px] border-r-1 border-(--gray-gray400) ${
+              className={`pr-[5px] shrink-0 border-r-1 border-(--gray-gray400) ${
                 GRADE_COLORS[grade] || 'text-(--white-white)'
               } md:pr-[10px]`}
             >
               {GRADE_MAP[grade] || grade}
             </p>
 
-            <p className="pl-[5px] md:pl-[10px]">{GENRE_MAP[genre] || genre}</p>
+            <p className="pl-[5px] truncate md:pl-[10px]">
+              {GENRE_MAP[genre] || genre}
+            </p>
           </div>
 
           <p className="truncate text-(--white-white) underline underline-offset-3">

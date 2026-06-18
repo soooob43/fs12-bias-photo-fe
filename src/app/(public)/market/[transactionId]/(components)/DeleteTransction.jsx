@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteMarketTransactionApi } from '@/api/detailApi';
+import AlertButtonModal from '@/components/ui/AlertButtonModal/AlertButtonModal';
 
-export default function DeleteTransaction({ transactionId, onClose }) {
+export default function DeleteTransaction({ isOpen, transactionId, onClose }) {
   const router = useRouter();
 
   // 취소 중 중복 요청 방지 관리
@@ -17,7 +18,7 @@ export default function DeleteTransaction({ transactionId, onClose }) {
 
       await deleteMarketTransactionApi(transactionId);
 
-      router.push('/market');
+      router.replace('/market');
 
       onClose();
     } catch (error) {
@@ -29,26 +30,17 @@ export default function DeleteTransaction({ transactionId, onClose }) {
   };
 
   return (
-    <div className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[22rem] p-[4rem] fixed z-50 flex flex-col items-center justify-between rounded-[0.125rem] bg-[#161616] ">
-      <button
-        onClick={onClose}
-        disabled={isSubmitting}
-        className="absolute w-[2rem] h-[2rem] top-[30px] right-[30px] text-[#A4A4A4] cursor-pointer "
-      >
-        &times;
-      </button>
-      <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
-        포토카드 판매 내리기
-      </p>
-      <p className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1rem]">
-        정말로 판매를 중단하시겠습니까?
-      </p>
-      <button
-        onClick={handleDeleteTransaction}
-        className="w-[170px] h-[60px] flex justify-center items-center rounded-[0.125rem] bg-[#EFFF04] cursor-pointer text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold"
-      >
-        판매내리기
-      </button>
-    </div>
+    <AlertButtonModal
+      onClose={onClose}
+      isOpen={isOpen}
+      onClick={handleDeleteTransaction}
+      disabled={isSubmitting}
+      btnName="판매내리기"
+    >
+      <div className="flex flex-col gap-5">
+        <h2>포토카드 판매 내리기</h2>
+        <p>정말로 판매를 중단하시겠습니까?</p>
+      </div>
+    </AlertButtonModal>
   );
 }

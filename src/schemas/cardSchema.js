@@ -16,7 +16,7 @@ export const createCardSchema = z.object({
     .refine((val) => Number(val) >= 1, '최소 가격은 1P 이상이어야 합니다.')
     .refine(
       (val) => Number(val) <= 1000000000,
-      '가격은 1000000000P 이하여야 합니다.',
+      '가격은 1,000,000,000P 이하여야 합니다.',
     ),
   totalQuantity: z
     .string()

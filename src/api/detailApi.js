@@ -53,10 +53,9 @@ export const deleteMarketTransactionApi = async (transactionId) => {
 export const acceptExchangeOfferApi = async ({
   transactionId,
   exchangeOfferId,
-  loginId,
 }) => {
   return await authHeaderFetch(`/market/${transactionId}/exchange`, {
     method: 'PATCH',
-    body: JSON.stringify({ exchangeOfferId, loginId }),
+    body: JSON.stringify({ exchangeOfferId }),
   });
 };

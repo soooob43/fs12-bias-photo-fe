@@ -2,7 +2,7 @@ import { authHeaderFetch } from './core/fetchClient';
 
 export const fetchMySales = async ({
   page = 1,
-  limit = 15,
+  limit = 6,
   keyword,
   grade,
   genre,

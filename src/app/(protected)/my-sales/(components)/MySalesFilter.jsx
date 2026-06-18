@@ -10,6 +10,7 @@ import {
   MY_SALES_FILTER_CONFIG,
   MY_SALES_FILTER_KEY_MAP,
 } from '@/constants/mySalesFilter';
+import RefreshIcon from '@/components/icons/RefreshIcon';
 
 const MySalesFilter = ({
   keyword,
@@ -58,6 +59,19 @@ const MySalesFilter = ({
     setSoldOut(MY_SALES_FILTER_KEY_MAP.soldOut[value]);
   };
 
+  const handleReset = () => {
+    setKeyword('');
+    setGrade('');
+    setGenre('');
+    setSaleMethod('');
+    setSoldOut('');
+
+    setSelectedGrade(MY_SALES_FILTER_CONFIG.grade.label);
+    setSelectedGenre(MY_SALES_FILTER_CONFIG.genre.label);
+    setSelectedSaleMethod(MY_SALES_FILTER_CONFIG.saleMethod.label);
+    setSelectedSoldOut(MY_SALES_FILTER_CONFIG.soldOut.label);
+  };
+
   const renderFilterDropdowns = (dropdownProps = {}) => (
     <>
       <Dropdown
@@ -84,22 +98,29 @@ const MySalesFilter = ({
         onChange={handleSoldOutChange}
         {...dropdownProps}
       />
+      <button
+        type="button"
+        onClick={handleReset}
+        className="group p-[0.125rem] cursor-pointer"
+      >
+        <RefreshIcon className="text-(--gray-gray400) transition-colors duration-150 group-hover:text-(--white-white)" />
+      </button>
     </>
   );
 
   return (
-    <div className="mt-[20px] md:mt-[30px]">
-      <div className="flex items-center gap-[12px] md:gap-[25px]">
+    <div className="mt-[1.25rem]">
+      <div className="flex items-center gap-[0.75rem] md:gap-[1.5625rem]">
         <button
           type="button"
           onClick={() => setIsMobileFilterOpen((prev) => !prev)}
           aria-label="filter"
-          className="flex h-[56px] w-[56px] shrink-0 items-center justify-center border border-(--gray-gray200) rounded-[2px] md:hidden"
+          className="flex h-[3.5rem] w-[3.5rem] shrink-0 items-center justify-center border border-(--gray-gray200) rounded-[0.125rem] md:hidden"
         >
           <Image src={icFilter} alt="" width={24} height={24} />
         </button>
 
-        <div className="relative w-full md:max-w-[320px]">
+        <div className="relative w-full md:max-w-[20rem]">
           <input
             type="text"
             value={keyword}
@@ -107,7 +128,7 @@ const MySalesFilter = ({
               setKeyword(event.target.value);
             }}
             placeholder={'\uAC80\uC0C9'}
-            className="w-full h-[56px] pl-[20px] pr-[50px] text-[14px] text-(--white-white) bg-(--black-black) border border-(--gray-gray200) rounded-[2px] outline-none md:h-auto md:py-[9.5px] lg:py-[12px]"
+            className="w-full h-[3.5rem] pl-[1.25rem] pr-[3.125rem] text-[0.875rem] text-(--white-white) bg-(--black-black) border border-(--gray-gray200) rounded-[0.125rem] outline-none md:h-auto md:py-[0.5938rem] lg:py-[0.75rem]"
           />
 
           <Image
@@ -115,17 +136,17 @@ const MySalesFilter = ({
             alt=""
             width={24}
             height={24}
-            className="absolute top-1/2 -translate-y-1/2 right-[20px]"
+            className="absolute top-1/2 -translate-y-1/2 right-[1.25rem]"
           />
         </div>
 
-        <div className="hidden items-center gap-[25px] md:flex">
+        <div className="hidden items-center gap-[1.5625rem] md:flex">
           {renderFilterDropdowns()}
         </div>
       </div>
 
       {isMobileFilterOpen && (
-        <div className="mt-[12px] grid grid-cols-2 gap-[8px] md:hidden">
+        <div className="mt-[0.75rem] grid grid-cols-2 gap-[0.5rem] md:hidden">
           {renderFilterDropdowns({ type: 'sort', widthClass: 'w-full' })}
         </div>
       )}

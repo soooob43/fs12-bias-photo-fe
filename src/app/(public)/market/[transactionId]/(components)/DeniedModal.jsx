@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteExchangeApi } from '@/api/detailApi';
 import { useQueryClient } from '@tanstack/react-query';
+import AlertButtonModal from '@/components/ui/AlertButtonModal/AlertButtonModal';
 
 export default function DeniedModal({
+  isOpen,
   page,
   grade,
   title,
@@ -23,12 +25,7 @@ export default function DeniedModal({
   const handleDeleteExchange = async () => {
     try {
       setIsSubmitting(true);
-
       await deleteExchangeApi(exchangeOfferId);
-
-      const actionText = page === 'buyer' ? '취소' : '거절';
-      alert(`교환 제안이 성공적으로 ${actionText}되었습니다.`);
-
       queryClient.invalidateQueries({ queryKey: ['exchangeList'] }); // 강제 캐시 무효화
       onClose();
     } catch (error) {
@@ -39,47 +36,37 @@ export default function DeniedModal({
     }
   };
 
+  const isBuyer = page === 'buyer';
+
   return (
-    <div className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[22rem] p-[4rem] fixed z-50 flex flex-col items-center justify-between rounded-[0.125rem] bg-[#161616] ">
-      <button
-        onClick={onClose}
-        className="absolute w-[2rem] h-[2rem] top-[30px] right-[30px] text-[#A4A4A4] cursor-pointer "
-      >
-        &times;
-      </button>
+    <AlertButtonModal
+      onClose={onClose}
+      isOpen={isOpen}
+      onClick={isBuyer ? handleDeleteExchange : handleDeleteExchange}
+      btnName={isBuyer ? '취소하기' : '거절하기'}
+      disabled={isSubmitting}
+    >
       {page === 'buyer' ? (
-        <>
-          <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
-            교환 제시 취소
-          </p>
-          <p className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1rem]">
-            [{grade} | {title}] 교환 제시를 취소하시겠습니까?
-          </p>
-          <button
-            onClick={handleDeleteExchange}
-            disabled={isSubmitting} // 로딩 중 클릭 비활성화
-            className="w-[170px] h-[60px] flex justify-center items-center rounded-[0.125rem] bg-[#EFFF04] cursor-pointer text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold"
-          >
-            취소하기
-          </button>
-        </>
+        <div className="flex flex-col gap-4">
+          <h2>교환 제시 취소</h2>
+          <div className="flex flex-col gap-2">
+            <p>
+              [{grade} | {title}]
+            </p>
+            <p>교환 제시를 취소하시겠습니까?</p>
+          </div>
+        </div>
       ) : (
-        <>
-          <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
-            교환 제시 거절
-          </p>
-          <p className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1rem]">
-            [{grade} | {title}] 카드와의 교환을 거절하시겠습니까?
-          </p>
-          <button
-            onClick={handleDeleteExchange}
-            disabled={isSubmitting} // 로딩 중 클릭 비활성화
-            className="w-[170px] h-[60px] flex justify-center items-center rounded-[0.125rem] bg-[#EFFF04] cursor-pointer text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold"
-          >
-            거절하기
-          </button>
-        </>
+        <div className="flex flex-col gap-4">
+          <h2>교환 제시 거절</h2>
+          <div className="flex flex-col gap-2">
+            <p>
+              [{grade} | {title}]
+            </p>
+            <p>카드와의 교환을 거절하시겠습니까?</p>
+          </div>
+        </div>
       )}
-    </div>
+    </AlertButtonModal>
   );
 }

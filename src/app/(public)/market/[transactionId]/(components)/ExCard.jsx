@@ -118,6 +118,7 @@ const ExCard = ({
 
       {deniedOpen && (
         <DeniedModal
+          isOpen={deniedOpen}
           page={page}
           grade={grade}
           title={title}
@@ -131,6 +132,7 @@ const ExCard = ({
 
       {approvedOpen && (
         <ApprovedModal
+          isOpen={approvedOpen}
           grade={grade}
           title={title}
           transactionId={transactionId}

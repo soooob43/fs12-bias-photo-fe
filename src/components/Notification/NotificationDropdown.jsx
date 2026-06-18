@@ -4,6 +4,7 @@ import Link from 'next/link';
 import NotificationItem from './NotificationItem';
 
 const NotificationDropdown = ({ notifications = [] }) => {
+  console.log('Dropdown notifications', notifications);
   return (
     <div className="absolute top-12 right-0 z-50 flex max-h-[500px] w-[460px] flex-col overflow-hidden rounded-xl border border-[#333333] bg-[#1A1A1A] shadow-xl">
       {notifications.length === 0 ? (
@@ -23,7 +24,7 @@ const NotificationDropdown = ({ notifications = [] }) => {
         </>
       ) : (
         <>
-          <div className="max-h-[420px] overflow-y-auto">
+          <div className="scrollbar-hide max-h-[420px] overflow-y-auto">
             {notifications.map((notification) => (
               <NotificationItem
                 key={notification.id}

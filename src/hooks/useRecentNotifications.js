@@ -9,7 +9,7 @@ export const useRecentNotifications = () => {
       const data = await getNotifications({
         limit: 5,
       });
-
+      console.log('알림 API 응답', data);
       return data.data;
     },
   });

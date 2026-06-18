@@ -33,9 +33,19 @@ const Header = () => {
 
   const { data: user, isLoading } = useMe();
 
-  const { data: unreadCount = 0 } = useUnreadNotificationCount();
+  // const { data: unreadCount = 0 } = useUnreadNotificationCount();
 
-  const { data: notifications = [] } = useRecentNotifications();
+  // const { data: notifications = [] } = useRecentNotifications();
+  // console.log('notifications 데이터', notifications);
+
+  const recentQuery = useRecentNotifications();
+  const unreadQuery = useUnreadNotificationCount();
+
+  console.log('recentQuery', recentQuery);
+  console.log('unreadQuery', unreadQuery);
+
+  const notifications = recentQuery.data ?? [];
+  const unreadCount = unreadQuery.data ?? 0;
 
   const queryClient = useQueryClient();
   const router = useRouter();

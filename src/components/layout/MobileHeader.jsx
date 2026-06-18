@@ -25,7 +25,7 @@ const MobileHeader = () => {
           >
             <Image src={menu} alt="메뉴" />
           </button>
-          <Link href="/market">
+          <Link href="/">
             <Image src={logo} alt="최애의포토 로고" width={84} />
           </Link>
           {isLoading ? (

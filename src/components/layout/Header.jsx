@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <header className={`hidden md:block ${styles.header}`}>
       <div className={styles.inner}>
-        <Link href="/market" className={styles.logo}>
+        <Link href="/" className={styles.logo}>
           <Image src={logo} alt="최애의포토 로고" priority height={25} />
         </Link>
         {isLoading ? (

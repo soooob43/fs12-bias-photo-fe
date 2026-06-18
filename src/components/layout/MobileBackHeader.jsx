@@ -13,7 +13,7 @@ const MobileBackHeader = ({ title }) => {
         type="button"
         aria-label="뒤로가기"
         onClick={() => router.back()}
-        className="absolute left-5 text-[var(--white-white)]"
+        className="absolute left-5 text-[var(--white-white)] cursor-pointer"
       >
         <LeftArrowIcon />
       </button>

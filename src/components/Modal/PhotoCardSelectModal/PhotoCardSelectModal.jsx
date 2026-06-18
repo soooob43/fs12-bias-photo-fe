@@ -12,6 +12,7 @@ import icSearch from '@/assets/icons/ic_search.svg';
 import icFilter from '@/assets/icons/ic_filter.svg';
 import { brBold } from '@/fonts';
 import styles from './PhotoCardSelectModal.module.css';
+import { GENRE_MAP, GRADE_MAP } from '@/constants/card';
 
 export default function PhotoCardSelectModal({
   isOpen,
@@ -59,7 +60,11 @@ export default function PhotoCardSelectModal({
         <div className={styles.divider} />
 
         <div className={styles.controls}>
-          <button className={styles.filterButton} type="button" aria-label="필터">
+          <button
+            className={styles.filterButton}
+            type="button"
+            aria-label="필터"
+          >
             <Image src={icFilter} alt="" width={24} height={24} />
             필터
           </button>
@@ -134,7 +139,9 @@ export default function PhotoCardSelectModal({
                 />
 
                 <div className={styles.cardBody}>
-                  <h2 className={styles.cardTitle}>{card.title}</h2>
+                  <h2 className={`${styles.cardTitle} truncate`}>
+                    {card.title}
+                  </h2>
 
                   <div className={styles.meta}>
                     <span
@@ -144,9 +151,11 @@ export default function PhotoCardSelectModal({
                         ]
                       }
                     >
-                      {card.grade}
+                      {GRADE_MAP[card.grade]}
                     </span>
-                    <span className={styles.genre}>{card.genre}</span>
+                    <span className={styles.genre}>
+                      {GENRE_MAP[card.genre]}
+                    </span>
                   </div>
 
                   <div className={styles.cardDivider} />

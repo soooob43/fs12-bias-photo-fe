@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { brBold } from '@/fonts';
 import styles from '@/components/features/PhotoCardSelectModal/PhotoCardSelectModal.module.css';
 import AlertButtonModal from '@/components/ui/AlertButtonModal/AlertButtonModal';
+import { GENRE_MAP, GRADE_MAP } from '@/constants/card';
 
 export default function ExchangeModal({
   transactionId,
@@ -91,7 +92,9 @@ export default function ExchangeModal({
             />
 
             <div className={styles.cardBody}>
-              <h2 className={styles.cardTitle}>{cardInfo.title}</h2>
+              <h2 className={`${styles.cardTitle} truncate`}>
+                {cardInfo.title}
+              </h2>
 
               <div className={styles.meta}>
                 <span
@@ -101,9 +104,11 @@ export default function ExchangeModal({
                     ]
                   }
                 >
-                  {cardInfo.grade}
+                  {GRADE_MAP[cardInfo.grade]}
                 </span>
-                <span className={styles.genre}>{cardInfo.genre}</span>
+                <span className={styles.genre}>
+                  {GENRE_MAP[cardInfo.genre]}
+                </span>
               </div>
 
               <div className={styles.cardDivider} />

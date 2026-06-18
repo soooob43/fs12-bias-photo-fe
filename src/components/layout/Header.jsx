@@ -28,9 +28,7 @@ const Header = () => {
     }
 
     localStorage.removeItem('accessToken');
-    queryClient.setQueryData(['me'], {
-      user: null,
-    });
+    queryClient.setQueryData(['me'], null);
 
     router.push('/');
   };

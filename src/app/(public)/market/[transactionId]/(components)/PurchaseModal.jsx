@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { purchasePhotocardApi } from '@/api/detailApi';
+import AlertButtonModal from '@/components/ui/AlertButtonModal/AlertButtonModal';
 
 export default function PurchaseModal({
+  isOpen,
   onClose,
   transactionId,
   loginId,
@@ -13,54 +15,52 @@ export default function PurchaseModal({
 }) {
   const router = useRouter();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handlePurchase = async () => {
     try {
+      setIsSubmitting(true);
       await purchasePhotocardApi({
         transactionId: transactionId,
         buyerId: loginId,
         quantity: quantity,
       });
-      router.push(
+      router.replace(
         `/market/${transactionId}/result?isSuccess=true&grade=${encodeURIComponent(cardInfo.grade)}&title=${encodeURIComponent(cardInfo.title)}&quantity=${quantity}`,
       );
       onClose();
     } catch (error) {
       if (!loginId) {
         alert('로그인 후에 구매가 가능합니다.');
-        return onClose();
       }
 
-      alert(error.message || '구매 진행 중 오류가 발생했습니다.');
       console.error('구매 요청 중 오류 발생: ', error);
-
-      router.push(
+      router.replace(
         `/market/${transactionId}/result?isSuccess=false&grade=${encodeURIComponent(cardInfo.grade)}&title=${encodeURIComponent(cardInfo.title)}&quantity=${quantity}`,
       );
-
       onClose();
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[22rem] p-[4rem] fixed z-50 flex flex-col items-center justify-between rounded-[0.125rem] bg-[#161616] ">
-      <button
-        onClick={onClose}
-        className="absolute w-[2rem] h-[2rem] top-[30px] right-[30px] text-[#A4A4A4] cursor-pointer "
-      >
-        &times;
-      </button>
-      <p className="text-[#FFF] font-['Noto_Sans_KR'] text-[1.125rem] font-bold">
-        포토카드 구매
-      </p>
-      <p className="text-[#A4A4A4] font-['Noto_Sans_KR'] text-[1rem]">
-        [{cardInfo.grade} | {cardInfo.title}] {quantity}장을 구매하시겠습니까?
-      </p>
-      <button
-        onClick={handlePurchase}
-        className="w-[170px] h-[60px] flex justify-center items-center rounded-[0.125rem] bg-[#EFFF04] cursor-pointer text-[#0F0F0F] font-['Noto_Sans_KR'] text-[1.125rem] font-bold"
-      >
-        구매하기
-      </button>
-    </div>
+    <AlertButtonModal
+      onClose={onClose}
+      isOpen={isOpen}
+      onClick={handlePurchase}
+      disabled={isSubmitting}
+      btnName="구매하기"
+    >
+      <div className="flex flex-col gap-4">
+        <h2>포토카드 구매</h2>
+        <div className="flex flex-col gap-2">
+          <p>
+            [{cardInfo.grade} | {cardInfo.title}]
+          </p>
+          <p>{quantity}장을 구매하시겠습니까?</p>
+        </div>
+      </div>
+    </AlertButtonModal>
   );
 }

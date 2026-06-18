@@ -3,6 +3,16 @@ import Header from '@/components/layout/Header';
 import MySalesCardList from './(components)/MySalesCardList';
 import MySaleHeader from './(components)/MySaleHeader';
 
+export const metadata = {
+  title: '나의 판매 포토카드',
+  description:
+    '마켓플레이스에 등록한 내 포토카드의 판매 및 교환 내역을 확인하세요.',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const MySalesPage = () => {
   return (
     <>

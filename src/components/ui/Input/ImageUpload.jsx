@@ -3,7 +3,14 @@
 import CloseIcon from '@/components/icons/CloseIcon';
 import React, { useRef } from 'react';
 
-const ImageUpload = ({ labelName, name, file, setFile, errorMsg = null }) => {
+const ImageUpload = ({
+  labelName,
+  name,
+  file,
+  setFile,
+  errorMsg = null,
+  ...rest
+}) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -36,6 +43,7 @@ const ImageUpload = ({ labelName, name, file, setFile, errorMsg = null }) => {
           name={name}
           onChange={handleFileChange}
           className="hidden"
+          {...rest}
         />
       </label>
       <div className="flex justify-between gap-2">

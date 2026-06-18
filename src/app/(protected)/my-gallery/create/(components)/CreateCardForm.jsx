@@ -142,6 +142,8 @@ const CreateCardForm = () => {
             ? errorTree?.properties?.minimumPrice?.errors?.[0]
             : null
         }
+        onWheel={(e) => e.target.blur()}
+        maxLength={10}
       />
       <TextField
         type="number"
@@ -155,6 +157,8 @@ const CreateCardForm = () => {
             ? errorTree?.properties?.totalQuantity?.errors?.[0]
             : null
         }
+        onWheel={(e) => e.target.blur()}
+        maxLength={2}
       />
       <ImageUpload
         labelName="사진 업로드"

@@ -83,7 +83,7 @@ const ExCard = ({
         {page === 'buyer' ? (
           <button
             onClick={() => setDeniedOpen(true)}
-            className="flex w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--gray-gray100) md:h-[3.4375rem] lg:h-[3.75rem]"
+            className="flex w-full h-[2.5rem] justify-center items-center rounded-[0.125rem] border border-(--gray-gray100) cursor-pointer md:h-[3.4375rem] lg:h-[3.75rem] "
           >
             <p className="text-(--white-white) text-[0.75rem] font-bold md:text-[1rem] lg:text-[1.125rem]">
               취소하기

@@ -15,6 +15,7 @@ export default function PhotoCardSellModal({
   card,
   transactionId,
   initialValues,
+  maxQuantity: maxQuantityProp,
   mode = 'create',
   isOpen,
   onClose,
@@ -24,6 +25,15 @@ export default function PhotoCardSellModal({
   const queryClient = useQueryClient();
 
   const isEditMode = mode === 'edit';
+  const editTotalQuantity = initialValues?.totalQuantity ?? 1;
+  const editRemainingQuantity =
+    initialValues?.remainingQuantity ?? editTotalQuantity;
+  const editableQuantity = isEditMode
+    ? (maxQuantityProp ?? editRemainingQuantity)
+    : (card?.quantity ?? 1);
+  const soldQuantity = Math.max(0, editTotalQuantity - editableQuantity);
+  const minQuantity = isEditMode ? 0 : 1;
+  const maxQuantity = Math.max(minQuantity, editableQuantity);
 
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState('');
@@ -31,12 +41,16 @@ export default function PhotoCardSellModal({
   const [genre, setGenre] = useState('');
   const [description, setDescription] = useState('');
   const [formError, setFormError] = useState('');
+  const currentQuantity = Math.min(
+    maxQuantity,
+    Math.max(minQuantity, quantity),
+  );
 
   useEffect(() => {
     if (!isOpen) return;
 
     if (isEditMode) {
-      setQuantity(initialValues?.totalQuantity ?? 1);
+      setQuantity(editableQuantity);
       setPrice(String(initialValues?.price ?? ''));
       setGrade(initialValues?.exchangeGrade ?? '');
       setGenre(initialValues?.exchangeGenre ?? '');
@@ -55,7 +69,7 @@ export default function PhotoCardSellModal({
     }
 
     setFormError('');
-  }, [isOpen, isEditMode, initialValues]);
+  }, [isOpen, isEditMode, initialValues, editableQuantity]);
 
   const transactionMutation = useMutation({
     mutationFn: (payload) =>
@@ -107,11 +121,11 @@ export default function PhotoCardSellModal({
   });
 
   const decreaseQuantity = () => {
-    setQuantity((curr) => Math.max(1, curr - 1));
+    setQuantity((curr) => Math.max(minQuantity, curr - 1));
   };
 
   const increaseQuantity = () => {
-    setQuantity((curr) => Math.min(card.quantity, curr + 1));
+    setQuantity((curr) => Math.min(maxQuantity, curr + 1));
   };
 
   const handleSubmit = () => {
@@ -144,7 +158,7 @@ export default function PhotoCardSellModal({
     if (isEditMode) {
       transactionMutation.mutate({
         ...payload,
-        totalQuantity: quantity,
+        totalQuantity: soldQuantity + currentQuantity,
       });
       return;
     }
@@ -152,7 +166,7 @@ export default function PhotoCardSellModal({
     transactionMutation.mutate({
       ...payload,
       cardId: card.cardId,
-      ownershipIds: card.ownershipIds.slice(0, quantity),
+      ownershipIds: card.ownershipIds.slice(0, currentQuantity),
     });
   };
 
@@ -188,24 +202,24 @@ export default function PhotoCardSellModal({
                   <button
                     type="button"
                     onClick={decreaseQuantity}
-                    disabled={quantity === 1}
+                    disabled={currentQuantity <= minQuantity}
                     aria-label="판매 수량 줄이기"
                   >
                     &minus;
                   </button>
-                  <span>{quantity}</span>
+                  <span>{currentQuantity}</span>
                   <button
                     type="button"
                     onClick={increaseQuantity}
-                    disabled={quantity === card.quantity}
+                    disabled={currentQuantity >= maxQuantity}
                     aria-label="판매 수량 늘리기"
                   >
                     +
                   </button>
                 </div>
                 <div className={styles.quantityLimit}>
-                  <strong>/ {card.quantity}</strong>
-                  <small>최대 {card.quantity}장</small>
+                  <strong>/ {maxQuantity}</strong>
+                  <small>최대 {maxQuantity}장</small>
                 </div>
               </div>
             </div>

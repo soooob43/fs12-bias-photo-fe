@@ -2,10 +2,10 @@
 
 import { useNotificationSse } from '@/hooks/useNotificationSse';
 
-const NotificationSseProvider = () => {
+const NotificationSseProvider = ({ children }) => {
   useNotificationSse();
 
-  return null;
+  return <>{children}</>;
 };
 
 export default NotificationSseProvider;

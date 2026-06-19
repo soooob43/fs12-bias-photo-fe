@@ -8,11 +8,11 @@ import PasswordInput from '@/components/ui/Input/PasswordInput';
 import PrimaryButton from '@/components/ui/Button/PrimaryButton';
 import { useMutation } from '@tanstack/react-query';
 import { signup } from '@/api/authApi';
-import AlertModal from '@/components/ui/AlertModal/AlertModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './SignupForm.module.css';
 import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 import SignupSkeleton from '@/components/ui/Skeleton/SignupSkeleton';
+import AlertButtonModal from '@/components/ui/AlertButtonModal/AlertButtonModal';
 
 const signupSchema = z
   .object({
@@ -245,9 +245,14 @@ const SignupFormContent = () => {
           로그인하기
         </Link>
       </p>
-      <AlertModal isOpen={modal.isOpen} onClose={handleModalClose}>
+      <AlertButtonModal
+        isOpen={modal.isOpen}
+        onClose={handleModalClose}
+        btnName="확인"
+        onClick={handleModalClose}
+      >
         <p>{modal.message}</p>
-      </AlertModal>
+      </AlertButtonModal>
     </>
   );
 };

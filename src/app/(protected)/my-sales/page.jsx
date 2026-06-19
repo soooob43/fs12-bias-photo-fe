@@ -1,7 +1,6 @@
-import MobileBackHeader from '@/components/layout/MobileBackHeader';
-import Header from '@/components/layout/Header';
 import MySalesCardList from './(components)/MySalesCardList';
 import MySaleHeader from './(components)/MySaleHeader';
+import MySaleCommonHeader from './(components)/MySaleCommonHeader';
 
 export const metadata = {
   title: '나의 판매 포토카드',
@@ -15,14 +14,13 @@ export const metadata = {
 
 const MySalesPage = () => {
   return (
-    <>
-      <MobileBackHeader title="나의 판매 포토카드" />
-      <Header />
-      <main className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
+    <div className="w-full max-w-[92.5rem] mx-auto px-[0.9375rem] pb-[5.625rem] md:pb-0">
+      <MySaleCommonHeader />
+      <main>
         <MySaleHeader />
         <MySalesCardList />
       </main>
-    </>
+    </div>
   );
 };
 

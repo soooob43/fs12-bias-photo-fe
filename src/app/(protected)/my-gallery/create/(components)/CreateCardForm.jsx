@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { createCardSchema } from '@/schemas/cardSchema';
+import Spinner from '@/components/ui/Spinner';
 
 const CreateCardForm = () => {
   const router = useRouter();
@@ -96,6 +97,17 @@ const CreateCardForm = () => {
   };
 
   const isProcessing = postPhotoCardMutaion.isPending || isRouting;
+
+  if (isProcessing) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full max-w-[520px] min-h-[600px] gap-4">
+        <Spinner />
+        <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse md:text-[1.125rem] lg:text-[1.5rem]">
+          포토카드 생성중...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form

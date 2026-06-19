@@ -1,15 +1,24 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+
 import { brBold } from '@/fonts';
 import { useMe } from '@/hooks/useMe';
 import { logout } from '@/api/authApi';
+import { readAllNotifications } from '@/api/notificationApi';
+import { useUnreadNotificationCount } from '@/hooks/useUnreadNotificationCount';
+import { useRecentNotifications } from '@/hooks/useRecentNotifications';
+
 import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
+
 import UserDropdown from './UserDropdown';
-import { useState } from 'react';
+import NotificationDropdown from '@/components/Notification/NotificationDropdown';
+
 import styles from './Header.module.css';
 import RandomBoxModal from '../features/RandomBoxModal/RandomBoxModal';
 import RandomBoxIcon from '../icons/RandomBoxIcon';
@@ -18,7 +27,20 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isRandomBoxOpen, setIsRandomBoxOpen] = useState(false);
 
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const notificationRef = useRef(null);
   const { data: user, isLoading } = useMe();
+
+  // const { data: unreadCount = 0 } = useUnreadNotificationCount();
+
+  // const { data: notifications = [] } = useRecentNotifications();
+  // console.log('notifications 데이터', notifications);
+
+  const recentQuery = useRecentNotifications(!!user);
+  const unreadQuery = useUnreadNotificationCount(!!user);
+
+  const notifications = recentQuery.data ?? [];
+  const unreadCount = unreadQuery.data ?? 0;
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -39,6 +61,67 @@ const Header = () => {
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const handleToggleNotification = () => {
+    setIsNotificationOpen((prev) => !prev);
+  };
+
+  const handleCloseNotification = async () => {
+    // console.log('닫기 전 notifications', notifications);
+    if (!isNotificationOpen) {
+      return;
+    }
+
+    const unreadNotificationIds = notifications
+      .filter((notification) => !notification.isRead)
+      .map((notification) => notification.id);
+
+    if (unreadNotificationIds.length > 0) {
+      try {
+        await readAllNotifications(unreadNotificationIds);
+
+        queryClient.setQueryData(['notifications', 'unread-count'], 0);
+
+        queryClient.setQueryData(['notifications', 'recent'], (oldData = []) =>
+          oldData.map((notification) => ({
+            ...notification,
+            isRead: true,
+          })),
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    setIsNotificationOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        handleCloseNotification();
+      }
+    };
+
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        handleCloseNotification();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    document.addEventListener('keydown', handleEscapeKey);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [isNotificationOpen, notifications]);
 
   return (
     <>
@@ -61,9 +144,24 @@ const Header = () => {
                 랜덤박스
               </button>
               <p className={styles.point}>{user?.points} P</p>
-              <button className={styles.notificationButton}>
-                <Image src={notificationIcon} alt="알림" />
-              </button>
+
+              <div ref={notificationRef} className={styles.notificationWrapper}>
+                <button
+                  className={styles.notificationButton}
+                  onClick={handleToggleNotification}
+                >
+                  <Image src={notificationIcon} alt="알림" />
+
+                  {unreadCount > 0 && (
+                    <span className={styles.notificationBadge} />
+                  )}
+                </button>
+
+                {isNotificationOpen && (
+                  <NotificationDropdown notifications={notifications} />
+                )}
+              </div>
+
               <div className={styles.userMenu}>
                 <button
                   className={`${styles.nicknameButton} ${brBold.className}`}

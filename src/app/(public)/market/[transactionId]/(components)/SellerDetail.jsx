@@ -247,6 +247,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
 
       {isDeleteModalOpen && (
         <DeleteTransaction
+          isOpen={isDeleteModalOpen}
           transactionId={transactionId}
           onClose={() => setIsDeleteModalOpen(false)}
         />

@@ -34,13 +34,11 @@
 .content h2 {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 32px;
 }
 
 .content p {
   font-size: 16px;
   color: var(--gray-gray300);
-  margin-bottom: 55px;
 }
 
 .closeButton {
@@ -61,6 +59,11 @@
   cursor: pointer;
 }
 
+.confirmButton {
+  width: 170px;
+  height: 60px;
+}
+
 @media (max-width: 1023px) {
   .modal {
     max-width: 400px;
@@ -73,12 +76,10 @@
 
   .content h2 {
     font-size: 18px;
-    margin-bottom: 18px;
   }
 
   .content p {
     font-size: 14px;
-    margin-bottom: 24px;
   }
 
   .closeButton {
@@ -87,6 +88,11 @@
     top: 15px;
     right: 15px;
     font-size: 16px;
+  }
+
+  .confirmButton {
+    width: 140px;
+    height: 55px;
   }
 }
 
@@ -100,19 +106,15 @@
     padding-top: 60px;
   }
 
-  .content h2 {
-    margin-bottom: 18px;
-  }
-
-  .content p {
-    margin-bottom: 26px;
-  }
-
   .closeButton {
     width: 28px;
     height: 28px;
     top: 15px;
     right: 15px;
     font-size: 16px;
+  }
+
+  .confirmButton {
+    width: 120px;
   }
 }

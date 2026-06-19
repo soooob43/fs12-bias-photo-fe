@@ -277,6 +277,7 @@ export default function TestBuyerDetail({ transactionId, loginId, data }) {
 
       {purchaseModalOpen && (
         <PurchaseModal
+          isOpen={purchaseModalOpen}
           onClose={() => setPurchaseModalOpen(false)}
           transactionId={transactionId}
           loginId={loginId}

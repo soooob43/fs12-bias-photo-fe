@@ -24,8 +24,7 @@ export default function MyPhotoCardSellDetailPage() {
         [{grade} | {title}] {quantity}장 판매 등록에 성공했습니다!
       </p>
 
-      {/* 나의 판매 포토카드 프론트 작업 완료하면 경로 수정할 예정 */}
-      <Link className={styles.btn} href="/market">
+      <Link className={styles.btn} href="/my-sales">
         나의 판매 포토카드에서 확인하기
       </Link>
     </div>

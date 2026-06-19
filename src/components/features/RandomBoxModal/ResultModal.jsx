@@ -12,16 +12,17 @@ const ResultModal = ({ isOpen, earnedPoints, remainingTime, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       modalClassName={styles.resultModal}
+      contentClassName={styles.resultContent}
     >
       <h2 className={`${brRegular.className} ${styles.title}`}>
         랜덤<strong>포인트</strong>
       </h2>
       <Image src={point} alt="point" />
-      <div>
-        <p>
+      <div className={styles.textbox}>
+        <p className={styles.point}>
           <span>{earnedPoints}P</span> 획득!
         </p>
-        <p>
+        <p className={styles.remainingTime}>
           다음 기회까지 남은 시간 <span>{remainingTime}</span>
         </p>
       </div>

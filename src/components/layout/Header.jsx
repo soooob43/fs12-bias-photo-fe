@@ -12,6 +12,7 @@ import { logout } from '@/api/authApi';
 import { readAllNotifications } from '@/api/notificationApi';
 import { useUnreadNotificationCount } from '@/hooks/useUnreadNotificationCount';
 import { useRecentNotifications } from '@/hooks/useRecentNotifications';
+import { useNotificationSse } from '@/hooks/useNotificationSse';
 
 import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
@@ -24,6 +25,7 @@ import RandomBoxModal from '../features/RandomBoxModal/RandomBoxModal';
 import RandomBoxIcon from '../icons/RandomBoxIcon';
 
 const Header = () => {
+  useNotificationSse();
   const [isOpen, setIsOpen] = useState(false);
   const [isRandomBoxOpen, setIsRandomBoxOpen] = useState(false);
 

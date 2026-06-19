@@ -102,50 +102,48 @@ const LoginFormContent = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <label htmlFor="email" className={styles.label}>
-            이메일
-          </label>
-          <Input
-            placeholder="이메일을 입력해 주세요"
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            error={!!errors.email}
-          />
-          {errors.email && (
-            <p className={styles.errorMessage}>{errors.email[0]}</p>
-          )}
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="password" className={styles.label}>
-            비밀번호
-          </label>
-          <PasswordInput
-            placeholder="비밀번호를 입력해 주세요"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            error={!!errors.password}
-          />
-          {errors.password && (
-            <p className={styles.errorMessage}>{errors.password[0]}</p>
-          )}
-        </div>
+        <fieldset disabled={loginMutation.isPending}>
+          <div className={styles.field}>
+            <label htmlFor="email" className={styles.label}>
+              이메일
+            </label>
+            <Input
+              placeholder="이메일을 입력해 주세요"
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
+            />
+            {errors.email && (
+              <p className={styles.errorMessage}>{errors.email[0]}</p>
+            )}
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="password" className={styles.label}>
+              비밀번호
+            </label>
+            <PasswordInput
+              placeholder="비밀번호를 입력해 주세요"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              error={!!errors.password}
+            />
+            {errors.password && (
+              <p className={styles.errorMessage}>{errors.password[0]}</p>
+            )}
+          </div>
 
-        <div className={styles.buttonBox}>
-          <PrimaryButton
-            type="submit"
-            disabled={loginMutation.isPending}
-            className={styles.submitButton}
-          >
-            {loginMutation.isPending ? '로그인 중...' : '로그인'}
-          </PrimaryButton>
-          <GoogleLoginButton />
-        </div>
+          <div className={styles.buttonBox}>
+            <PrimaryButton type="submit" className={styles.submitButton}>
+              {loginMutation.isPending ? '로그인 중...' : '로그인'}
+            </PrimaryButton>
+            <GoogleLoginButton />
+          </div>
+        </fieldset>
       </form>
       <p className={styles.signupLinkText}>
         최애의 포토가 처음이신가요?

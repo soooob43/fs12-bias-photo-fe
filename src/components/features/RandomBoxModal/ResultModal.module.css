@@ -8,10 +8,66 @@
   border-radius: 2px;
 }
 
+.resultModal .resultContent {
+  padding: 65px 50px;
+}
+
 .resultModal .title {
   font-size: 46px;
+  margin-bottom: 15px;
 }
 
 .resultModal strong {
   color: var(--main-main);
+}
+
+.resultModal span {
+  color: var(--main-main);
+}
+
+.resultModal .textbox p {
+  margin: 16px;
+}
+
+.textbox .point {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white-white);
+}
+
+.textbox .remainingTime {
+  font-size: 16px;
+}
+
+@media (max-width: 1023px) {
+  .resultModal {
+    height: 658px;
+  }
+
+  .resultModal .title {
+    font-size: 36px;
+  }
+
+  .textbox .point {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 743px) {
+  .resultModal {
+    max-width: 345px;
+    height: 541px;
+  }
+
+  .resultModal .title {
+    font-size: 30px;
+  }
+
+  .textbox .point {
+    font-size: 24px;
+  }
+
+  .remainingTime span {
+    display: block;
+  }
 }

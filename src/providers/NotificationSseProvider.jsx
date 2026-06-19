@@ -1,9 +1,11 @@
 'use client';
 
+import { useMe } from '@/hooks/useMe';
 import { useNotificationSse } from '@/hooks/useNotificationSse';
 
 const NotificationSseProvider = ({ children }) => {
-  useNotificationSse();
+  const { data: user } = useMe();
+  useNotificationSse(!!user);
 
   return <>{children}</>;
 };

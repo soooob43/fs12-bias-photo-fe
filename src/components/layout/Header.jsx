@@ -12,7 +12,6 @@ import { logout } from '@/api/authApi';
 import { readAllNotifications } from '@/api/notificationApi';
 import { useUnreadNotificationCount } from '@/hooks/useUnreadNotificationCount';
 import { useRecentNotifications } from '@/hooks/useRecentNotifications';
-import { useNotificationSse } from '@/hooks/useNotificationSse';
 
 import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
@@ -23,14 +22,9 @@ import NotificationDropdown from '@/components/Notification/NotificationDropdown
 import styles from './Header.module.css';
 
 const Header = () => {
-  // useNotificationSse();
-
   const [isOpen, setIsOpen] = useState(false);
-
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-
   const notificationRef = useRef(null);
-
   const { data: user, isLoading } = useMe();
 
   // const { data: unreadCount = 0 } = useUnreadNotificationCount();
@@ -38,11 +32,8 @@ const Header = () => {
   // const { data: notifications = [] } = useRecentNotifications();
   // console.log('notifications 데이터', notifications);
 
-  const recentQuery = useRecentNotifications();
-  const unreadQuery = useUnreadNotificationCount();
-
-  // console.log('recentQuery', recentQuery);
-  // console.log('unreadQuery', unreadQuery);
+  const recentQuery = useRecentNotifications(!!user);
+  const unreadQuery = useUnreadNotificationCount(!!user);
 
   const notifications = recentQuery.data ?? [];
   const unreadCount = unreadQuery.data ?? 0;

@@ -2,6 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getNotifications } from '@/api/notificationApi';
 
 export const useInfiniteNotifications = () => {
+  const { data: user } = useMe();
   return useInfiniteQuery({
     queryKey: ['notifications', 'infinite'],
 
@@ -17,5 +18,6 @@ export const useInfiniteNotifications = () => {
     },
 
     initialPageParam: null,
+    enabled: !!user,
   });
 };

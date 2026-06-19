@@ -18,7 +18,7 @@ import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
 
 import UserDropdown from './UserDropdown';
-import NotificationDropdown from '@/components/notification/notificationDropdown';
+import NotificationDropdown from '@/components/Notification/NotificationDropdown';
 
 import styles from './Header.module.css';
 

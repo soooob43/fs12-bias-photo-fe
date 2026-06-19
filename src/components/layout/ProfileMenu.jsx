@@ -17,9 +17,7 @@ const ProfileMenu = ({ user, onClose }) => {
     }
 
     localStorage.removeItem('accessToken');
-    queryClient.setQueryData(['me'], {
-      user: null,
-    });
+    queryClient.setQueryData(['me'], null);
 
     onClose?.();
 
@@ -53,7 +51,7 @@ const ProfileMenu = ({ user, onClose }) => {
             </li>
 
             <li className={styles.menuItem}>
-              <Link href="/my-photo-card-sell" onClick={onClose}>
+              <Link href="/my-sales" onClick={onClose}>
                 판매 중인 포토카드
               </Link>
             </li>

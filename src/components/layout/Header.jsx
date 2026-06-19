@@ -12,7 +12,6 @@ import { logout } from '@/api/authApi';
 import { readAllNotifications } from '@/api/notificationApi';
 import { useUnreadNotificationCount } from '@/hooks/useUnreadNotificationCount';
 import { useRecentNotifications } from '@/hooks/useRecentNotifications';
-import { useNotificationSse } from '@/hooks/useNotificationSse';
 
 import logo from '@/assets/images/img_logo.svg';
 import notificationIcon from '@/assets/icons/ic_notification.svg';
@@ -21,16 +20,15 @@ import UserDropdown from './UserDropdown';
 import NotificationDropdown from '@/components/Notification/NotificationDropdown';
 
 import styles from './Header.module.css';
+import RandomBoxModal from '../features/RandomBoxModal/RandomBoxModal';
+import RandomBoxIcon from '../icons/RandomBoxIcon';
 
 const Header = () => {
-  // useNotificationSse();
-
   const [isOpen, setIsOpen] = useState(false);
+  const [isRandomBoxOpen, setIsRandomBoxOpen] = useState(false);
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-
   const notificationRef = useRef(null);
-
   const { data: user, isLoading } = useMe();
 
   // const { data: unreadCount = 0 } = useUnreadNotificationCount();
@@ -38,11 +36,8 @@ const Header = () => {
   // const { data: notifications = [] } = useRecentNotifications();
   // console.log('notifications 데이터', notifications);
 
-  const recentQuery = useRecentNotifications();
-  const unreadQuery = useUnreadNotificationCount();
-
-  // console.log('recentQuery', recentQuery);
-  // console.log('unreadQuery', unreadQuery);
+  const recentQuery = useRecentNotifications(!!user);
+  const unreadQuery = useUnreadNotificationCount(!!user);
 
   const notifications = recentQuery.data ?? [];
   const unreadCount = unreadQuery.data ?? 0;
@@ -58,10 +53,7 @@ const Header = () => {
     }
 
     localStorage.removeItem('accessToken');
-
-    queryClient.setQueryData(['me'], {
-      user: null,
-    });
+    queryClient.setQueryData(['me'], null);
 
     router.push('/');
   };
@@ -132,67 +124,75 @@ const Header = () => {
   }, [isNotificationOpen, notifications]);
 
   return (
-    <header className={`hidden md:block ${styles.header}`}>
-      <div className={styles.inner}>
-        <Link href="/" className={styles.logo}>
-          <Image src={logo} alt="최애의포토 로고" priority height={25} />
-        </Link>
-
-        {isLoading ? (
-          <nav className={styles.nav}>
-            <div className={styles.skeletonIcon}></div>
-          </nav>
-        ) : user ? (
-          <nav className={styles.nav}>
-            <p className={styles.point}>{user?.points} P</p>
-
-            <div ref={notificationRef} className={styles.notificationWrapper}>
-              <button
-                className={styles.notificationButton}
-                onClick={handleToggleNotification}
-              >
-                <Image src={notificationIcon} alt="알림" />
-
-                {unreadCount > 0 && (
-                  <span className={styles.notificationBadge} />
-                )}
-              </button>
-
-              {isNotificationOpen && (
-                <NotificationDropdown notifications={notifications} />
-              )}
-            </div>
-
-            <div className={styles.userMenu}>
+    <>
+      <header className={`hidden md:block ${styles.header}`}>
+        <div className={styles.inner}>
+          <Link href="/market" className={styles.logo}>
+            <Image src={logo} alt="최애의포토 로고" priority height={25} />
+          </Link>
+          {isLoading ? (
+            <nav className={styles.nav}>
+              <div className={styles.skeletonIcon}></div>
+            </nav>
+          ) : user ? (
+            <nav className={styles.nav}>
               <button
                 className={`${styles.nicknameButton} ${brBold.className}`}
-                onClick={toggleDropdown}
+                onClick={() => setIsRandomBoxOpen(true)}
               >
-                {user?.nickname}
+                <RandomBoxIcon />
+                랜덤박스
               </button>
+              <p className={styles.point}>{user?.points} P</p>
 
-              {isOpen && <UserDropdown user={user} />}
-            </div>
+              <div ref={notificationRef} className={styles.notificationWrapper}>
+                <button
+                  className={styles.notificationButton}
+                  onClick={handleToggleNotification}
+                >
+                  <Image src={notificationIcon} alt="알림" />
 
-            <p className={styles.divider}>|</p>
+                  {unreadCount > 0 && (
+                    <span className={styles.notificationBadge} />
+                  )}
+                </button>
 
-            <button className={styles.logoutButton} onClick={handleLogout}>
-              로그아웃
-            </button>
-          </nav>
-        ) : (
-          <nav className={styles.nav}>
-            <Link href="/login" className={styles.loginButton}>
-              로그인
-            </Link>
+                {isNotificationOpen && (
+                  <NotificationDropdown notifications={notifications} />
+                )}
+              </div>
 
-            <Link href="/signup" className={styles.logoutButton}>
-              회원가입
-            </Link>
-          </nav>
-        )}
-      </div>
-    </header>
+              <div className={styles.userMenu}>
+                <button
+                  className={`${styles.nicknameButton} ${brBold.className}`}
+                  onClick={toggleDropdown}
+                >
+                  {user?.nickname}
+                </button>
+                {isOpen && <UserDropdown user={user} />}
+              </div>
+              <p className={styles.divider}>|</p>
+              <button className={styles.logoutButton} onClick={handleLogout}>
+                로그아웃
+              </button>
+            </nav>
+          ) : (
+            <nav className={styles.nav}>
+              <Link href="/login" className={styles.loginButton}>
+                로그인
+              </Link>
+              <Link href="/signup" className={styles.logoutButton}>
+                회원가입
+              </Link>
+            </nav>
+          )}
+        </div>
+      </header>
+      <RandomBoxModal
+        isOpen={isRandomBoxOpen}
+        onClose={() => setIsRandomBoxOpen(false)}
+      />
+    </>
   );
 };
 

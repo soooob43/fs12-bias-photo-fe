@@ -20,8 +20,8 @@ const MobileHeader = () => {
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const notificationRef = useRef(null);
-  const recentQuery = useRecentNotifications();
-  const unreadQuery = useUnreadNotificationCount();
+  const recentQuery = useRecentNotifications(!!user);
+  const unreadQuery = useUnreadNotificationCount(!!user);
   const notifications = recentQuery.data ?? [];
   const unreadCount = unreadQuery.data ?? 0;
   const queryClient = useQueryClient();

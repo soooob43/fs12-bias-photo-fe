@@ -1,0 +1,78 @@
+.randomBoxModal {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 80px;
+  background: var(--gray-gray500, #161616);
+  border-radius: 2px;
+}
+
+.randomBoxModal .randomBoxContent {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+}
+
+.randomBoxContent .textBox {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 85px;
+}
+
+.randomBoxContent .textBox p {
+  margin: 0;
+}
+
+.textBox .title {
+  font-size: 46px;
+  margin: 0;
+}
+
+.textBox .description {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white-white);
+}
+
+.textBox strong {
+  color: var(--main-main);
+}
+
+.boxs {
+  display: flex;
+  gap: 70px;
+  max-width: 835px;
+  width: 100%;
+}
+
+.dimmed {
+  opacity: 0.3;
+}
+
+.boxs button {
+  cursor: pointer;
+}
+
+.boxs button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.time {
+  color: var(--main-main);
+}
+
+.seletButton {
+  margin: 60px auto 0;
+  width: 520px;
+  height: 60px;
+}
+
+@media (max-width: 1023px) {
+}
+
+@media (max-width: 743px) {
+}

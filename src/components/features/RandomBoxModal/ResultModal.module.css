@@ -1,0 +1,17 @@
+.resultModal {
+  position: relative;
+  overflow: hidden;
+  max-width: 455px;
+  width: 100%;
+  height: 678px;
+  background: var(--gray-gray500, #161616);
+  border-radius: 2px;
+}
+
+.resultModal .title {
+  font-size: 46px;
+}
+
+.resultModal strong {
+  color: var(--main-main);
+}

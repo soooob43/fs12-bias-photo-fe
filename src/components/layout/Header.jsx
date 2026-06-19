@@ -23,7 +23,7 @@ import NotificationDropdown from '@/components/Notification/NotificationDropdown
 import styles from './Header.module.css';
 
 const Header = () => {
-  useNotificationSse();
+  // useNotificationSse();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,8 +41,8 @@ const Header = () => {
   const recentQuery = useRecentNotifications();
   const unreadQuery = useUnreadNotificationCount();
 
-  console.log('recentQuery', recentQuery);
-  console.log('unreadQuery', unreadQuery);
+  // console.log('recentQuery', recentQuery);
+  // console.log('unreadQuery', unreadQuery);
 
   const notifications = recentQuery.data ?? [];
   const unreadCount = unreadQuery.data ?? 0;
@@ -75,7 +75,7 @@ const Header = () => {
   };
 
   const handleCloseNotification = async () => {
-    console.log('닫기 전 notifications', notifications);
+    // console.log('닫기 전 notifications', notifications);
     if (!isNotificationOpen) {
       return;
     }
@@ -134,7 +134,7 @@ const Header = () => {
   return (
     <header className={`hidden md:block ${styles.header}`}>
       <div className={styles.inner}>
-        <Link href="/market" className={styles.logo}>
+        <Link href="/" className={styles.logo}>
           <Image src={logo} alt="최애의포토 로고" priority height={25} />
         </Link>
 

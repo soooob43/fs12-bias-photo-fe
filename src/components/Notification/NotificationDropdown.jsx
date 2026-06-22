@@ -33,12 +33,12 @@ const NotificationDropdown = ({ notifications = [] }) => {
             ))}
           </div>
 
-          {/* <Link
+          <Link
             href="/notifications"
             className="border-t border-[#333333] px-4 py-4 text-center text-sm font-semibold text-[#FFFF00] transition-opacity hover:opacity-80"
           >
             전체 알림 보기
-          </Link> */}
+          </Link>
         </>
       )}
     </div>

@@ -128,7 +128,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
                   {data?.remainingQuantity || 0}{' '}
                 </span>
                 <span className="text-(--gray-gray300) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
-                  / {data?.totalQuantity || '?'}
+                  / {data?.totalQuantity || '0'}
                 </span>
               </span>
             </div>

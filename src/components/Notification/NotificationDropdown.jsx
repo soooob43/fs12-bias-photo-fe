@@ -23,7 +23,7 @@ const NotificationDropdown = ({ notifications = [] }) => {
         </>
       ) : (
         <>
-          <div className="max-h-[420px] overflow-y-auto">
+          <div className="scrollbar-hide max-h-[420px] overflow-y-auto">
             {notifications.map((notification) => (
               <NotificationItem
                 key={notification.id}

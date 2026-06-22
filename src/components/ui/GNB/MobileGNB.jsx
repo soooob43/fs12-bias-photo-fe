@@ -9,7 +9,7 @@ import Link from 'next/link';
 const MobileGNB = ({ title, href = '' }) => {
   const router = useRouter();
   return (
-    <header className="relative flex items-center justify-center py-[1.25rem] mx-auto bg-(--black-black) md:hidden">
+    <header className="relative sticky top-0 flex items-center justify-center py-[1.25rem] mx-auto bg-(--black-black) z-100 md:hidden">
       <button
         type="button"
         onClick={() => router.back()}

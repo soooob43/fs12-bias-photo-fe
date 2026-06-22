@@ -128,7 +128,7 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
                   {data?.remainingQuantity || 0}{' '}
                 </span>
                 <span className="text-(--gray-gray300) text-right text-[1.25rem] font-bold lg:text-[1.5rem]">
-                  / {data?.totalQuantity || '?'}
+                  / {data?.totalQuantity || '0'}
                 </span>
               </span>
             </div>
@@ -219,8 +219,10 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
         </div>
       </div>
       <PhotoCardSellModal
+        key={`${transactionId}-${data?.remainingQuantity ?? 0}`}
         mode="edit"
         transactionId={transactionId}
+        maxQuantity={data?.remainingQuantity ?? 0}
         card={{
           cardId: cardInfo?.id,
           title: cardInfo?.title,
@@ -228,10 +230,11 @@ export default function TestSellerDetail({ transactionId, loginId, data }) {
           grade: cardInfo?.grade,
           genre: cardInfo?.genre,
           creator: userInfo?.nickname,
-          quantity: data?.totalQuantity ?? 1,
+          quantity: data?.remainingQuantity ?? 1,
         }}
         initialValues={{
           totalQuantity: data?.totalQuantity,
+          remainingQuantity: data?.remainingQuantity,
           price: data?.price,
           exchangeGrade: data?.exchangeGrade,
           exchangeGenre: data?.exchangeGenre,

@@ -143,7 +143,7 @@ src
 
 ## ⚙️ 시스템 이미지
 
-추가될 예정
+<img width="1571" height="962" alt="중급프로젝트_4팀_아키텍처" src="https://github.com/user-attachments/assets/ddab0b24-a6cf-4a30-ba8a-20bd6b32befa" />
 
 ## 실행 방법
 

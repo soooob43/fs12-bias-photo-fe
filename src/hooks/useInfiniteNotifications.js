@@ -1,3 +1,4 @@
+import { useMe } from '@/hooks/useMe';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getNotifications } from '@/api/notificationApi';
 

@@ -1,5 +1,5 @@
-import NotificationHeader from '@/components/notification/NotificationHeader';
-import NotificationList from '@/components/notification/NotificationList';
+import NotificationHeader from '@/components/Notification/NotificationHeader';
+import NotificationList from '@/components/Notification/NotificationList';
 
 const NotificationsPage = () => {
   return (

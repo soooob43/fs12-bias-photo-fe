@@ -72,7 +72,55 @@
 }
 
 @media (max-width: 1023px) {
+  .randomBoxModal {
+    padding: 50px 60px;
+  }
+
+  .boxs {
+    max-width: 530px;
+    gap: 30px;
+  }
+
+  .randomBoxContent .textBox {
+    margin-bottom: 60px;
+  }
+
+  .textBox .title {
+    font-size: 36px;
+  }
+
+  .textBox .description {
+    font-size: 16px;
+  }
+
+  .time {
+    display: block;
+  }
+
+  .seletButton {
+    width: 440px;
+    height: 55px;
+  }
 }
 
 @media (max-width: 743px) {
+  .randomBoxModal {
+    padding: 60px 20px;
+  }
+  .textBox .title {
+    font-size: 30px;
+  }
+  .boxs {
+    max-width: 315px;
+    gap: 20px;
+    margin: 0 auto;
+  }
+
+  .seletButton {
+    width: 300px;
+  }
+
+  .randomBoxContent .textBox {
+    margin-bottom: 55px;
+  }
 }

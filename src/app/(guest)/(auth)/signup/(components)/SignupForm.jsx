@@ -117,7 +117,7 @@ const SignupFormContent = () => {
       });
     },
     onError: (error) => {
-      if (error.message === '이미 사용 중인 이메일입니다.') {
+      if (error.message === '이미 가입된 이메일입니다.') {
         setErrors((prev) => ({
           ...prev,
           email: [error.message],
@@ -155,82 +155,80 @@ const SignupFormContent = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <label htmlFor="email" className={styles.label}>
-            이메일
-          </label>
-          <Input
-            placeholder="이메일을 입력해 주세요"
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            error={!!errors.email}
-          />
-          {errors.email && (
-            <p className={styles.errorMessage}>{errors.email[0]}</p>
-          )}
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="nickname" className={styles.label}>
-            닉네임
-          </label>
-          <Input
-            placeholder="닉네임을 입력해 주세요"
-            id="nickname"
-            name="nickname"
-            type="text"
-            value={formData.nickname}
-            onChange={handleChange}
-            error={!!errors.nickname}
-          />
-          {errors.nickname && (
-            <p className={styles.errorMessage}>{errors.nickname[0]}</p>
-          )}
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="password" className={styles.label}>
-            비밀번호
-          </label>
-          <PasswordInput
-            placeholder="8자 이상 입력해 주세요"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            error={!!errors.password}
-          />
-          {errors.password && (
-            <p className={styles.errorMessage}>{errors.password[0]}</p>
-          )}
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="passwordConfirm" className={styles.label}>
-            비밀번호 확인
-          </label>
-          <PasswordInput
-            placeholder="비밀번호를 한번 더 입력해 주세요"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            value={formData.passwordConfirm}
-            onChange={handleChange}
-            error={!!errors.passwordConfirm}
-          />
-          {errors.passwordConfirm && (
-            <p className={styles.errorMessage}>{errors.passwordConfirm[0]}</p>
-          )}
-        </div>
-        <div className={styles.buttonBox}>
-          <PrimaryButton
-            type="submit"
-            disabled={signupMutation.isPending}
-            className={styles.submitButton}
-          >
-            {signupMutation.isPending ? '가입 중...' : '가입하기'}
-          </PrimaryButton>
-          <GoogleLoginButton />
-        </div>
+        <fieldset disabled={signupMutation.isPending}>
+          <div className={styles.field}>
+            <label htmlFor="email" className={styles.label}>
+              이메일
+            </label>
+            <Input
+              placeholder="이메일을 입력해 주세요"
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
+            />
+            {errors.email && (
+              <p className={styles.errorMessage}>{errors.email[0]}</p>
+            )}
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="nickname" className={styles.label}>
+              닉네임
+            </label>
+            <Input
+              placeholder="닉네임을 입력해 주세요"
+              id="nickname"
+              name="nickname"
+              type="text"
+              value={formData.nickname}
+              onChange={handleChange}
+              error={!!errors.nickname}
+            />
+            {errors.nickname && (
+              <p className={styles.errorMessage}>{errors.nickname[0]}</p>
+            )}
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="password" className={styles.label}>
+              비밀번호
+            </label>
+            <PasswordInput
+              placeholder="8자 이상 입력해 주세요"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              error={!!errors.password}
+            />
+            {errors.password && (
+              <p className={styles.errorMessage}>{errors.password[0]}</p>
+            )}
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="passwordConfirm" className={styles.label}>
+              비밀번호 확인
+            </label>
+            <PasswordInput
+              placeholder="비밀번호를 한번 더 입력해 주세요"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              value={formData.passwordConfirm}
+              onChange={handleChange}
+              error={!!errors.passwordConfirm}
+            />
+            {errors.passwordConfirm && (
+              <p className={styles.errorMessage}>{errors.passwordConfirm[0]}</p>
+            )}
+          </div>
+          <div className={styles.buttonBox}>
+            <PrimaryButton type="submit" className={styles.submitButton}>
+              {signupMutation.isPending ? '가입 중...' : '가입하기'}
+            </PrimaryButton>
+            <GoogleLoginButton />
+          </div>
+        </fieldset>
       </form>
       <p className={styles.loginLinkText}>
         이미 최애의포토 회원이신가요?

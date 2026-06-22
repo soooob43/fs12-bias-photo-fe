@@ -1,4 +1,4 @@
-.form {
+.form fieldset {
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -37,6 +37,12 @@
   margin-left: 10px;
   color: var(--main-main);
   border-bottom: 1px solid var(--main-main);
+}
+
+.form fieldset:disabled button {
+  color: var(--gray-gray300);
+  background-color: var(--gray-gray400);
+  cursor: not-allowed;
 }
 
 .buttonBox {

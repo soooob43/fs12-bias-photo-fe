@@ -72,3 +72,11 @@
   color: var(--gray-gray300);
   font-size: 14px;
 }
+
+.randomBox {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

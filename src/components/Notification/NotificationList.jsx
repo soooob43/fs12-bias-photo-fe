@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 
 import NotificationItem from './NotificationItem';
-
+import { useMe } from '@/hooks/useMe';
 import { useInfiniteNotifications } from '@/hooks/useInfiniteNotifications';
 import { readAllNotifications } from '@/api/notificationApi';
 

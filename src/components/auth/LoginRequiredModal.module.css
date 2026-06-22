@@ -1,0 +1,17 @@
+.confirmButton {
+  width: 170px;
+  height: 60px;
+}
+
+@media (max-width: 1023px) {
+  .confirmButton {
+    width: 140px;
+    height: 55px;
+  }
+}
+
+@media (max-width: 743px) {
+  .confirmButton {
+    width: 120px;
+  }
+}

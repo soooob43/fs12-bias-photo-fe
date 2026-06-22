@@ -1,0 +1,61 @@
+.dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+
+  width: 260px;
+  padding: 24px;
+
+  background-color: var(--gray-gray500);
+
+  z-index: 100;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid var(--gray-gray400);
+}
+
+.greeting {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pointBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pointLabel {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--gray-gray300);
+}
+
+.pointValue {
+  font-size: 12px;
+  color: var(--main-main);
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  padding: 0;
+  margin: 0;
+}
+
+.menuItem a {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 700;
+}

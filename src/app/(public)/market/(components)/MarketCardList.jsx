@@ -1,0 +1,135 @@
+'use client';
+
+import { fetchTransactions } from '@/api/marketApi';
+import Card from '@/components/ui/Card';
+import Spinner from '@/components/ui/Spinner';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+const MarketCardList = ({
+  keyword,
+  filterType,
+  filterValue,
+  sortBy,
+  sortOrder,
+  isLogin,
+  setIsLoginOpen,
+}) => {
+  const { ref, inView } = useInView();
+  const router = useRouter();
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+  } = useInfiniteQuery({
+    queryKey: [
+      'transactions',
+      { keyword, filterType, filterValue, sortBy, sortOrder },
+    ],
+    queryFn: ({ pageParam }) =>
+      fetchTransactions({
+        pageParam,
+        keyword,
+        filterType,
+        filterValue,
+        sortBy,
+        sortOrder,
+      }),
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage?.nextCursor || undefined,
+    refetchOnMount: 'always',
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (status === 'pending') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-5 mt-10">
+        <Spinner />
+        <p className="text-(--gray-gray300) text-[1rem] font-medium animate-pulse">
+          포토카드를 불러오는 중입니다...
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="mt-20 text-center text-(--red-red)">
+        에러가 발생했습니다: {error?.message}
+      </div>
+    );
+  }
+
+  const allCards = data?.pages.flatMap((page) => page.data || []) || [];
+
+  return (
+    <>
+      <div className="mt-[20px] grid grid-cols-2 gap-[10px] md:mt-[40px] md:gap-[20px] lg:mt-[60px] lg:grid-cols-3 lg:gap-5">
+        {allCards.length === 0 ? (
+          <div className="col-span-full py-20 text-center text-(--gray-gray400)">
+            조건에 맞는 포토카드가 없습니다.
+          </div>
+        ) : (
+          allCards.map((transaction) =>
+            transaction.remainingQuantity === 0 ? (
+              <Card
+                key={transaction.id}
+                title={transaction.card?.title}
+                imageUrl={transaction.card?.imageUrl}
+                grade={transaction.card?.grade}
+                genre={transaction.card?.genre}
+                nickname={transaction.seller?.nickname}
+                price={transaction.price}
+                remainingQuantity={transaction.remainingQuantity}
+                totalQuantity={transaction.totalQuantity}
+                isSoldOut={transaction.remainingQuantity === 0}
+              />
+            ) : (
+              <button
+                type="button"
+                key={transaction.id}
+                onClick={() => {
+                  if (isLogin) {
+                    router.push(`/market/${transaction.id}`);
+                    return;
+                  }
+                  setIsLoginOpen(true);
+                }}
+                className="cursor-pointer"
+              >
+                <Card
+                  title={transaction.card?.title}
+                  imageUrl={transaction.card?.imageUrl}
+                  grade={transaction.card?.grade}
+                  genre={transaction.card?.genre}
+                  nickname={transaction.seller?.nickname}
+                  price={transaction.price}
+                  remainingQuantity={transaction.remainingQuantity}
+                  totalQuantity={transaction.totalQuantity}
+                  isSoldOut={transaction.remainingQuantity === 0}
+                />
+              </button>
+            ),
+          )
+        )}
+      </div>
+      {/* 무한 스크롤 트리거 역할 */}
+      <div ref={ref} className="h-10 mt-5 flex justify-center items-center">
+        {isFetchingNextPage && <Spinner />}
+      </div>
+    </>
+  );
+};
+
+export default MarketCardList;

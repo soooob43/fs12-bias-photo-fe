@@ -1,0 +1,13 @@
+import { useQuery } from '@tanstack/react-query';
+import { getMe } from '@/api/authApi';
+
+export const useMe = () => {
+  return useQuery({
+    queryKey: ['me'],
+    queryFn: async () => {
+      const data = await getMe();
+      return data.user;
+    },
+    retry: false,
+  });
+};

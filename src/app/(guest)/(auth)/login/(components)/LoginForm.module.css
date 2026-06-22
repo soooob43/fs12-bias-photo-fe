@@ -1,0 +1,73 @@
+.form fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submitButton {
+  width: 520px;
+  height: 60px;
+  margin-top: 10px;
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white-white);
+}
+
+.errorMessage {
+  font-size: 16px;
+  color: var(--red-red);
+  font-weight: 300;
+}
+
+.signupLinkText {
+  margin-top: 44px;
+  font-size: 14px;
+}
+
+.link {
+  margin-left: 10px;
+  color: var(--main-main);
+  border-bottom: 1px solid var(--main-main);
+}
+
+.form fieldset:disabled button {
+  color: var(--gray-gray300);
+  background-color: var(--gray-gray400);
+  cursor: not-allowed;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 1023px) {
+  .label {
+    font-size: 16px;
+  }
+
+  .submitButton {
+    width: 440px;
+    height: 55px;
+  }
+
+  .errorMessage {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 743px) {
+  .submitButton {
+    width: 345px;
+  }
+}

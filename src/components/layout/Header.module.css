@@ -1,0 +1,120 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  width: 100%;
+  background-color: var(--black-black);
+}
+
+.inner {
+  max-width: 1520px;
+  height: 80px;
+
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-shrink: 0;
+}
+
+.point {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.notificationButton,
+.nicknameButton,
+.logoutButton {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nicknameButton {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.divider {
+  font-size: 14px;
+  color: var(--gray-gray400);
+}
+
+.logoutButton {
+  font-size: 14px;
+  color: var(--gray-gray400);
+}
+
+.userMenu {
+  position: relative;
+}
+
+.skeletonIcon {
+  width: 120px;
+  height: 24px;
+  background-color: var(--gray-gray400);
+}
+
+.loginButton,
+.logoutButton {
+  font-weight: 500;
+  color: var(--gray-gray200);
+  font-size: 14px;
+}
+
+.notificationWrapper {
+  position: relative;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 9999px;
+  background-color: #ef4444;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.skeletonPoint,
+.skeletonIcon,
+.skeletonNickname {
+  animation: shimmer 1.2s infinite;
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    height: 70px;
+    padding: 0 15px;
+  }
+}

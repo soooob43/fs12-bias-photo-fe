@@ -1,17 +1,19 @@
 'use client';
 
 import { useMe } from '@/hooks/useMe';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect } from 'react';
 
-const GuestRoute = ({ children }) => {
+const GuestRouteContent = ({ children }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect');
 
   const { data: user, isLoading } = useMe();
 
   useEffect(() => {
     if (user) {
-      router.replace('/market');
+      router.replace(redirect || '/market');
     }
   }, [user, router]);
 
@@ -44,4 +46,10 @@ const GuestRoute = ({ children }) => {
   return children;
 };
 
-export default GuestRoute;
+export default function GuestRoute({ children }) {
+  return (
+    <Suspense fallback={null}>
+      <GuestRouteContent>{children}</GuestRouteContent>
+    </Suspense>
+  );
+}
